@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TECBank_BackEnd.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("nombredelaclase/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
     }

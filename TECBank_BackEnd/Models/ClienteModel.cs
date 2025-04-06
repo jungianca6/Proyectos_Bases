@@ -2,16 +2,16 @@
 {
     public class ClienteModel
     {
-        public string Cédula { get; set; }
-        public string Dirección { get; set; }
-        public string Teléfono { get; set; }
+        public string Cedula { get; set; }
+        public string Direccion { get; set; }
+        public string Telefono { get; set; }
         public decimal IngresoMensual { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string TipoDeCliente { get; set; }
         public string Usuario { get; set; }
-        public string Contraseña { get; set; }
+        public string Contrasena { get; set; }
         public List<CuentaModel> Cuentas { get; set; } = new List<CuentaModel>();
 
     }
