@@ -6,4 +6,6 @@
         public String Numero_de_Tarjeta;
 
     }
+
+
 }
