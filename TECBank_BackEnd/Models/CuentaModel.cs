@@ -19,4 +19,3 @@
         public void GenerarReporte() { /* Implementación */ }
     }
 }
-}
