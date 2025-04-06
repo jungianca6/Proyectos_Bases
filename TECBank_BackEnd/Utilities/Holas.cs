@@ -1,6 +1,25 @@
-﻿namespace TECBank_BackEnd.Utilities
+﻿using System.Text.Json;
+using TECBank_BackEnd.Models;
+
+namespace TECBank_BackEnd.Utilities
 {
     public class Holas
     {
+        private static string archivo = "clientes.json";
+
+        public static List<ClienteModel> LeerClientes()
+        {
+            if (!File.Exists(archivo))
+                return new List<ClienteModel>();
+
+            var json = File.ReadAllText(archivo);
+            return JsonSerializer.Deserialize<List<ClienteModel>>(json) ?? new List<ClienteModel>();
+        }
+
+        public static void GuardarClientes(List<ClienteModel> clientes)
+        {
+            var json = JsonSerializer.Serialize(clientes, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivo, json);
+        }
     }
 }
