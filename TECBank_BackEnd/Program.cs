@@ -60,7 +60,16 @@ Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
 
 var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
 
-Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 
+Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 var listaTodos = pruebaLecturaClientes.Ejecutar(); // sin filtro
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
+PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
+pruebaEliminacionClientes.EliminarPorCedula("1233");
+
+Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
+pruebaLecturaClientes.Ejecutar();
+
+
+
 app.Run();
