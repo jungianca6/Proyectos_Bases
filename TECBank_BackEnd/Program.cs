@@ -11,6 +11,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin", policy =>
+    {
+        policy.WithOrigins("https://localhost:3000")  // Ajusta esto según el dominio de tu frontend
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var ClienteA = new ClienteModel
 {
     Cedula = "123",
@@ -24,6 +36,7 @@ var ClienteA = new ClienteModel
     Usuario = "sapo",
     Contrasena = "32"
 };
+
 var app = builder.Build();
 
 // Configurar el pipeline HTTP
@@ -33,16 +46,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configuración de CORS (debe ir antes de Authorization)
+app.UseCors("AllowSpecificOrigin");
+
 app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+app.UseAuthorization(); // Aquí se autoriza el acceso
+app.MapControllers(); // Mapea los controladores
 
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
-
-
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
 PruebaEscrituraClientes pruebaEscrituraClientes = new PruebaEscrituraClientes();
 pruebaEscrituraClientes.Ejecutar(ClienteA);
+
 Console.WriteLine("=========== 📖 PRUEBA DE LECTURA DE CLIENTES ===========");
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();

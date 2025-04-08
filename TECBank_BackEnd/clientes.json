@@ -29,7 +29,7 @@
     "Cedula": "123456789",
     "Direccion": "San Jos\u00E9, Costa Rica",
     "Telefono": "8888-8888",
-    "IngresoMensual": 750000.00,
+    "IngresoMensual": 750000,
     "Nombre": "Carlos",
     "Apellido1": "Ram\u00EDrez",
     "Apellido2": "Gonz\u00E1lez",
@@ -42,7 +42,7 @@
     "Cedula": "123456788",
     "Direccion": "San Jos\u00E9, Costa Rica",
     "Telefono": "8888-8888",
-    "IngresoMensual": 750000.00,
+    "IngresoMensual": 750000,
     "Nombre": "Carlos",
     "Apellido1": "Ram\u00EDrez",
     "Apellido2": "Gonz\u00E1lez",
@@ -50,5 +50,44 @@
     "Usuario": "carlosrg",
     "Contrasena": "MiContrasenaSegura123",
     "AdminRol": true
+  },
+  {
+    "Cedula": "1",
+    "Direccion": "1",
+    "Telefono": "1",
+    "IngresoMensual": 1,
+    "Nombre": "1",
+    "Apellido1": "1",
+    "Apellido2": "1",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "1",
+    "Contrasena": "1",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "13",
+    "Direccion": "1",
+    "Telefono": "1",
+    "IngresoMensual": 1,
+    "Nombre": "rrr",
+    "Apellido1": "rrrr",
+    "Apellido2": "rrrr",
+    "TipoDeCliente": "Juridico",
+    "Usuario": "1",
+    "Contrasena": "1",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "132",
+    "Direccion": "1",
+    "Telefono": "1",
+    "IngresoMensual": 1,
+    "Nombre": "rrr",
+    "Apellido1": "rrrr",
+    "Apellido2": "rrrr",
+    "TipoDeCliente": "Juridico",
+    "Usuario": "1",
+    "Contrasena": "1",
+    "AdminRol": false
   }
 ]

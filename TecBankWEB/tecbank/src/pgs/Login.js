@@ -22,7 +22,7 @@ function Login({ setUser }) {
         tipoDeCliente: "",
         usuario: "",
         contrasena: "",
-        adminRol: 0
+        adminRol: false
     });
 
     const [users, setUsers] = useState([]);
@@ -98,14 +98,14 @@ function Login({ setUser }) {
                         <input type="text" placeholder="Teléfono" required onChange={(e) => setNewUser({ ...newUser, telefono: e.target.value })} />
                         <input type="number" placeholder="Ingreso Mensual" required onChange={(e) => setNewUser({ ...newUser, ingresoMensual: e.target.value })} />
 
-                        <select required onChange={(e) => setNewUser({ ...newUser, tipoCliente: e.target.value })}>
+                        <select required onChange={(e) => setNewUser({ ...newUser, tipoDeCliente: e.target.value })}>
                         <option value="">Selecciona tipo de cliente</option>
                         <option value="Fisico">Físico</option>
                         <option value="Juridico">Jurídico</option>
                         </select>
 
                         <input type="text" placeholder="Usuario" required onChange={(e) => setNewUser({ ...newUser, usuario: e.target.value })} />
-                        <input type="password" placeholder="Contraseña" required onChange={(e) => setNewUser({ ...newUser, contraseña: e.target.value })} />
+                        <input type="password" placeholder="Contraseña" required onChange={(e) => setNewUser({ ...newUser, contrasena: e.target.value })} />
 
                         <button type="submit">Registrarse</button>
                         <p className="register-link">
