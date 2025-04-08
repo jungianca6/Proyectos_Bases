@@ -13,5 +13,7 @@
         public string Usuario { get; set; }
         public string Contrasena { get; set; }
 
+        public bool AdminRol { get; set; }
+
     }
 }
