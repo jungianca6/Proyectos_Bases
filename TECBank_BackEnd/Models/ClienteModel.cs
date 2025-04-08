@@ -12,7 +12,8 @@
         public string TipoDeCliente { get; set; }
         public string Usuario { get; set; }
         public string Contrasena { get; set; }
-        public List<CuentaModel> Cuentas { get; set; } = new List<CuentaModel>();
+
+        public bool AdminRol { get; set; }
 
     }
 }
