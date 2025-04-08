@@ -59,6 +59,24 @@ var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
 
 var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+Console.WriteLine("=========== ✏️ PRUEBA DE EDICIÓN DE CLIENTE ===========");
+
+PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
+
+var datosActualizados = new ClienteModel
+{
+    Nombre = "JorgeActualizado",
+    Apellido1 = "Ramírez",
+    Apellido2 = "Gómez",
+    Direccion = "Nueva Dirección 123",
+    Telefono = "8888-9999",
+    IngresoMensual = 3000,
+    TipoDeCliente = "Gold",
+    Usuario = "jorgeEditado",
+    Contrasena = "nuevaPass123"
+};
+
+pruebaEditarClientes.EditarCliente("1233", datosActualizados);
 
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
