@@ -2,10 +2,12 @@
 {
     public class TarjetaModel
     {
-        public string Número { get; set; }
+        public string Numero { get; set; }
+        public string NumeroDeCuenta { get; set; }
+
         public string TipoDeTarjeta { get; set; }
-        public DateTime FechaDeExportación { get; set; }
-        public string CódigoDeSeguridad { get; set; }
+        public DateTime FechaDeExpiracion { get; set; }
+        public string CCV { get; set; }
         public decimal SaldoDisponible { get; set; }
 
         public void IngresarTarjeta() { /* Implementación */ }
