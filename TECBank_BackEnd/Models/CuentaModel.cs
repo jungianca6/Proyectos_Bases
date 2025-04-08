@@ -7,6 +7,7 @@
         public string Moneda { get; set; }
         public string TipoDeCuenta { get; set; }
         public string Nombre { get; set; }
+        public string ID_Cliente { get; set; }
         public List<TarjetaModel> Tarjetas { get; set; } = new List<TarjetaModel>();
         public List<MovimientoModel> Movimientos { get; set; } = new List<MovimientoModel>();
 
