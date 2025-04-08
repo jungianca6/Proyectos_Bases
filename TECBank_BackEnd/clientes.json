@@ -10,7 +10,7 @@
     "TipoDeCliente": "Pr2mium",
     "Usuario": "sapo",
     "Contrasena": "32",
-    "Cuentas": []
+    "AdminRol": false
   },
   {
     "Cedula": "123",
@@ -23,6 +23,32 @@
     "TipoDeCliente": "Pr2mium",
     "Usuario": "sapo",
     "Contrasena": "32",
-    "Cuentas": []
+    "AdminRol": false
+  },
+  {
+    "Cedula": "123456789",
+    "Direccion": "San Jos\u00E9, Costa Rica",
+    "Telefono": "8888-8888",
+    "IngresoMensual": 750000.00,
+    "Nombre": "Carlos",
+    "Apellido1": "Ram\u00EDrez",
+    "Apellido2": "Gonz\u00E1lez",
+    "TipoDeCliente": "Preferencial",
+    "Usuario": "carlosrg",
+    "Contrasena": "MiContrasenaSegura123",
+    "AdminRol": true
+  },
+  {
+    "Cedula": "123456788",
+    "Direccion": "San Jos\u00E9, Costa Rica",
+    "Telefono": "8888-8888",
+    "IngresoMensual": 750000.00,
+    "Nombre": "Carlos",
+    "Apellido1": "Ram\u00EDrez",
+    "Apellido2": "Gonz\u00E1lez",
+    "TipoDeCliente": "Preferencial",
+    "Usuario": "carlosrg",
+    "Contrasena": "MiContrasenaSegura123",
+    "AdminRol": true
   }
 ]

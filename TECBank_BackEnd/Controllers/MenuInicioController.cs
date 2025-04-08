@@ -7,7 +7,7 @@ using TECBank_BackEnd.Utilities;
 namespace TECBank_BackEnd.Controllers
 {
     [ApiController]
-    [Route("MenuInicio/[controller]")]
+    [Route("/[controller]")]
     public class MenuInicioController : ControllerBase
     {
         // POST: MenuInicio/Registro
@@ -27,9 +27,9 @@ namespace TECBank_BackEnd.Controllers
         public ActionResult Deposito([FromBody] LoginDataInputModel data)
         {
 
-
-
             ClienteModel cliente = new ClienteModel();
+
+
 
 
             // Lógica para obtener datos
