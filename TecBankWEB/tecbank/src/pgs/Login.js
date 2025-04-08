@@ -1,54 +1,140 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import React from "react";
+import axios from "axios";
 import './Login.css';
 
 function Login({ setUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isRegistering, setIsRegistering] = useState(false);
+    const [newUser, setNewUser] = useState({
+        nombre: "",
+        apellido1: "",
+        apellido2: "",
+        cedula: "",
+        direccion: "",
+        telefono: "",
+        ingresoMensual: "",
+        tipoDeCliente: "",
+        usuario: "",
+        contrasena: "",
+        adminRol: 0
+    });
+
+    const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    useEffect(() => {
+        // Cargar usuarios guardados al iniciar
+        const savedUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
+        setUsers(savedUsers);
+    }, []);
+
+    const handleLogin = async (e) => {
         e.preventDefault();
 
+        // Verificar usuarios predefinidos
         if (username === "admin" && password === "admin123") {
             setUser("admin");
             navigate("/admin");
-        } else if (username === "cliente" && password === "cliente123") {
-            setUser("cliente");
-            navigate("/cliente");
-        } else {
-            alert("Credenciales incorrectas");
+            return;
+        }
+
+        // Verificar usuarios registrados
+        try {
+            const response = await axios.post("https://localhost:7190/MenuInicio/Registro", { username, password });
+            if (response.data.success) {
+                setUser(response.data.user);
+                if (response.data.user.adminRol === 1) {
+
+                    navigate("/admin");
+                } else {
+                    navigate("/cliente");
+                }
+
+            } else {
+                alert("Credenciales incorrectas");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error al conectar con el servidor");
+        }
+    };
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        // Enviar datos de registro al backend
+
+        try {
+            const response = await axios.post("https://localhost:7190/MenuInicio/Registro", newUser);
+            if (response.data.success) {
+                alert("Usuario registrado exitosamente");
+                setIsRegistering(false);
+            } else {
+                alert("Error al registrar usuario");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error al conectar con el servidor");
         }
     };
 
     return (
         <div className="login-wrapper">
-        <div className="wrapper">
-            <form onSubmit={handleLogin}>
+            <div className="wrapper">
+                {isRegistering ? (
+                    <form onSubmit={handleRegister}>
+                        <h1>Registro</h1>
 
-                <h1>TecBank</h1>
+                        <input type="text" placeholder="Nombre" required onChange={(e) => setNewUser({ ...newUser, nombre: e.target.value })} />
+                        <input type="text" placeholder="Primer Apellido" required onChange={(e) => setNewUser({ ...newUser, apellido1: e.target.value })} />
+                        <input type="text" placeholder="Segundo Apellido" required onChange={(e) => setNewUser({ ...newUser, apellido2: e.target.value })} />
+                        <input type="text" placeholder="Cédula" required onChange={(e) => setNewUser({ ...newUser, cedula: e.target.value })} />
+                        <input type="text" placeholder="Dirección" required onChange={(e) => setNewUser({ ...newUser, direccion: e.target.value })} />
+                        <input type="text" placeholder="Teléfono" required onChange={(e) => setNewUser({ ...newUser, telefono: e.target.value })} />
+                        <input type="number" placeholder="Ingreso Mensual" required onChange={(e) => setNewUser({ ...newUser, ingresoMensual: e.target.value })} />
 
-                <div className="input-box">
-                    <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                    <FaRegUser className="icon"/>
-                </div>
+                        <select required onChange={(e) => setNewUser({ ...newUser, tipoCliente: e.target.value })}>
+                        <option value="">Selecciona tipo de cliente</option>
+                        <option value="Fisico">Físico</option>
+                        <option value="Juridico">Jurídico</option>
+                        </select>
 
-                <div className="input-box">
-                    <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    <MdLockOutline className="icon"/>
-                </div>
+                        <input type="text" placeholder="Usuario" required onChange={(e) => setNewUser({ ...newUser, usuario: e.target.value })} />
+                        <input type="password" placeholder="Contraseña" required onChange={(e) => setNewUser({ ...newUser, contraseña: e.target.value })} />
 
-                <button type="submit">Ingresar</button>
+                        <button type="submit">Registrarse</button>
+                        <p className="register-link">
+                            ¿Ya tienes una cuenta?{" "}
+                            <span onClick={() => setIsRegistering(false)} style={{ cursor: 'pointer', color: 'white' }}>Inicia sesión</span>
+                        </p>
+                    </form>
+                ) : (
+                    <form onSubmit={handleLogin}>
+                        <h1>TecBank</h1>
 
-                <div className="register-link">
-                    <p><a href="#">Registrarse</a></p>
-                </div>
+                        <div className="input-box">
+                            <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} required />
+                            <FaRegUser className="icon" />
+                        </div>
 
-            </form>
-        </div>
+                        <div className="input-box">
+                            <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                            <MdLockOutline className="icon" />
+                        </div>
+
+                        <button type="submit">Ingresar</button>
+
+                        <div className="register-link">
+                            <p><span onClick={() => setIsRegistering(true)} style={{ cursor: 'pointer', color: 'white' }}>Registrarse</span></p>
+                        </div>
+                    </form>
+                )}
+            </div>
         </div>
     );
 }
