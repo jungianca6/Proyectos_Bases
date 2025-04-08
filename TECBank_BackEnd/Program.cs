@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var ClienteA = new ClienteModel
 {
-    Cedula = "123",
+    Cedula = "1233",
     Nombre = "jorge1",
     Apellido1 = "e",
     Apellido2 = "s",
@@ -49,7 +49,7 @@ PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
 pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
-pruebaLecturaClientes.Ejecutar("Cedula", "123");
+pruebaLecturaClientes.Ejecutar("Cedula", "1233");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
