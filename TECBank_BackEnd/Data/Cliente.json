@@ -1,8 +1,8 @@
 [
   {
-    "Cedula": "1243",
-    "Direccion": "S2e",
-    "Telefono": "8828-8888",
+    "Cedula": "1233",
+    "Direccion": "Nueva Casa en Cartago",
+    "Telefono": "6000-0000",
     "IngresoMensual": 1210,
     "Nombre": "jorge1",
     "Apellido1": "e",
@@ -13,9 +13,9 @@
     "AdminRol": false
   },
   {
-    "Cedula": "1233",
-    "Direccion": "Nueva Casa en Cartago",
-    "Telefono": "6000-0000",
+    "Cedula": "1243",
+    "Direccion": "S2e",
+    "Telefono": "8828-8888",
     "IngresoMensual": 1210,
     "Nombre": "jorge1",
     "Apellido1": "e",
