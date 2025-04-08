@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var ClienteA = new ClienteModel
 {
-    Cedula = "12",
+    Cedula = "123",
     Nombre = "jorge1",
     Apellido1 = "e",
     Apellido2 = "s",
@@ -38,13 +38,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
-Console.WriteLine("=========== 📖 PRUEBA DE LECTURA DE CLIENTES ===========");
-PruebaLecturaClientes.Ejecutar();
+
 
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
 PruebaEscrituraClientes.Ejecutar(ClienteA);
+Console.WriteLine("=========== 📖 PRUEBA DE LECTURA DE CLIENTES ===========");
+Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
+PruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 
-Console.WriteLine("\n=========== 📖 RE-LECTURA PARA VERIFICAR CAMBIOS ===========");
-PruebaLecturaClientes.Ejecutar(); // Leer de nuevo para verificar si se agregó correctamente
+Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
+PruebaLecturaClientes.Ejecutar("Cedula", "123");
+
+Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
+PruebaLecturaClientes.Ejecutar();
 
 app.Run();
