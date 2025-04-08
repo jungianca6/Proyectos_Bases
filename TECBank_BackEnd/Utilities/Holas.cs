@@ -5,7 +5,19 @@ namespace TECBank_BackEnd.Utilities
 {
     public class Holas
     {
-        private string archivo = "clientes.json";
+        private readonly string carpeta = Path.Combine(Directory.GetCurrentDirectory(), "Data");
+        private readonly string archivo;
+
+        public Holas()
+        {
+            // Asegura que la carpeta Data exista
+            if (!Directory.Exists(carpeta))
+            {
+                Directory.CreateDirectory(carpeta);
+            }
+
+            archivo = Path.Combine(carpeta, "Cliente.json");
+        }
 
         public List<ClienteModel> LeerClientes()
         {

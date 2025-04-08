@@ -5,7 +5,7 @@ namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaLecturaClientes
     {
-        public void Ejecutar(string? etiqueta = null, string? valor = null)
+        public List<ClienteModel> Ejecutar(string? etiqueta = null, string? valor = null)
         {
             Holas holas = new Holas();
             var clientes = holas.LeerClientes();
@@ -26,6 +26,7 @@ namespace TECBank_BackEnd.Pruebas
                 ).ToList();
             }
 
+            // Imprimir resultados
             Console.WriteLine("📄 Clientes encontrados:");
             if (clientes.Count == 0)
             {
@@ -38,6 +39,9 @@ namespace TECBank_BackEnd.Pruebas
                     Console.WriteLine($"➡️ {cliente.Nombre} {cliente.Apellido1} | Usuario: {cliente.Usuario} | Cédula: {cliente.Cedula}");
                 }
             }
+
+            // Retornar lista de objetos ClienteModel
+            return clientes;
         }
     }
 }

@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 
 var ClienteA = new ClienteModel
 {
-    Cedula = "123",
+    Cedula = "1233",
     Nombre = "jorge1",
     Apellido1 = "e",
     Apellido2 = "s",
@@ -64,9 +64,39 @@ PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
 pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
-pruebaLecturaClientes.Ejecutar("Cedula", "123");
+pruebaLecturaClientes.Ejecutar("Cedula", "1233");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
+
+Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
+var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
+
+var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
+
+PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
+
+var cambiosParciales = new ClienteModel
+{
+    Telefono = "6000-0000",
+    Direccion = "Nueva Casa en Cartago"
+    // Los demás campos los dejamos vacíos
+};
+
+pruebaEditarClientes.EditarClienteParcial("1233", cambiosParciales);
+
+
+Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
+var listaTodos = pruebaLecturaClientes.Ejecutar(); // sin filtro
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
+PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
+pruebaEliminacionClientes.EliminarPorCedula("123323");
+
+Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
+pruebaLecturaClientes.Ejecutar();
+
+
 
 app.Run();
