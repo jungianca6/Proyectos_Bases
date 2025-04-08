@@ -5,7 +5,7 @@
         public string Cedula { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
-        public decimal IngresoMensual { get; set; }
+        public float IngresoMensual { get; set; }
         public string Nombre { get; set; }
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
