@@ -5,7 +5,7 @@ namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaEscrituraClientes
     {
-        public static void Ejecutar(ClienteModel cliente )
+        public void Ejecutar(ClienteModel cliente )
         {
             var clientes = Holas.LeerClientes();
 

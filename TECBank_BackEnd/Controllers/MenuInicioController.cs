@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TECBank_BackEnd.Data_Input_Models;
 using TECBank_BackEnd.Models;
+using TECBank_BackEnd.Pruebas;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Controllers
 {
@@ -12,6 +14,9 @@ namespace TECBank_BackEnd.Controllers
         [HttpPost("Registro")]
         public ActionResult Deposito([FromBody] ClienteModel data)
         {
+            PruebaEscrituraClientes escrituraClientes = new PruebaEscrituraClientes();
+
+            escrituraClientes.Ejecutar(data);
 
             // Lógica para obtener datos
             return Ok();

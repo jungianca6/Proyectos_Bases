@@ -5,7 +5,7 @@ namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaLecturaClientes
     {
-        public static void Ejecutar(string? etiqueta = null, string? valor = null)
+        public void Ejecutar(string? etiqueta = null, string? valor = null)
         {
             var clientes = Holas.LeerClientes();
 
