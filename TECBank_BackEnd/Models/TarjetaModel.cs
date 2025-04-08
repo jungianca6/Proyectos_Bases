@@ -10,6 +10,8 @@
         public string CCV { get; set; }
         public decimal SaldoDisponible { get; set; }
 
+        public string ID_Cliente { get; set; }
+
         public void IngresarTarjeta() { /* Implementación */ }
         public void ModificarTarjeta() { /* Implementación */ }
         public void EliminarTarjeta() { /* Implementación */ }
