@@ -5,7 +5,7 @@ namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaEditarClientes
     {
-        public void EditarCliente(string cedula, ClienteModel nuevosDatos)
+        public void EditarClienteParcial(string cedula, ClienteModel nuevosDatos)
         {
             Holas holas = new Holas();
             var clientes = holas.LeerClientes();
@@ -14,20 +14,37 @@ namespace TECBank_BackEnd.Pruebas
 
             if (clienteExistente != null)
             {
-                // Aplicar los cambios desde el objeto nuevosDatos
-                clienteExistente.Nombre = nuevosDatos.Nombre;
-                clienteExistente.Apellido1 = nuevosDatos.Apellido1;
-                clienteExistente.Apellido2 = nuevosDatos.Apellido2;
-                clienteExistente.Direccion = nuevosDatos.Direccion;
-                clienteExistente.Telefono = nuevosDatos.Telefono;
-                clienteExistente.IngresoMensual = nuevosDatos.IngresoMensual;
-                clienteExistente.TipoDeCliente = nuevosDatos.TipoDeCliente;
-                clienteExistente.Usuario = nuevosDatos.Usuario;
-                clienteExistente.Contrasena = nuevosDatos.Contrasena;
+                // Solo modificar si se proporciona un valor distinto
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
+                    clienteExistente.Nombre = nuevosDatos.Nombre;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido1))
+                    clienteExistente.Apellido1 = nuevosDatos.Apellido1;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido2))
+                    clienteExistente.Apellido2 = nuevosDatos.Apellido2;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Direccion))
+                    clienteExistente.Direccion = nuevosDatos.Direccion;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Telefono))
+                    clienteExistente.Telefono = nuevosDatos.Telefono;
+
+                if (nuevosDatos.IngresoMensual != 0)
+                    clienteExistente.IngresoMensual = nuevosDatos.IngresoMensual;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.TipoDeCliente))
+                    clienteExistente.TipoDeCliente = nuevosDatos.TipoDeCliente;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
+                    clienteExistente.Usuario = nuevosDatos.Usuario;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Contrasena))
+                    clienteExistente.Contrasena = nuevosDatos.Contrasena;
 
                 holas.GuardarClientes(clientes);
 
-                Console.WriteLine($"✅ Cliente con cédula {cedula} actualizado correctamente.");
+                Console.WriteLine($"✅ Cliente con cédula {cedula} actualizado parcialmente.");
             }
             else
             {
