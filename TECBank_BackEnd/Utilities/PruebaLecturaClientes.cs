@@ -7,7 +7,8 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void Ejecutar(string? etiqueta = null, string? valor = null)
         {
-            var clientes = Holas.LeerClientes();
+            Holas holas = new Holas();
+            var clientes = holas.LeerClientes();
 
             // Si se pasan etiqueta y valor, filtrar
             if (!string.IsNullOrWhiteSpace(etiqueta) && !string.IsNullOrWhiteSpace(valor))

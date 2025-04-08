@@ -41,15 +41,17 @@ app.MapControllers();
 
 
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
-PruebaEscrituraClientes.Ejecutar(ClienteA);
+PruebaEscrituraClientes pruebaEscrituraClientes = new PruebaEscrituraClientes();
+pruebaEscrituraClientes.Ejecutar(ClienteA);
 Console.WriteLine("=========== 📖 PRUEBA DE LECTURA DE CLIENTES ===========");
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-PruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
+pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
-PruebaLecturaClientes.Ejecutar("Cedula", "123");
+pruebaLecturaClientes.Ejecutar("Cedula", "123");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-PruebaLecturaClientes.Ejecutar();
+pruebaLecturaClientes.Ejecutar();
 
 app.Run();

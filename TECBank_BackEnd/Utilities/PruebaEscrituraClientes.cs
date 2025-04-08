@@ -7,7 +7,8 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void Ejecutar(ClienteModel cliente )
         {
-            var clientes = Holas.LeerClientes();
+            Holas holas = new Holas();
+            var clientes = holas.LeerClientes();
 
             string cedulaNueva = cliente.Cedula;
 
@@ -17,7 +18,7 @@ namespace TECBank_BackEnd.Pruebas
 
 
                 clientes.Add(nuevoCliente);
-                Holas.GuardarClientes(clientes);
+                holas.GuardarClientes(clientes);
 
                 Console.WriteLine("✅ Cliente agregado y guardado en el archivo JSON.");
             }
