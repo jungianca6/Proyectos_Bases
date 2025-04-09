@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 
 var ClienteA = new ClienteModel
 {
-    Cedula = "1233",
+    Cedula = "1243",
     Nombre = "jorge1",
     Apellido1 = "e",
     Apellido2 = "s",
@@ -58,22 +58,86 @@ Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ==========
 PruebaEscrituraClientes pruebaEscrituraClientes = new PruebaEscrituraClientes();
 pruebaEscrituraClientes.Ejecutar(ClienteA);
 
-Console.WriteLine("=========== 📖 PRUEBA DE LECTURA DE CLIENTES ===========");
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
+
 pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
-
-Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
-pruebaLecturaClientes.Ejecutar("Cedula", "1233");
-
-Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-pruebaLecturaClientes.Ejecutar();
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
-Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
 
-List<ClienteModel> listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+if (listaPorNombre.Count > 0)
+{
+    Console.WriteLine("========= Detalles de los Clientes Encontrados por Nombre =========");
+    foreach (var cliente in listaPorNombre)
+    {
+        // Imprimir todos los detalles del cliente
+        Console.WriteLine($"Nombre Completo: {cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}");
+        Console.WriteLine($"Cédula: {cliente.Cedula}");
+        Console.WriteLine($"Teléfono: {cliente.Telefono}");
+        Console.WriteLine($"Dirección: {cliente.Direccion}");
+        Console.WriteLine($"Ingreso Mensual: {cliente.IngresoMensual}");
+        Console.WriteLine($"Tipo de Cliente: {cliente.TipoDeCliente}");
+        Console.WriteLine($"Usuario: {cliente.Usuario}");
+        Console.WriteLine($"Contraseña: {cliente.Contrasena}");
+        Console.WriteLine("------------------------------------------------------------");
+    }
+}
+else
+{
+    Console.WriteLine("⚠️ No se encontraron clientes con ese nombre.");
+}
+
+Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
+// Filtrar clientes por cédula "1233"
+var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+
+if (listaPorCedula.Count > 0)
+{
+    Console.WriteLine("========= Detalles de los Clientes Encontrados por Cédula =========");
+    foreach (var cliente in listaPorCedula)
+    {
+        // Imprimir todos los detalles del cliente
+        Console.WriteLine($"Nombre Completo: {cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}");
+        Console.WriteLine($"Cédula: {cliente.Cedula}");
+        Console.WriteLine($"Teléfono: {cliente.Telefono}");
+        Console.WriteLine($"Dirección: {cliente.Direccion}");
+        Console.WriteLine($"Ingreso Mensual: {cliente.IngresoMensual}");
+        Console.WriteLine($"Tipo de Cliente: {cliente.TipoDeCliente}");
+        Console.WriteLine($"Usuario: {cliente.Usuario}");
+        Console.WriteLine($"Contraseña: {cliente.Contrasena}");
+        Console.WriteLine("------------------------------------------------------------");
+    }
+}
+else
+{
+    Console.WriteLine("⚠️ No se encontró un cliente con esa cédula.");
+}
+Console.WriteLine("===========  🔍 sin filtro ===========");
+
+var listaTodos = pruebaLecturaClientes.Ejecutar();
+
+if (listaTodos.Count > 0)
+{
+    Console.WriteLine("========= Detalles de Todos los Clientes =========");
+    foreach (var cliente in listaTodos)
+    {
+        // Imprimir todos los detalles del cliente
+        Console.WriteLine($"Nombre Completo: {cliente.Nombre} {cliente.Apellido1} {cliente.Apellido2}");
+        Console.WriteLine($"Cédula: {cliente.Cedula}");
+        Console.WriteLine($"Teléfono: {cliente.Telefono}");
+        Console.WriteLine($"Dirección: {cliente.Direccion}");
+        Console.WriteLine($"Ingreso Mensual: {cliente.IngresoMensual}");
+        Console.WriteLine($"Tipo de Cliente: {cliente.TipoDeCliente}");
+        Console.WriteLine($"Usuario: {cliente.Usuario}");
+        Console.WriteLine($"Contraseña: {cliente.Contrasena}");
+        Console.WriteLine("------------------------------------------------------------");
+    }
+}
+else
+{
+    Console.WriteLine("⚠️ No se encontraron clientes.");
+}
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
 PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
@@ -89,14 +153,14 @@ pruebaEditarClientes.EditarClienteParcial("1233", cambiosParciales);
 
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-var listaTodos = pruebaLecturaClientes.Ejecutar(); // sin filtro
+pruebaLecturaClientes.Ejecutar();
+
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
 PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
-pruebaEliminacionClientes.EliminarPorCedula("1233");
+pruebaEliminacionClientes.EliminarPorCedula("12332");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
-
 
 
 app.Run();

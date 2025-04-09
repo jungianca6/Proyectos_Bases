@@ -1,16 +1,19 @@
-﻿using TECBank_BackEnd.Utilities;
-using TECBank_BackEnd.Models;
+﻿using TECBank_BackEnd.Models;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaLecturaClientes
     {
+        // 🟢 Lista accesible públicamente con todos los datos de los clientes leídos
+        public List<ClienteModel> ListaClientesLeidos { get; private set; } = new List<ClienteModel>();
+
         public List<ClienteModel> Ejecutar(string? etiqueta = null, string? valor = null)
         {
             Holas holas = new Holas();
             var clientes = holas.LeerClientes();
 
-            // Si se pasan etiqueta y valor, filtrar
+            // Filtrar si se especifica etiqueta y valor
             if (!string.IsNullOrWhiteSpace(etiqueta) && !string.IsNullOrWhiteSpace(valor))
             {
                 clientes = clientes.Where(c =>
@@ -26,7 +29,10 @@ namespace TECBank_BackEnd.Pruebas
                 ).ToList();
             }
 
-            // Imprimir resultados
+            // Guardar los clientes completos en la lista interna
+            ListaClientesLeidos = clientes;
+
+            // Mostrar solo algunos datos en consola
             Console.WriteLine("📄 Clientes encontrados:");
             if (clientes.Count == 0)
             {
@@ -40,7 +46,6 @@ namespace TECBank_BackEnd.Pruebas
                 }
             }
 
-            // Retornar lista de objetos ClienteModel
             return clientes;
         }
     }
