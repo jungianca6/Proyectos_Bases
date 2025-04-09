@@ -1,5 +1,6 @@
 package com.example.tecbank
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -7,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.io.InputStream
 import java.io.InputStreamReader
 
@@ -19,6 +21,12 @@ class MainActivity : ComponentActivity() {
         val usuarioEditText: EditText = findViewById(R.id.usuario)
         val contrasenaEditText: EditText = findViewById(R.id.contrasena)
         val ingresarButton: Button = findViewById(R.id.button)
+        val registrarButton: Button = findViewById(R.id.btnRegistrar)
+
+        registrarButton.setOnClickListener {
+            val intent = Intent(this, RegistroActivity::class.java)
+            startActivity(intent)
+        }
 
         ingresarButton.setOnClickListener {
             val usuario = usuarioEditText.text.toString()
@@ -26,23 +34,29 @@ class MainActivity : ComponentActivity() {
 
             // Verificar si el usuario y la contraseña son correctos
             if (verificarUsuario(usuario, contrasena)) {
-                // Si es válido, mostrar un mensaje de éxito o iniciar sesión
+                // Si es válido, mostrar un mensaje de éxito y navegar a la pantalla de cuentas
                 Toast.makeText(this, "Ingreso exitoso", Toast.LENGTH_SHORT).show()
-                // Aquí puedes redirigir a otra actividad si es necesario
+
+                // Intent para ir a la nueva actividad
+                val intent = Intent(this, CuentasActivity::class.java)
+                startActivity(intent)
             } else {
                 // Si no es válido, mostrar un mensaje de error
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     // Función para verificar si el usuario y contraseña existen en el archivo JSON
     private fun verificarUsuario(usuario: String, contrasena: String): Boolean {
         try {
-            // Abrir el archivo JSON desde assets
-            val inputStream: InputStream = assets.open("usuarios.json")
-            val inputStreamReader = InputStreamReader(inputStream)
-            val jsonString = inputStreamReader.readText()
+            val archivo = File(filesDir, "usuarios.json")
+            val jsonString = if (archivo.exists()) {
+                archivo.readText()
+            } else {
+                assets.open("usuarios.json").bufferedReader().use { it.readText() }
+            }
 
             // Convertir el JSON en un array
             val jsonArray = JSONArray(jsonString)
