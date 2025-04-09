@@ -46,14 +46,20 @@ namespace TECBank_BackEnd.Controllers
 
             if (cliente != null)
             {
-                
+                if (cliente.Contrasena != data.contrasena)
+                {
+                    var response = new { success = false, message = "Contraseña incorrecta" }; // Respuesta de éxito
+                    return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+                }
+                else {
+                    var response = new { success = true, usuario_actual = cliente }; // Respuesta de éxito
+                    return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+                }
 
-                var response = new { success = true , usuario_actual = cliente}; // Respuesta de éxito
-                return Ok(response);  // Enviar respuesta al frontend con la propiedad success
             }
             else
             {
-                var response = new { success = false, message = "Error" };
+                var response = new { success = false, message = "El Usuario no existe" };
                 return BadRequest(response);  // Puedes usar BadRequest para manejar errores
             }
 
