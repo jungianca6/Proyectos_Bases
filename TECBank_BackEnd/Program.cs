@@ -15,9 +15,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin", policy =>
+    options.AddPolicy("AllowAnyOriginPolicy", policy =>
     {
-        policy.WithOrigins("https://localhost:3000")  // Ajusta esto según el dominio de tu frontend
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configuración de CORS (debe ir antes de Authorization)
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAnyOriginPolicy");
 
 app.UseHttpsRedirection();
 app.UseAuthorization(); // Aquí se autoriza el acceso

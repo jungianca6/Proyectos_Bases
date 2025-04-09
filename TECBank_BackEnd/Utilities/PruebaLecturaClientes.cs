@@ -48,16 +48,14 @@ namespace TECBank_BackEnd.Pruebas
 
             return clientes;
         }
-
-        public ClienteModel? BuscarPorCredenciales(string usuario, string contrasena)
+        public ClienteModel? BuscarPorUsuario(string usuario)
         {
             Holas holas = new Holas();
             var clientes = holas.LeerClientes();
 
-            // Buscar coincidencia exacta por usuario y contraseña
+            // Buscar coincidencia exacta por usuario
             var cliente = clientes.FirstOrDefault(c =>
-                c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true &&
-                c.Contrasena?.Equals(contrasena, StringComparison.Ordinal) == true // se puede hacer case-insensitive si querés
+                c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
             );
 
             return cliente;

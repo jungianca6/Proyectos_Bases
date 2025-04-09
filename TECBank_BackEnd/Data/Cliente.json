@@ -21,8 +21,21 @@
     "Apellido1": "e",
     "Apellido2": "s",
     "TipoDeCliente": "Pr2mium",
-    "Usuario": "sapo",
+    "Usuario": "sapo2",
     "Contrasena": "32",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "1234",
+    "Direccion": "e",
+    "Telefono": "1",
+    "IngresoMensual": 1,
+    "Nombre": "e",
+    "Apellido1": "e",
+    "Apellido2": "e",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "1",
+    "Contrasena": "e",
     "AdminRol": false
   }
 ]

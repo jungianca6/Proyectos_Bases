@@ -59,17 +59,19 @@ function Login({ setUser }) {
         }
     
         try {
-            const response = await axios.post("https://localhost:7190/MenuInicio/Registro", {
-                username,
-                password
+            const response = await axios.post("https://localhost:7190/MenuInicio/Login", {
+                usuario: username,   // Cambiar 'username' a 'usuario'
+                contrasena: password // Cambiar 'password' a 'contrasena'
             });
     
             if (response.data.success) {
-                const usuario = response.data.user;
+                const usuario = response.data.usuario_actual;
                 setUser(usuario);
                 localStorage.setItem("usuario_actual", JSON.stringify(usuario)); // Guarda el usuario actualmente loggeado en la web.
+
+                alert("Logeo exitoso");
     
-                if (usuario.adminRol === 1) {
+                if (usuario.adminRol === true) {
                     navigate("/admin");
                 } else {
                     navigate("/cliente");

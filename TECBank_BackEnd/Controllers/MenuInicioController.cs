@@ -37,17 +37,18 @@ namespace TECBank_BackEnd.Controllers
 
         }
 
-        // POST: MenuInicio/Registro
-        [HttpGet("Login")]
+        // POST: MenuInicio/Login
+        [HttpPost("Login")]
         public ActionResult Deposito([FromBody] LoginDataInputModel data)
         {
             PruebaLecturaClientes lector = new PruebaLecturaClientes();
-            ClienteModel? cliente = lector.BuscarPorCredenciales(data.usuario, data.contrasena);
+            ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);
 
             if (cliente != null)
             {
-                // Supongamos que la operación fue exitosa
-                var response = new { success = true , usuarioactual = cliente}; // Respuesta de éxito
+                
+
+                var response = new { success = true , usuario_actual = cliente}; // Respuesta de éxito
                 return Ok(response);  // Enviar respuesta al frontend con la propiedad success
             }
             else
