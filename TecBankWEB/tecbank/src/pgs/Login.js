@@ -36,26 +36,44 @@ function Login({ setUser }) {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+    
         // Verificar usuarios predefinidos
         if (username === "admin" && password === "admin123") {
+            const adminUser = {
+                nombre: "Admin",
+                apellido1: "",
+                apellido2: "",
+                cedula: "",
+                direccion: "",
+                telefono: "",
+                ingresoMensual: "",
+                tipoDeCliente: "Administrador",
+                usuario: "admin",
+                contrasena: "admin123",
+                adminRol: true
+            };
             setUser("admin");
+            localStorage.setItem("usuario_actual", JSON.stringify(adminUser));
             navigate("/admin");
             return;
         }
-
-        // Verificar usuarios registrados
+    
         try {
-            const response = await axios.post("https://localhost:7190/MenuInicio/Registro", { username, password });
+            const response = await axios.post("https://localhost:7190/MenuInicio/Registro", {
+                username,
+                password
+            });
+    
             if (response.data.success) {
-                setUser(response.data.user);
-                if (response.data.user.adminRol === 1) {
-
+                const usuario = response.data.user;
+                setUser(usuario);
+                localStorage.setItem("usuario_actual", JSON.stringify(usuario)); // Guarda el usuario actualmente loggeado en la web.
+    
+                if (usuario.adminRol === 1) {
                     navigate("/admin");
                 } else {
                     navigate("/cliente");
                 }
-
             } else {
                 alert("Credenciales incorrectas");
             }
