@@ -73,7 +73,7 @@ Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
 
-var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+List<ClienteModel> listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
 PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
@@ -92,7 +92,7 @@ Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 var listaTodos = pruebaLecturaClientes.Ejecutar(); // sin filtro
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
 PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
-pruebaEliminacionClientes.EliminarPorCedula("123323");
+pruebaEliminacionClientes.EliminarPorCedula("1233");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
