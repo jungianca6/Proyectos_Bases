@@ -23,5 +23,7 @@ namespace TECBank_BackEnd.Pruebas
                 Console.WriteLine($"⚠️ No se encontró un cliente con cédula {cedula}.");
             }
         }
+
+       
     }
 }

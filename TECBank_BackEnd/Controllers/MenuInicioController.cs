@@ -60,7 +60,7 @@ namespace TECBank_BackEnd.Controllers
             else
             {
                 var response = new { success = false, message = "El Usuario no existe" };
-                return BadRequest(response);  // Puedes usar BadRequest para manejar errores
+                return Ok(response);  // Puedes usar BadRequest para manejar errores
             }
 
         }

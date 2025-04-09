@@ -63,21 +63,24 @@ function Login({ setUser }) {
                 usuario: username,   // Cambiar 'username' a 'usuario'
                 contrasena: password // Cambiar 'password' a 'contrasena'
             });
-    
+        
             if (response.data.success) {
                 const usuario = response.data.usuario_actual;
-                setUser(usuario);
+                setUser(usuario); // Aquí guardas el usuario completo
                 localStorage.setItem("usuario_actual", JSON.stringify(usuario)); // Guarda el usuario actualmente loggeado en la web.
-
+        
                 alert("Logeo exitoso");
-    
+        
+                // Verificar si adminRol es verdadero
                 if (usuario.adminRol === true) {
+                    console.log("Redirigiendo a admin");
                     navigate("/admin");
                 } else {
+                    console.log("Redirigiendo a cliente");
                     navigate("/cliente");
                 }
             } else {
-                alert("Credenciales incorrectas");
+                alert(response.data.message);
             }
         } catch (error) {
             console.error(error);
