@@ -7,7 +7,7 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void Ejecutar(ClienteModel cliente )
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             string cedulaNueva = cliente.Cedula;

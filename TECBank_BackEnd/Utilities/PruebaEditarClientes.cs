@@ -7,7 +7,7 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void EditarClienteParcial(string cedula, ClienteModel nuevosDatos)
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             var clienteExistente = clientes.FirstOrDefault(c => c.Cedula == cedula);

@@ -10,7 +10,7 @@ namespace TECBank_BackEnd.Pruebas
 
         public List<ClienteModel> Ejecutar(string? etiqueta = null, string? valor = null)
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             // Filtrar si se especifica etiqueta y valor
@@ -50,7 +50,7 @@ namespace TECBank_BackEnd.Pruebas
         }
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             // Buscar coincidencia exacta por usuario

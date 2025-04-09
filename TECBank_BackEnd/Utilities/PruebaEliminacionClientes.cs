@@ -7,7 +7,7 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void EliminarPorCedula(string cedula)
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             var clienteAEliminar = clientes.FirstOrDefault(c => c.Cedula == cedula);

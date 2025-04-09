@@ -3,12 +3,12 @@ using TECBank_BackEnd.Models;
 
 namespace TECBank_BackEnd.Utilities
 {
-    public class Holas
+    public class Jason
     {
         private readonly string carpeta = Path.Combine(Directory.GetCurrentDirectory(), "Data");
         private readonly string archivo;
 
-        public Holas()
+        public Jason()
         {
             // Asegura que la carpeta Data exista
             if (!Directory.Exists(carpeta))
