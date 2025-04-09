@@ -10,6 +10,9 @@ namespace TECBank_BackEnd.Controllers
     [Route("/[controller]")]
     public class MenuInicioController : ControllerBase
     {
+
+        public PruebaLecturaClientes pruebaLectura;
+
         // POST: MenuInicio/Registro
         [HttpPost("Registro")]
         public ActionResult Deposito([FromBody] ClienteModel data)
@@ -38,17 +41,21 @@ namespace TECBank_BackEnd.Controllers
         [HttpGet("Login")]
         public ActionResult Deposito([FromBody] LoginDataInputModel data)
         {
+            PruebaLecturaClientes lector = new PruebaLecturaClientes();
+            ClienteModel? cliente = lector.BuscarPorCredenciales(data.usuario, data.contrasena);
 
+            if (cliente != null)
+            {
+                // Supongamos que la operación fue exitosa
+                var response = new { success = true , usuarioactual = cliente}; // Respuesta de éxito
+                return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+            }
+            else
+            {
+                var response = new { success = false, message = "Error" };
+                return BadRequest(response);  // Puedes usar BadRequest para manejar errores
+            }
 
-
-
-            ClienteModel cliente = new ClienteModel();
-
-
-
-
-            // Lógica para obtener datos
-            return Ok(cliente);
         }
 
     }
