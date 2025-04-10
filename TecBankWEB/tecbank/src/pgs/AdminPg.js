@@ -5,6 +5,7 @@ import axios from "axios";
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
   
+  const [accion, setAccion] = useState('');
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [numeroTarjetaE, setNumeroTarjetaE] = useState('');
   const [tipoTarjeta, setTipoTarjeta] = useState('');
@@ -24,51 +25,34 @@ if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
 
-  const handleSubmitAgregar = async (e) => {
-    e.preventDefault();
+const handleSubmitTarjeta = async (e) => {
+  e.preventDefault();
 
-    // Prepare the data to send to the backend
-    const tarjetaData = {
-      numeroDeTarjeta: numeroTarjeta,      // Ajustado a "numeroDeTarjeta"
-      tipoDeTarjeta: tipoTarjeta,          // Ajustado a "tipoDeTarjeta"
-      fechaDeExpiracion: fechaExp,         // Ajustado a "fechaDeExpiracion"
-      CCV: codigoSeg,                      // Ajustado a "CCV"
-      saldo: parseFloat(saldoDisponible),  // Ajustado a "saldo" (debe ser numérico)
-      numeroDeCuenta: cuenta.usuario       // El número de cuenta se toma de `cuenta.usuario`
-    };
+  const tarjetaData = {
+    numeroDeTarjeta: numeroTarjeta,
+    tipoDeTarjeta: tipoTarjeta,
+    fechaDeExpiracion: fechaExp,
+    CCV: codigoSeg,
+    saldo: parseFloat(saldoDisponible),
+    numeroDeCuenta: cuenta.usuario
+  };
 
-    try {
-      // Send data to backend using Axios
+  try {
+    if (accion === 'ingresar') {
+      // Enviar para agregar la tarjeta
       const response = await axios.post('http://localhost:7190/MenuGestion/AgregarTarjeta', tarjetaData);
       console.log('Tarjeta ingresada con éxito:', response.data);
-    } catch (error) {
-      console.error('Error al ingresar la tarjeta:', error);
-    }
-  };
-
-  const handleSubmitModificar = async (e) => {
-    e.preventDefault();
-  
-    // Prepare the data to send to the backend
-    const tarjetaData = {
-      numeroDeTarjeta: numeroTarjeta,      // Ajustado a "numeroDeTarjeta"
-      tipoDeTarjeta: tipoTarjeta,          // Ajustado a "tipoDeTarjeta"
-      fechaDeExpiracion: fechaExp,         // Ajustado a "fechaDeExpiracion"
-      CCV: codigoSeg,                      // Ajustado a "CCV"
-      saldo: parseFloat(saldoDisponible),  // Ajustado a "saldo" (debe ser numérico)
-      numeroDeCuenta: cuenta.usuario       // El número de cuenta se toma de `cuenta.usuario`
-    };
-  
-    try {
-      // Send data to backend using Axios (endpoint para modificar tarjeta)
-      const response = await axios.put(`http://localhost:7190/MenuGestion/ModificarTarjeta/${numeroTarjeta}`, tarjetaData);
+    } else if (accion === 'modificar') {
+      // Enviar para modificar la tarjeta
+      const response = await axios.post('http://localhost:7190/MenuGestion/ModificarTarjeta', tarjetaData);
       console.log('Tarjeta modificada con éxito:', response.data);
-    } catch (error) {
-      console.error('Error al modificar la tarjeta:', error);
     }
-  };
+  } catch (error) {
+    console.error('Error al realizar la operación:', error);
+  }
+};
 
-  const handleSubmitEliminar = async (e) => {
+  const handleSubmitEliminarTarjeta = async (e) => {
     e.preventDefault();
   
     // Prepare the data to send to the backend (solo número de tarjeta)
@@ -321,73 +305,73 @@ if (!cuenta) {
       <br />
 
       <h3>Ingreso y modificación de tarjetas</h3>
-      <br />
-      <form>
-            <label> Número de tarjeta: </label>
+        <br />
+        <form onSubmit={handleSubmitTarjeta}>
+          <label> Número de tarjeta: </label>
+          <input 
+            type="number" 
+            name="numeroTarjeta" 
+            className="form-control" 
+            value={numeroTarjeta} 
+            onChange={(e) => setNumeroTarjeta(e.target.value)} 
+          />
+          <br />
+          <label> Tipo de tarjeta: </label>
+          <select 
+            name="tipoTarjeta" 
+            className="form-control" 
+            value={tipoTarjeta} 
+            onChange={(e) => setTipoTarjeta(e.target.value)}
+          >
+            <option value="">Seleccione...</option>
+            <option value="Débito">Débito</option>
+            <option value="Crédito">Crédito</option>
+          </select>
+          <br />
+          <div className="col-md-4">
+            <label htmlFor="fechaExp" className="form-label">Fecha de expiración:</label>
             <input 
-              type="number" 
-              name="numeroTarjeta" 
+              type="date" 
+              id="fechaExp" 
               className="form-control" 
-              value={numeroTarjeta} 
-              onChange={(e) => setNumeroTarjeta(e.target.value)} 
+              value={fechaExp} 
+              onChange={(e) => setFechaExp(e.target.value)} 
             />
-            <br />
-            <label> Tipo de tarjeta: </label>
-            <select 
-              name="tipoTarjeta" 
-              className="form-control" 
-              value={tipoTarjeta} 
-              onChange={(e) => setTipoTarjeta(e.target.value)}
-            >
-              <option value="">Seleccione...</option>
-              <option value="Débito">Débito</option>
-              <option value="Crédito">Crédito</option>
-            </select>
-            <br />
-            <div className="col-md-4">
-              <label htmlFor="fechaExp" className="form-label">Fecha de expiración:</label>
-              <input 
-                type="date" 
-                id="fechaExp" 
-                className="form-control" 
-                value={fechaExp} 
-                onChange={(e) => setFechaExp(e.target.value)} 
-              />
-            </div>
-            <br />
-            <label> Código de seguridad: </label>
-            <input 
-              type="number" 
-              min="0" 
-              max="999" 
-              name="codigoSeg" 
-              className="form-control" 
-              value={codigoSeg} 
-              onChange={(e) => setCodigoSeg(e.target.value)} 
-            />
-            <br />
-            <label> Saldo disponible/monto de crédito disponible: </label>
-            <input 
-              type="number" 
-              name="saldoDisponible" 
-              className="form-control" 
-              value={saldoDisponible} 
-              onChange={(e) => setSaldoDisponible(e.target.value)} 
-            />
-            <br />
-            <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-primary" onClick={handleSubmitAgregar}>Ingresar</button>
-            </div>
-            <br />
-            <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-warning" onClick={handleSubmitModificar}>Modificar</button>
-            </div>
-            <br />
+          </div>
+          <br />
+          <label> Código de seguridad: </label>
+          <input 
+            type="number" 
+            min="0" 
+            max="999" 
+            name="codigoSeg" 
+            className="form-control" 
+            value={codigoSeg} 
+            onChange={(e) => setCodigoSeg(e.target.value)} 
+          />
+          <br />
+          <label> Saldo disponible/monto de crédito disponible: </label>
+          <input 
+            type="number" 
+            name="saldoDisponible" 
+            className="form-control" 
+            value={saldoDisponible} 
+            onChange={(e) => setSaldoDisponible(e.target.value)} 
+          />
+          <br />
+          <div className="col-md-4 d-flex align-items-end">
+            <button type="submit" className="btn btn-primary" onClick={() => setAccion('ingresar')}>Ingresar</button>
+          </div>
+          <br />
+          <div className="col-md-4 d-flex align-items-end">
+            <button type="submit" className="btn btn-warning" onClick={() => setAccion('modificar')}>Modificar</button>
+          </div>
+          <br />
         </form>
 
         <h3>Eliminación de tarjetas</h3>
         <br />
-        <form>
+        <form onSubmit={handleSubmitEliminarTarjeta}>
         <label> Número de tarjeta: </label>
         <input 
         type="number" 
@@ -399,7 +383,7 @@ if (!cuenta) {
       </form>
       <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-danger" onClick={handleSubmitEliminar}>Eliminar</button>
+          <button type="submit" className="btn btn-danger">Eliminar</button>
         </div>
       <br />
       <hr />
