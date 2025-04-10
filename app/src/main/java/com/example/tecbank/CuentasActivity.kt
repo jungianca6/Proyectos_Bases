@@ -23,11 +23,23 @@ class CuentasActivity : ComponentActivity() {
         val layoutCuentas: LinearLayout = findViewById(R.id.layout_cuentas)
         val textoView: TextView = findViewById(R.id.texto_cuenta)
         val transferenciaButton: Button = findViewById(R.id.transferencias_button)
+        val tarjetasButton: Button = findViewById(R.id.tarjetas_button)
+        val prestamosButton: Button = findViewById(R.id.prestamos_button)
 
         // Leer el archivo JSON de cuentas
         val cuentas = cargarCuentas()
         transferenciaButton.setOnClickListener{
             val intent = Intent(this, TransferenciaActivity::class.java)
+            startActivity(intent)
+
+        }
+        tarjetasButton.setOnClickListener{
+            val intent = Intent(this, TarjetasActivity::class.java)
+            startActivity(intent)
+
+        }
+        prestamosButton.setOnClickListener{
+            val intent = Intent(this, PrestamosActivity::class.java)
             startActivity(intent)
 
         }

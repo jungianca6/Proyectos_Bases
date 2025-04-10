@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import org.json.JSONObject
-import java.io.*
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.IOException
@@ -73,7 +72,7 @@ class RegistroActivity : ComponentActivity() {
 
 
         val request = Request.Builder()
-            .url("https://fb20-201-202-14-53.ngrok-free.app/MenuInicio/Registro")
+            .url("https://b973-201-202-14-53.ngrok-free.app/MenuInicio/Registro")
             .post(requestBody)
             .build()
 

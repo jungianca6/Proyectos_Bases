@@ -30,4 +30,32 @@
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
+    <!-- Sección: Préstamos -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pago de Préstamo"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:textColor="#000000" />
+
+    <!-- Botón para Pago Normal -->
+    <Button
+        android:id="@+id/btnPagoNormal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pago Normal"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Botón para Pago Extraordinario -->
+    <Button
+        android:id="@+id/btnPagoExtra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pago Extraordinario"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="24dp" />
+
 </LinearLayout>
