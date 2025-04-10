@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import styles from './ClientePg.module.css';
 
 function ClientePG() {
@@ -13,6 +13,10 @@ function ClientePG() {
       }
   }, []);
 
+  if (!cuenta) {
+    return <div>Cargando información...</div>; // Mostrar mensaje de carga
+  }
+
   return (
     <div className="cliente">
     <div className={styles.body}>
@@ -21,8 +25,8 @@ function ClientePG() {
       <br />
 
       <div className="datos-en-linea">
-      <p><strong>Usuario:</strong> {cuenta.Usuario}</p>
-      <p><strong>Número de Cuenta:</strong> {cuenta.NumeroDeCuenta}</p>
+      <p><strong>Usuario:</strong> {cuenta.usuario}</p>
+      <p><strong>Número de Cuenta:</strong> {cuenta.numeroDeCuenta}</p>
       </div>
 
       <br />

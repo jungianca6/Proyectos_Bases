@@ -73,12 +73,15 @@ function Login({ setUser }) {
             if (response.data.success) {
                 const usuario = response.data.usuario_actual;
                 const cuenta = response.data.cuenta_actual;
+                console.log("Datos de la cuenta despues de guardar:", cuenta);
+                console.log("Datos de la cuenta despues de guardar:", usuario);
 
                 setUser(usuario); // Aquí guardas el usuario completo
                 localStorage.setItem("usuario_actual", JSON.stringify(usuario)); // Guarda el usuario actualmente loggeado en la web.
                 
                 setCuenta(cuenta);
                 localStorage.setItem("cuenta_actual", JSON.stringify(cuenta));
+                console.log("Cuenta guardada en localStorage:", localStorage.getItem("cuenta_actual"));
         
                 alert("Logeo exitoso");
         

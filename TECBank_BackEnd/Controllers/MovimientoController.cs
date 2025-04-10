@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TECBank_BackEnd.Data_Input_Models;
 using TECBank_BackEnd.Models;
 
 namespace TECBank_BackEnd.Controllers
@@ -9,8 +10,13 @@ namespace TECBank_BackEnd.Controllers
     {
         // POST: Movimiento/Pago
         [HttpPost("Pago")]
-        public ActionResult Pago([FromBody] MovimientoModel data)
+        public ActionResult Pago([FromBody] PagoDataInputModel data)
         {
+            PagoModel nuevo_pago = new PagoModel();
+            nuevo_pago.Fecha = DateTime.Now;
+            nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
+
+
             // Lógica para obtener datos
             return Ok();
         }

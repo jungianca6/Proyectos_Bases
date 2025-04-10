@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import styles from './AdminPg.module.css';
+
 
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
@@ -11,6 +12,10 @@ function AdminPG() {
           setCuenta(JSON.parse(cuentaGuardada));
       }
   }, []);
+
+  if (!cuenta) {
+    return <div>Cargando información...</div>; // Mostrar mensaje de carga
+  }
 
   return (
     <div className="admin">
