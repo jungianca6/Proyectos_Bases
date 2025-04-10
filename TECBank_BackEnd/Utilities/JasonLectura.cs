@@ -54,9 +54,8 @@ namespace TECBank_BackEnd.Pruebas
                 "NumeroDeCuenta" => tarjetas.Where(t => t.NumeroDeCuenta == valor).ToList(),
                 "TipoDeTarjeta" => tarjetas.Where(t => t.TipoDeTarjeta == valor).ToList(),
                 "CCV" => tarjetas.Where(t => t.CCV == valor).ToList(),
-                "ID_Cliente" => tarjetas.Where(t => t.ID_Cliente == valor).ToList(),
                 "SaldoDisponible" => tarjetas.Where(t => t.SaldoDisponible.ToString() == valor).ToList(),
-                "FechaDeExpiracion" => tarjetas.Where(t => t.FechaDeExpiracion.ToString("yyyy-MM-dd") == valor).ToList(),
+                "FechaDeExpiracion" => tarjetas.Where(t => t.FechaDeExpiracion == valor).ToList(),
                 _ => tarjetas
             };
         }
@@ -80,7 +79,6 @@ namespace TECBank_BackEnd.Pruebas
                 c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
             );
         }
-
 
     }
 }

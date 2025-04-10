@@ -147,7 +147,7 @@ else
 }
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
-JasonEditare Editare = new JasonEditare();
+JasonEditar Editare = new JasonEditar();
 
 var cambiosParciales = new ClienteModel
 {
@@ -255,10 +255,9 @@ var tarjetaA = new TarjetaModel
     Numero = "T001",
     NumeroDeCuenta = "C123",
     TipoDeTarjeta = "Debito",
-    FechaDeExpiracion = new DateTime(2027, 12, 31),
+    FechaDeExpiracion = "2027/12/31",
     CCV = "123",
-    SaldoDisponible = 50000.75m,
-    ID_Cliente = ClienteA.Cedula
+    SaldoDisponible = 50000
 };
 
 // Escritura
@@ -274,10 +273,9 @@ foreach (var tarjeta in tarjetasTodas)
     Console.WriteLine($"Número: {tarjeta.Numero}");
     Console.WriteLine($"Cuenta Asociada: {tarjeta.NumeroDeCuenta}");
     Console.WriteLine($"Tipo: {tarjeta.TipoDeTarjeta}");
-    Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion.ToShortDateString()}");
+    Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion}");
     Console.WriteLine($"CCV: {tarjeta.CCV}");
     Console.WriteLine($"Saldo Disponible: {tarjeta.SaldoDisponible}");
-    Console.WriteLine($"ID Cliente: {tarjeta.ID_Cliente}");
     Console.WriteLine("------------------------------------------------------------");
 }
 

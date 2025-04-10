@@ -3,7 +3,7 @@ using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
-    public class JasonEditare
+    public class JasonEditar
     {
         public void EditarClienteParcial(string cedula, ClienteModel nuevosDatos)
         {
@@ -105,11 +105,13 @@ namespace TECBank_BackEnd.Pruebas
                 if (nuevosDatos.SaldoDisponible > 0)
                     tarjeta.SaldoDisponible = nuevosDatos.SaldoDisponible;
 
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.ID_Cliente))
-                    tarjeta.ID_Cliente = nuevosDatos.ID_Cliente;
+                if (nuevosDatos.SaldoDisponible > 0)
+                    tarjeta.SaldoDisponible = nuevosDatos.SaldoDisponible;
 
-                if (nuevosDatos.FechaDeExpiracion > DateTime.MinValue)
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaDeExpiracion))
                     tarjeta.FechaDeExpiracion = nuevosDatos.FechaDeExpiracion;
+
+
 
                 jason.GuardarTarjetas(tarjetas);
                 Console.WriteLine($"✅ Tarjeta {numero} actualizada parcialmente.");

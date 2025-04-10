@@ -13,7 +13,7 @@ namespace TECBank_BackEnd.Controllers
         public ActionResult Pago([FromBody] PagoDataInputModel data)
         {
             PagoModel nuevo_pago = new PagoModel();
-            nuevo_pago.Fecha = DateTime.Now;
+            nuevo_pago.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
             nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
 
 
