@@ -4,18 +4,87 @@ import styles from './AdminPg.module.css';
 
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
-
+  
+  const [numeroTarjeta, setNumeroTarjeta] = useState('');
+  const [numeroTarjetaE, setNumeroTarjetaE] = useState('');
+  const [tipoTarjeta, setTipoTarjeta] = useState('');
+  const [fechaExp, setFechaExp] = useState('');
+  const [codigoSeg, setCodigoSeg] = useState('');
+  const [saldoDisponible, setSaldoDisponible] = useState(0);
+  
   useEffect(() => {
-      // Cargar cuenta actual desde localStorage
-      const cuentaGuardada = localStorage.getItem("cuenta_actual");
-      if (cuentaGuardada) {
-          setCuenta(JSON.parse(cuentaGuardada));
-      }
-  }, []);
+    // Cargar cuenta actual desde localStorage
+    const cuentaGuardada = localStorage.getItem("cuenta_actual");
+    if (cuentaGuardada) {
+        setCuenta(JSON.parse(cuentaGuardada));
+    }
+}, []);
 
-  if (!cuenta) {
-    return <div>Cargando información...</div>; // Mostrar mensaje de carga
-  }
+if (!cuenta) {
+  return <div>Cargando información...</div>; // Mostrar mensaje de carga
+}
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Prepare the data to send to the backend
+    const tarjetaData = {
+      numeroDeTarjeta: numeroTarjeta,      // Ajustado a "numeroDeTarjeta"
+      tipoDeTarjeta: tipoTarjeta,          // Ajustado a "tipoDeTarjeta"
+      fechaDeExpiracion: fechaExp,         // Ajustado a "fechaDeExpiracion"
+      CCV: codigoSeg,                      // Ajustado a "CCV"
+      saldo: parseFloat(saldoDisponible),  // Ajustado a "saldo" (debe ser numérico)
+      numeroDeCuenta: cuenta.usuario       // El número de cuenta se toma de `cuenta.usuario`
+    };
+
+    try {
+      // Send data to backend using Axios
+      const response = await axios.post('http://localhost:7190/MenuGestion/AgregarTarjeta', tarjetaData);
+      console.log('Tarjeta ingresada con éxito:', response.data);
+    } catch (error) {
+      console.error('Error al ingresar la tarjeta:', error);
+    }
+  };
+
+  const handleSubmitModificar = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend
+    const tarjetaData = {
+      numeroDeTarjeta: numeroTarjeta,      // Ajustado a "numeroDeTarjeta"
+      tipoDeTarjeta: tipoTarjeta,          // Ajustado a "tipoDeTarjeta"
+      fechaDeExpiracion: fechaExp,         // Ajustado a "fechaDeExpiracion"
+      CCV: codigoSeg,                      // Ajustado a "CCV"
+      saldo: parseFloat(saldoDisponible),  // Ajustado a "saldo" (debe ser numérico)
+      numeroDeCuenta: cuenta.usuario       // El número de cuenta se toma de `cuenta.usuario`
+    };
+  
+    try {
+      // Send data to backend using Axios (endpoint para modificar tarjeta)
+      const response = await axios.put(`http://localhost:7190/MenuGestion/ModificarTarjeta/${numeroTarjeta}`, tarjetaData);
+      console.log('Tarjeta modificada con éxito:', response.data);
+    } catch (error) {
+      console.error('Error al modificar la tarjeta:', error);
+    }
+  };
+
+  const handleSubmitEliminar = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend (solo número de tarjeta)
+    const tarjetaData = {
+      numeroDeTarjeta: numeroTarjetaE, // Solo el número de la tarjeta
+    };
+  
+    try {
+      // Send data to backend using Axios (endpoint para eliminar tarjeta)
+      const response = await axios.delete(`http://localhost:7190/MenuGestion/EliminarTarjeta/${numeroTarjeta}`, { data: tarjetaData });
+      console.log('Tarjeta eliminada con éxito:', response.data);
+    } catch (error) {
+      console.error('Error al eliminar la tarjeta:', error);
+    }
+  };
+  
 
   return (
     <div className="admin">
@@ -25,8 +94,8 @@ function AdminPG() {
       <br />
 
       <div className="datos-en-linea">
-      <p><strong>Usuario:</strong> {cuenta.Usuario}</p>
-      <p><strong>Número de Cuenta:</strong> {cuenta.NumeroDeCuenta}</p>
+      <p><strong>Usuario:</strong> {cuenta.usuario}</p>
+      <p><strong>Número de Cuenta:</strong> {cuenta.numeroDeCuenta}</p>
       </div>
 
       <br />
@@ -254,52 +323,83 @@ function AdminPG() {
       <h3>Ingreso y modificación de tarjetas</h3>
       <br />
       <form>
-        <label> Número de tarjeta: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
-      <br />
-        <form>
-        <label> Tipo de tarjeta: </label>
-            <select name="tipo_tarjeta" className="form-control">
-            <option value="">Seleccione...</option>
-            <option value="Débito">Débito</option>
-            <option value="Crédito">Crédito</option>
-        </select>
+            <label> Número de tarjeta: </label>
+            <input 
+              type="number" 
+              name="numeroTarjeta" 
+              className="form-control" 
+              value={numeroTarjeta} 
+              onChange={(e) => setNumeroTarjeta(e.target.value)} 
+            />
+            <br />
+            <label> Tipo de tarjeta: </label>
+            <select 
+              name="tipoTarjeta" 
+              className="form-control" 
+              value={tipoTarjeta} 
+              onChange={(e) => setTipoTarjeta(e.target.value)}
+            >
+              <option value="">Seleccione...</option>
+              <option value="Débito">Débito</option>
+              <option value="Crédito">Crédito</option>
+            </select>
+            <br />
+            <div className="col-md-4">
+              <label htmlFor="fechaExp" className="form-label">Fecha de expiración:</label>
+              <input 
+                type="date" 
+                id="fechaExp" 
+                className="form-control" 
+                value={fechaExp} 
+                onChange={(e) => setFechaExp(e.target.value)} 
+              />
+            </div>
+            <br />
+            <label> Código de seguridad: </label>
+            <input 
+              type="number" 
+              min="0" 
+              max="999" 
+              name="codigoSeg" 
+              className="form-control" 
+              value={codigoSeg} 
+              onChange={(e) => setCodigoSeg(e.target.value)} 
+            />
+            <br />
+            <label> Saldo disponible/monto de crédito disponible: </label>
+            <input 
+              type="number" 
+              name="saldoDisponible" 
+              className="form-control" 
+              value={saldoDisponible} 
+              onChange={(e) => setSaldoDisponible(e.target.value)} 
+            />
+            <br />
+            <div className="col-md-4 d-flex align-items-end">
+            <button type="submit" className="btn btn-primary" onClick={handleSubmitAgregar}>Ingresar</button>
+            </div>
+            <br />
+            <div className="col-md-4 d-flex align-items-end">
+            <button type="submit" className="btn btn-warning" onClick={handleSubmitModificar}>Modificar</button>
+            </div>
+            <br />
         </form>
-        <br />
-        <div className="col-md-4">
-          <label htmlFor="fechaExp" className="form-label">Fecha de expiración:</label>
-          <input type="date" id="fechaExp" className="form-control" />
-        </div>
-        <br />
-        <form>
-        <label> Código de seguridad: </label>
-        <input type="number" min="0" max="999" name="codigo_seg" className="form-control" />
-        </form>
-    <br />
-        <form>
-        <label> Saldo disponible/monto de crédito disponible: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
-      <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Ingresar</button>
-        </div>
-        <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Modificar</button>
-        </div>
-        <br />
 
         <h3>Eliminación de tarjetas</h3>
         <br />
         <form>
         <label> Número de tarjeta: </label>
-        <input type="number" name="nombre" className="form-control" />
+        <input 
+        type="number" 
+        name="numeroTarjeta" 
+        className="form-control" 
+        value={numeroTarjeta} 
+        onChange={(e) => setNumeroTarjetaE(e.target.value)} 
+      />
       </form>
       <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Eliminar</button>
+          <button type="submit" className="btn btn-danger" onClick={handleSubmitEliminar}>Eliminar</button>
         </div>
       <br />
       <hr />
