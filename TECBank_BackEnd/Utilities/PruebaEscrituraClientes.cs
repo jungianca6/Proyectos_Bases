@@ -1,31 +1,26 @@
-﻿using TECBank_BackEnd.Utilities;
-using TECBank_BackEnd.Models;
+﻿using TECBank_BackEnd.Models;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
     public class PruebaEscrituraClientes
     {
-        public void Ejecutar(ClienteModel cliente )
+        public void Ejecutar(ClienteModel cliente)
         {
-            Jason holas = new Jason();
-            var clientes = holas.LeerClientes();
+            Jason json = new Jason();
+            var clientes = json.LeerClientes();
+            clientes.Add(cliente);
+            json.GuardarClientes(clientes);
+            Console.WriteLine($"✅ Cliente {cliente.Nombre} agregado correctamente.");
+        }
 
-            string cedulaNueva = cliente.Cedula;
-
-            if (!clientes.Any(c => c.Cedula == cedulaNueva))
-            {
-                var nuevoCliente = cliente;
-
-
-                clientes.Add(nuevoCliente);
-                holas.GuardarClientes(clientes);
-
-                Console.WriteLine("✅ Cliente agregado y guardado en el archivo JSON.");
-            }
-            else
-            {
-                Console.WriteLine("⚠️ Ya existe un cliente con esta cédula en el archivo JSON.");
-            }
+        public void GuardarCuenta(CuentaModel cuenta)
+        {
+            Jason json = new Jason();
+            var cuentas = json.LeerCuentas();
+            cuentas.Add(cuenta);
+            json.GuardarCuentas(cuentas);
+            Console.WriteLine($"✅ Cuenta {cuenta.Nombre} agregada correctamente.");
         }
     }
 }

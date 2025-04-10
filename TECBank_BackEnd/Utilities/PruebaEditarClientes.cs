@@ -14,7 +14,6 @@ namespace TECBank_BackEnd.Pruebas
 
             if (clienteExistente != null)
             {
-                // Solo modificar si se proporciona un valor distinto
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
                     clienteExistente.Nombre = nuevosDatos.Nombre;
 
@@ -49,6 +48,37 @@ namespace TECBank_BackEnd.Pruebas
             else
             {
                 Console.WriteLine($"⚠️ No se encontró un cliente con cédula {cedula}.");
+            }
+        }
+
+        public void EditarCuenta(string numeroCuenta, CuentaModel nuevosDatos)
+        {
+            Jason holas = new Jason();
+            var cuentas = holas.LeerCuentas();
+
+            var cuentaExistente = cuentas.FirstOrDefault(c => c.NúmeroDeCuenta == numeroCuenta);
+
+            if (cuentaExistente != null)
+            {
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Descripción))
+                    cuentaExistente.Descripción = nuevosDatos.Descripción;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Moneda))
+                    cuentaExistente.Moneda = nuevosDatos.Moneda;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.TipoDeCuenta))
+                    cuentaExistente.TipoDeCuenta = nuevosDatos.TipoDeCuenta;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
+                    cuentaExistente.Nombre = nuevosDatos.Nombre;
+
+                holas.GuardarCuentas(cuentas);
+
+                Console.WriteLine($"✅ Cuenta {numeroCuenta} actualizada parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró una cuenta con número {numeroCuenta}.");
             }
         }
     }

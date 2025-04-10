@@ -160,7 +160,59 @@ PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClien
 pruebaEliminacionClientes.EliminarPorCedula("12332");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-pruebaLecturaClientes.Ejecutar();
 
+pruebaLecturaClientes.Ejecutar();
+var cuentaA = new CuentaModel
+{
+    NúmeroDeCuenta = "C123",
+    Nombre = "Cuenta Corriente",
+    Descripción = "Cuenta para pagos rápidos",
+    Moneda = "CRC",
+    TipoDeCuenta = "Corriente"
+};
+
+// 🟩 Escritura de cuenta
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE CUENTA ===========");
+pruebaEscrituraClientes.GuardarCuenta(cuentaA);
+
+// 🟩 Lectura de cuentas
+Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
+var cuentasA = pruebaLecturaClientes.LeerCuentas();
+
+foreach (var cuenta in cuentasA)
+{
+    Console.WriteLine($"Número de Cuenta: {cuenta.NúmeroDeCuenta}");
+    Console.WriteLine($"Nombre: {cuenta.Nombre}");
+    Console.WriteLine($"Descripción: {cuenta.Descripción}");
+    Console.WriteLine($"Moneda: {cuenta.Moneda}");
+    Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// 🟩 Edición de cuenta
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CUENTA ===========");
+
+var cuentaEditada = new CuentaModel
+{
+    Descripción = "Cuenta editada para pagos internacionales"
+};
+
+pruebaEditarClientes.EditarCuenta("C123", cuentaEditada);
+
+// 🟩 Eliminación de cuenta
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE CUENTA ===========");
+pruebaEliminacionClientes.EliminarCuenta("C1223");
+Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
+var cuentasB = pruebaLecturaClientes.LeerCuentas();
+
+foreach (var cuenta in cuentasB)
+{
+    Console.WriteLine($"Número de Cuenta: {cuenta.NúmeroDeCuenta}");
+    Console.WriteLine($"Nombre: {cuenta.Nombre}");
+    Console.WriteLine($"Descripción: {cuenta.Descripción}");
+    Console.WriteLine($"Moneda: {cuenta.Moneda}");
+    Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
 
 app.Run();

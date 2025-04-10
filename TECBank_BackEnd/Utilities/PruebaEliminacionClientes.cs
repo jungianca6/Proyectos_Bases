@@ -1,5 +1,4 @@
-﻿using TECBank_BackEnd.Models;
-using TECBank_BackEnd.Utilities;
+﻿using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
@@ -7,23 +6,26 @@ namespace TECBank_BackEnd.Pruebas
     {
         public void EliminarPorCedula(string cedula)
         {
-            Jason holas = new Jason();
-            var clientes = holas.LeerClientes();
+            Jason json = new Jason();
+            var clientes = json.LeerClientes();
+            var clienteEliminado = clientes.RemoveAll(c => c.Cedula == cedula);
+            json.GuardarClientes(clientes);
 
-            var clienteAEliminar = clientes.FirstOrDefault(c => c.Cedula == cedula);
-
-            if (clienteAEliminar != null)
-            {
-                clientes.Remove(clienteAEliminar);
-                holas.GuardarClientes(clientes);
-                Console.WriteLine($"🗑️ Cliente con cédula {cedula} eliminado correctamente.");
-            }
-            else
-            {
-                Console.WriteLine($"⚠️ No se encontró un cliente con cédula {cedula}.");
-            }
+            Console.WriteLine(clienteEliminado > 0
+                ? $"🗑️ Cliente con cédula {cedula} eliminado correctamente."
+                : $"⚠️ No se encontró cliente con cédula {cedula}.");
         }
 
-       
+        public void EliminarCuenta(string numeroCuenta)
+        {
+            Jason json = new Jason();
+            var cuentas = json.LeerCuentas();
+            var cuentaEliminada = cuentas.RemoveAll(c => c.NúmeroDeCuenta == numeroCuenta);
+            json.GuardarCuentas(cuentas);
+
+            Console.WriteLine(cuentaEliminada > 0
+                ? $"🗑️ Cuenta {numeroCuenta} eliminada correctamente."
+                : $"⚠️ No se encontró cuenta con número {numeroCuenta}.");
+        }
     }
 }
