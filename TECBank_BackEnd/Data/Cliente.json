@@ -10,6 +10,6 @@
     "TipoDeCliente": "Pr2mium",
     "Usuario": "sapo",
     "Contrasena": "32",
-    "AdminRol": false
+    "AdminRol": true
   }
 ]
