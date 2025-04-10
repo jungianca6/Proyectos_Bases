@@ -2,15 +2,15 @@ package com.example.tecbank
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import org.json.JSONArray
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
-import java.io.*
-import java.io.InputStream
-import java.io.InputStreamReader
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
 
@@ -32,52 +32,87 @@ class MainActivity : ComponentActivity() {
             val usuario = usuarioEditText.text.toString()
             val contrasena = contrasenaEditText.text.toString()
 
-            // Verificar si el usuario y la contraseña son correctos
-            if (verificarUsuario(usuario, contrasena)) {
-                // Si es válido, mostrar un mensaje de éxito y navegar a la pantalla de cuentas
-                Toast.makeText(this, "Ingreso exitoso", Toast.LENGTH_SHORT).show()
-
-                // Intent para ir a la nueva actividad
-                val intent = Intent(this, CuentasActivity::class.java)
-                startActivity(intent)
-            } else {
-                // Si no es válido, mostrar un mensaje de error
-                Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-            }
+            obtenerDatosUsuarios(usuario, contrasena)
         }
-
     }
 
-    // Función para verificar si el usuario y contraseña existen en el archivo JSON
-    private fun verificarUsuario(usuario: String, contrasena: String): Boolean {
-        try {
-            val archivo = File(filesDir, "usuarios.json")
-            val jsonString = if (archivo.exists()) {
-                archivo.readText()
-            } else {
-                assets.open("usuarios.json").bufferedReader().use { it.readText() }
-            }
+    private fun obtenerDatosUsuarios(usuario: String, contrasena: String) {
+        val client = OkHttpClient()
 
-            // Convertir el JSON en un array
-            val jsonArray = JSONArray(jsonString)
-
-            // Iterar sobre los usuarios y verificar si coinciden
-            for (i in 0 until jsonArray.length()) {
-                val jsonObject: JSONObject = jsonArray.getJSONObject(i)
-                val usuarioJson = jsonObject.getString("usuario")
-                val contrasenaJson = jsonObject.getString("contrasena")
-
-                // Si el usuario y la contraseña coinciden, retornamos true
-                if (usuario == usuarioJson && contrasena == contrasenaJson) {
-                    return true
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace() // Imprimir el error en el Logcat
-            Toast.makeText(this, "Error al leer el archivo JSON", Toast.LENGTH_SHORT).show()
+        // Crear JSON de solicitud
+        val json = JSONObject().apply {
+            put("usuario", usuario)
+            put("contrasena", contrasena)
         }
 
-        // Si no encontramos una coincidencia, retornamos false
-        return false
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            json.toString()
+        )
+
+        val request = Request.Builder()
+            .url("https://fb20-201-202-14-53.ngrok-free.app/MenuInicio/Login")
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("MainActivity", "Fallo en la solicitud: ${e.message}")
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error de red: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (!response.isSuccessful) {
+                        Log.e("MainActivity", "Error del servidor: ${response.code}")
+                        runOnUiThread {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Error del servidor: ${response.code}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    } else {
+                        val responseBody = response.body?.string()
+                        Log.d("MainActivity", "Respuesta exitosa: $responseBody")
+
+                        try {
+                            val jsonResponse = JSONObject(responseBody)
+                            val success = jsonResponse.getBoolean("success")
+
+                            runOnUiThread {
+                                if (success) {
+
+                                    val intent =
+                                        Intent(this@MainActivity, CuentasActivity::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    Toast.makeText(
+                                        this@MainActivity,
+                                        "Usuario o contraseña incorrectos",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                        } catch (e: Exception) {
+                            Log.e("MainActivity", "Error al parsear la respuesta: ${e.message}")
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Respuesta inválida del servidor",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 }

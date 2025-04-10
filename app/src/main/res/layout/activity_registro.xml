@@ -37,7 +37,77 @@
 
             <!-- Campo de usuario -->
             <EditText
-                android:id="@+id/nuevo_usuario"
+                android:id="@+id/cedula"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Cédula"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/direccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Dirección"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/telefono"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Teléfono"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/ingresoMensual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Ingreso Mensual"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/apellido1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Primer apellido"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/apellido2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="Segundo apellido"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
@@ -46,19 +116,16 @@
                 android:inputType="textPersonName"
                 android:padding="10dp" />
 
-            <!-- Campo de contraseña -->
             <EditText
-                android:id="@+id/nueva_contrasena"
-                style="@android:style/Widget.AutoCompleteTextView"
+                android:id="@+id/contrasena"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="12dp"
                 android:background="@drawable/edittext_redondeado"
                 android:hint="Contraseña"
-                android:inputType="textPassword"
+                android:inputType="textPersonName"
                 android:padding="10dp" />
 
-            <!-- Botón de ingresar -->
             <Button
                 android:id="@+id/registrar_button"
                 android:layout_width="wrap_content"
