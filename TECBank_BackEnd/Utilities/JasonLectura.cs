@@ -3,7 +3,7 @@ using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
-    public class PruebaLecturaClientes
+    public class JasonLectura
     {
         public List<ClienteModel> Ejecutar(string filtro = "", string valor = "")
         {

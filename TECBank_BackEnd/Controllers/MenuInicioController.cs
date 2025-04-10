@@ -11,7 +11,7 @@ namespace TECBank_BackEnd.Controllers
     public class MenuInicioController : ControllerBase
     {
 
-        public PruebaLecturaClientes pruebaLectura;
+        public JasonLectura pruebaLectura;
 
         // POST: MenuInicio/Registro
         [HttpPost("Registro")]
@@ -20,7 +20,7 @@ namespace TECBank_BackEnd.Controllers
             try
             {
                 // Lógica para procesar el pago
-                PruebaEscrituraClientes escrituraClientes = new PruebaEscrituraClientes();
+                JasonEscritura escrituraClientes = new JasonEscritura();
 
                 escrituraClientes.Ejecutar(data);
 
@@ -41,7 +41,7 @@ namespace TECBank_BackEnd.Controllers
         [HttpPost("Login")]
         public ActionResult Deposito([FromBody] LoginDataInputModel data)
         {
-            PruebaLecturaClientes lector = new PruebaLecturaClientes();
+            JasonLectura lector = new JasonLectura();
             ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);
 
             if (cliente != null)

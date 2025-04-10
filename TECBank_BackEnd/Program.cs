@@ -55,11 +55,11 @@ app.MapControllers(); // Mapea los controladores
 
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
-PruebaEscrituraClientes pruebaEscrituraClientes = new PruebaEscrituraClientes();
+JasonEscritura pruebaEscrituraClientes = new JasonEscritura();
 pruebaEscrituraClientes.Ejecutar(ClienteA);
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
+JasonLectura pruebaLecturaClientes = new JasonLectura();
 
 pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
 
@@ -140,7 +140,7 @@ else
 }
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
-PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
+JasonEditare pruebaEditarClientes = new JasonEditare();
 
 var cambiosParciales = new ClienteModel
 {
@@ -156,7 +156,7 @@ Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
 
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
-PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
+JasonEliminar pruebaEliminacionClientes = new JasonEliminar();
 pruebaEliminacionClientes.EliminarPorCedula("12332");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");

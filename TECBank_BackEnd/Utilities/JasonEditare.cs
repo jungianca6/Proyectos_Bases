@@ -3,7 +3,7 @@ using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
-    public class PruebaEditarClientes
+    public class JasonEditare
     {
         public void EditarClienteParcial(string cedula, ClienteModel nuevosDatos)
         {

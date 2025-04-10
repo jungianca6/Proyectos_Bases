@@ -2,7 +2,7 @@
 
 namespace TECBank_BackEnd.Pruebas
 {
-    public class PruebaEliminacionClientes
+    public class JasonEliminar
     {
         public void EliminarPorCedula(string cedula)
         {
