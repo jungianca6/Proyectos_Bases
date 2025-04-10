@@ -13,14 +13,12 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "Nombre" => clientes.Where(c => c.Nombre == valor).ToList(),
+                "Cedula" => clientes.Where(c => c.Cedula == valor).ToList(),
                 "Apellido1" => clientes.Where(c => c.Apellido1 == valor).ToList(),
                 "Apellido2" => clientes.Where(c => c.Apellido2 == valor).ToList(),
-                "Cedula" => clientes.Where(c => c.Cedula == valor).ToList(),
                 "Direccion" => clientes.Where(c => c.Direccion == valor).ToList(),
                 "Telefono" => clientes.Where(c => c.Telefono == valor).ToList(),
-                "IngresoMensual" => double.TryParse(valor, out var ingreso)
-                                    ? clientes.Where(c => c.IngresoMensual == ingreso).ToList()
-                                    : new List<ClienteModel>(),
+                "IngresoMensual" => clientes.Where(c => c.IngresoMensual.ToString() == valor).ToList(),
                 "TipoDeCliente" => clientes.Where(c => c.TipoDeCliente == valor).ToList(),
                 "Usuario" => clientes.Where(c => c.Usuario == valor).ToList(),
                 "Contrasena" => clientes.Where(c => c.Contrasena == valor).ToList(),
@@ -35,13 +33,31 @@ namespace TECBank_BackEnd.Pruebas
 
             return filtro switch
             {
+                "Nombre" => cuentas.Where(c => c.Nombre == valor).ToList(),
                 "NumeroDeCuenta" => cuentas.Where(c => c.NumeroDeCuenta == valor).ToList(),
                 "Descripcion" => cuentas.Where(c => c.Descripcion == valor).ToList(),
                 "Usuario" => cuentas.Where(c => c.Usuario == valor).ToList(),
                 "Moneda" => cuentas.Where(c => c.Moneda == valor).ToList(),
                 "TipoDeCuenta" => cuentas.Where(c => c.TipoDeCuenta == valor).ToList(),
-                "Nombre" => cuentas.Where(c => c.Nombre == valor).ToList(),
                 _ => cuentas
+            };
+        }
+
+        public List<TarjetaModel> LeerTarjetas(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var tarjetas = json.LeerTarjetas();
+
+            return filtro switch
+            {
+                "Numero" => tarjetas.Where(t => t.Numero == valor).ToList(),
+                "NumeroDeCuenta" => tarjetas.Where(t => t.NumeroDeCuenta == valor).ToList(),
+                "TipoDeTarjeta" => tarjetas.Where(t => t.TipoDeTarjeta == valor).ToList(),
+                "CCV" => tarjetas.Where(t => t.CCV == valor).ToList(),
+                "ID_Cliente" => tarjetas.Where(t => t.ID_Cliente == valor).ToList(),
+                "SaldoDisponible" => tarjetas.Where(t => t.SaldoDisponible.ToString() == valor).ToList(),
+                "FechaDeExpiracion" => tarjetas.Where(t => t.FechaDeExpiracion.ToString("yyyy-MM-dd") == valor).ToList(),
+                _ => tarjetas
             };
         }
 
