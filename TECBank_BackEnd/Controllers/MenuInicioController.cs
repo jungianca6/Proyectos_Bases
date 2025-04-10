@@ -17,10 +17,24 @@ namespace TECBank_BackEnd.Controllers
             try
             {
                 // Crear una instancia del escritor de clientes de prueba
-                JasonEscritura escrituraClientes = new JasonEscritura();
+                JasonEscritura escrituraJson = new JasonEscritura();
 
                 // Ejecutar el método para registrar los datos del cliente
-                escrituraClientes.Ejecutar(data);
+                escrituraJson.Ejecutar(data);
+
+                CuentaModel nueva_cuenta = new CuentaModel();
+
+                Random random = new Random();
+                int id = random.Next(10_000_000, 100_000_000); // Entre 10,000,000 y 99,999,999
+
+                nueva_cuenta.Usuario = data.Usuario;
+                nueva_cuenta.Nombre = data.Nombre;
+                nueva_cuenta.TipoDeCuenta = "";
+                nueva_cuenta.Descripcion = "";
+                nueva_cuenta.Moneda = "Colones";
+                nueva_cuenta.NumeroDeCuenta = id.ToString();
+
+                escrituraJson.GuardarCuenta(nueva_cuenta);
 
                 // Crear una respuesta indicando éxito
                 var response = new { success = true };
@@ -59,8 +73,9 @@ namespace TECBank_BackEnd.Controllers
                 }
                 else
                 {
+                    CuentaModel cuenta = lector.BuscarCuentaPorUsuario(data.usuario);
                     // Si la contraseña es correcta, devolver el cliente como usuario actual
-                    var response = new { success = true, usuario_actual = cliente };
+                    var response = new { success = true, usuario_actual = cliente, cuenta_actual = cuenta };
                     return Ok(response);
                 }
             }
