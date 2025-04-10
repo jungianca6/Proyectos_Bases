@@ -5,7 +5,6 @@ import axios from "axios";
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
   
-  const [accion, setAccion] = useState('');
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [numeroTarjetaE, setNumeroTarjetaE] = useState('');
   const [tipoTarjeta, setTipoTarjeta] = useState('');
@@ -25,8 +24,10 @@ if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
 
-const handleSubmitTarjeta = async (e) => {
+const handleSubmitTarjeta = async (e, accionp) => {
   e.preventDefault();
+
+  console.log('Acción seleccionada:', accionp);
 
   const tarjetaData = {
     numeroDeTarjeta: numeroTarjeta,
@@ -37,14 +38,16 @@ const handleSubmitTarjeta = async (e) => {
     numeroDeCuenta: cuenta.usuario
   };
 
+  console.log('Datos a enviar:', tarjetaData);
+
   try {
-    if (accion === 'ingresar') {
+    if (accionp === 'ingresar') {
       // Enviar para agregar la tarjeta
-      const response = await axios.post('http://localhost:7190/MenuGestion/AgregarTarjeta', tarjetaData);
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/AgregarTarjeta', tarjetaData);
       console.log('Tarjeta ingresada con éxito:', response.data);
-    } else if (accion === 'modificar') {
+    } else if (accionp === 'modificar') {
       // Enviar para modificar la tarjeta
-      const response = await axios.post('http://localhost:7190/MenuGestion/ModificarTarjeta', tarjetaData);
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/ModificarTarjeta', tarjetaData);
       console.log('Tarjeta modificada con éxito:', response.data);
     }
   } catch (error) {
@@ -62,7 +65,7 @@ const handleSubmitTarjeta = async (e) => {
   
     try {
       // Send data to backend using Axios (endpoint para eliminar tarjeta)
-      const response = await axios.delete(`http://localhost:7190/MenuGestion/EliminarTarjeta/${numeroTarjeta}`, { data: tarjetaData });
+      const response = await axios.delete(`https://localhost:7190/cuenta/MenuGestion/EliminarTarjeta/${numeroTarjeta}`, { data: tarjetaData });
       console.log('Tarjeta eliminada con éxito:', response.data);
     } catch (error) {
       console.error('Error al eliminar la tarjeta:', error);
@@ -324,8 +327,8 @@ const handleSubmitTarjeta = async (e) => {
             onChange={(e) => setTipoTarjeta(e.target.value)}
           >
             <option value="">Seleccione...</option>
-            <option value="Débito">Débito</option>
-            <option value="Crédito">Crédito</option>
+            <option value="Debito">Debito</option>
+            <option value="Credito">Credito</option>
           </select>
           <br />
           <div className="col-md-4">
@@ -360,11 +363,20 @@ const handleSubmitTarjeta = async (e) => {
           />
           <br />
           <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-primary" onClick={() => setAccion('ingresar')}>Ingresar</button>
+          <button 
+          type="button" 
+          className="btn btn-primary" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitTarjeta(e, 'ingresar');  // Pasa el evento correctamente
+          }}
+        >
+          Ingresar
+          </button>
           </div>
           <br />
           <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-warning" onClick={() => setAccion('modificar')}>Modificar</button>
+            <button type="submit" className="btn btn-warning" onClick={() => {}}>Modificar</button>
           </div>
           <br />
         </form>
@@ -374,7 +386,7 @@ const handleSubmitTarjeta = async (e) => {
         <form onSubmit={handleSubmitEliminarTarjeta}>
         <label> Número de tarjeta: </label>
         <input 
-        type="number" 
+        type="button" 
         name="numeroTarjeta" 
         className="form-control" 
         value={numeroTarjeta} 

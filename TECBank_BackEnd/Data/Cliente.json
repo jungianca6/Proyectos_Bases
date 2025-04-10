@@ -23,7 +23,7 @@
     "TipoDeCliente": "Fisico",
     "Usuario": "SpaceBa",
     "Contrasena": "1234",
-    "AdminRol": false
+    "AdminRol": true
   },
   {
     "Cedula": "11111",
