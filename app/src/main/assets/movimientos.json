@@ -1,0 +1,37 @@
+[
+  {
+    "id": "M001",
+    "numero_cuenta": "12345",
+    "fecha": "2025-04-01",
+    "moneda": "colones",
+    "monto": 1500.0
+  },
+  {
+    "id": "M002",
+    "numero_cuenta": "12345",
+    "fecha": "2025-04-03",
+    "moneda": "colones",
+    "monto": -500.0
+  },
+  {
+    "id": "M004",
+    "numero_cuenta": "12345",
+    "fecha": "2025-04-03",
+    "moneda": "colones",
+    "monto": -1000.0
+  },
+  {
+    "id": "M005",
+    "numero_cuenta": "12345",
+    "fecha": "2025-04-03",
+    "moneda": "colones",
+    "monto": -2000.0
+  },
+  {
+    "id": "M003",
+    "numero_cuenta": "67890",
+    "fecha": "2025-04-05",
+    "moneda": "colones",
+    "monto": 300.0
+  }
+]

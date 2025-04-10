@@ -26,6 +26,7 @@
 
         <activity android:name=".CuentasActivity" />
         <activity android:name=".RegistroActivity" />
+        <activity android:name=".TransferenciaActivity" />
     </application>
 
 </manifest>

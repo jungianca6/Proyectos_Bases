@@ -18,7 +18,7 @@ class RegistroActivity : ComponentActivity() {
 
         val nuevoUsuario: EditText = findViewById(R.id.nuevo_usuario)
         val nuevaContrasena: EditText = findViewById(R.id.nueva_contrasena)
-        val registrarButton: Button = findViewById(R.id.btn_registrar)
+        val registrarButton: Button = findViewById(R.id.registrar_button)
 
         registrarButton.setOnClickListener {
             val usuario = nuevoUsuario.text.toString()

@@ -3,17 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo1_desenfoque"
     android:orientation="vertical"
-    android:padding="0dp"
-    android:background="#ffffff"> <!-- Fondo blanco para to el layout -->
+    android:padding="0dp">
 
     <!-- Barra azul en la parte superior -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="120dp"
+        android:background="#7044ACF8"
         android:gravity="center_vertical"
-        android:background="#2196F3"
+        android:orientation="horizontal"
         android:padding="16dp">
 
         <!-- Espacio vacío para empujar el botón a la derecha -->
@@ -27,9 +27,9 @@
             android:id="@+id/btnSalir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
             android:text="Salir"
-            android:textColor="#FFFFFF"
-            android:background="?android:attr/selectableItemBackground" />
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <TextView
@@ -37,32 +37,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Selecciona una cuenta"
-        android:textColor="#000000"
+        android:textColor="#FAFAFA"
         android:textSize="18sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="171dp">
+        android:layout_height="180dp">
 
-        <!-- LinearLayout dentro del ScrollView para las cuentas -->
         <LinearLayout
+            android:id="@+id/layout_cuentas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp">
-
-            <!-- Las cuentas se agregarán aquí dinámicamente -->
-            <LinearLayout
-                android:id="@+id/layout_cuentas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:orientation="vertical">
-            </LinearLayout>
-        </LinearLayout>
+            android:orientation="vertical" />
     </ScrollView>
 
     <TextView
@@ -70,19 +58,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Movimientos"
-        android:textColor="#000000"
-        android:textSize= "18sp"/>
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="516dp">
+        android:layout_height="384dp">
 
         <LinearLayout
+            android:id="@+id/layout_movimientos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp" />
 
-        </LinearLayout>
     </ScrollView>
+
+    <!-- Barra azul en la parte superior -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="339dp"
+        android:background="#7044ACF8"
+        android:gravity="top|center_vertical"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/tarjetas_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Tarjetas"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/transferencias_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="Transferencias"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/prestamos_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Préstamos"
+            android:textSize="18dp" />
+
+        <!-- LinearLayout de color azul que envuelve los botones -->
+    </LinearLayout>
 
 </LinearLayout>
