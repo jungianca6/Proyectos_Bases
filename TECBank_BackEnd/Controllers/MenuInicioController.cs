@@ -10,60 +10,69 @@ namespace TECBank_BackEnd.Controllers
     [Route("/[controller]")]
     public class MenuInicioController : ControllerBase
     {
-
+        // Instancia pública para pruebas de lectura de clientes (no se usa directamente en este controlador)
         public PruebaLecturaClientes pruebaLectura;
 
         // POST: MenuInicio/Registro
         [HttpPost("Registro")]
-        public ActionResult Deposito([FromBody] ClienteModel data)
+        public ActionResult Registro([FromBody] ClienteModel data)
         {
             try
             {
-                // Lógica para procesar el pago
+                // Crear una instancia del escritor de clientes de prueba
                 PruebaEscrituraClientes escrituraClientes = new PruebaEscrituraClientes();
 
+                // Ejecutar el método para registrar los datos del cliente
                 escrituraClientes.Ejecutar(data);
 
-                // Supongamos que la operación fue exitosa
-                var response = new { success = true }; // Respuesta de éxito
-                return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+                // Crear una respuesta indicando éxito
+                var response = new { success = true };
+
+                // Retornar la respuesta con código 200 (OK)
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, enviar una respuesta con success: false
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
                 var response = new { success = false, message = ex.Message };
-                return BadRequest(response);  // Puedes usar BadRequest para manejar errores
-            }
 
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest(response);
+            }
         }
 
         // POST: MenuInicio/Login
         [HttpPost("Login")]
-        public ActionResult Deposito([FromBody] LoginDataInputModel data)
+        public ActionResult Login([FromBody] LoginDataInputModel data)
         {
+            // Crear una instancia del lector de clientes
             PruebaLecturaClientes lector = new PruebaLecturaClientes();
+
+            // Buscar el cliente por nombre de usuario
             ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);
 
+            // Verificar si se encontró un cliente con ese usuario
             if (cliente != null)
             {
+                // Si la contraseña no coincide, devolver mensaje de error
                 if (cliente.Contrasena != data.contrasena)
                 {
-                    var response = new { success = false, message = "Contraseña incorrecta" }; // Respuesta de éxito
-                    return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+                    var response = new { success = false, message = "Contraseña incorrecta" };
+                    return Ok(response);
                 }
-                else {
-                    var response = new { success = true, usuario_actual = cliente }; // Respuesta de éxito
-                    return Ok(response);  // Enviar respuesta al frontend con la propiedad success
+                else
+                {
+                    // Si la contraseña es correcta, devolver el cliente como usuario actual
+                    var response = new { success = true, usuario_actual = cliente };
+                    return Ok(response);
                 }
-
             }
             else
             {
+                // Si el usuario no existe, devolver mensaje de error
                 var response = new { success = false, message = "El Usuario no existe" };
-                return Ok(response);  // Puedes usar BadRequest para manejar errores
+                return Ok(response);
             }
-
         }
-
     }
 }
