@@ -13,7 +13,17 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "Nombre" => clientes.Where(c => c.Nombre == valor).ToList(),
+                "Apellido1" => clientes.Where(c => c.Apellido1 == valor).ToList(),
+                "Apellido2" => clientes.Where(c => c.Apellido2 == valor).ToList(),
                 "Cedula" => clientes.Where(c => c.Cedula == valor).ToList(),
+                "Direccion" => clientes.Where(c => c.Direccion == valor).ToList(),
+                "Telefono" => clientes.Where(c => c.Telefono == valor).ToList(),
+                "IngresoMensual" => double.TryParse(valor, out var ingreso)
+                                    ? clientes.Where(c => c.IngresoMensual == ingreso).ToList()
+                                    : new List<ClienteModel>(),
+                "TipoDeCliente" => clientes.Where(c => c.TipoDeCliente == valor).ToList(),
+                "Usuario" => clientes.Where(c => c.Usuario == valor).ToList(),
+                "Contrasena" => clientes.Where(c => c.Contrasena == valor).ToList(),
                 _ => clientes
             };
         }
@@ -25,24 +35,24 @@ namespace TECBank_BackEnd.Pruebas
 
             return filtro switch
             {
+                "NumeroDeCuenta" => cuentas.Where(c => c.NumeroDeCuenta == valor).ToList(),
+                "Descripcion" => cuentas.Where(c => c.Descripcion == valor).ToList(),
+                "Usuario" => cuentas.Where(c => c.Usuario == valor).ToList(),
+                "Moneda" => cuentas.Where(c => c.Moneda == valor).ToList(),
+                "TipoDeCuenta" => cuentas.Where(c => c.TipoDeCuenta == valor).ToList(),
                 "Nombre" => cuentas.Where(c => c.Nombre == valor).ToList(),
-                "NúmeroDeCuenta" => cuentas.Where(c => c.NumeroDeCuenta == valor).ToList(),
                 _ => cuentas
             };
         }
 
-        // Método para buscar por usuario (lo que solicitaste)
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
             Jason json = new Jason();
             var clientes = json.LeerClientes();
 
-            // Buscar coincidencia exacta por usuario
-            var cliente = clientes.FirstOrDefault(c =>
+            return clientes.FirstOrDefault(c =>
                 c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
             );
-
-            return cliente;
         }
     }
 }

@@ -204,7 +204,7 @@ pruebaEditarClientes.EditarCuenta("C123", cuentaEditada);
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE CUENTA ===========");
 pruebaEliminacionClientes.EliminarCuenta("C1223");
 Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
-var cuentasB = pruebaLecturaClientes.LeerCuentas();
+var cuentasB = pruebaLecturaClientes.LeerCuentas("NumeroDeCuenta", "C123");
 
 foreach (var cuenta in cuentasB)
 {
