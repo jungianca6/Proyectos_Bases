@@ -26,7 +26,7 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "Nombre" => cuentas.Where(c => c.Nombre == valor).ToList(),
-                "NúmeroDeCuenta" => cuentas.Where(c => c.NúmeroDeCuenta == valor).ToList(),
+                "NúmeroDeCuenta" => cuentas.Where(c => c.NumeroDeCuenta == valor).ToList(),
                 _ => cuentas
             };
         }

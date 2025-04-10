@@ -28,9 +28,9 @@ namespace TECBank_BackEnd.Pruebas
             var cuentas = json.LeerCuentas();
 
             // Verificar si la cuenta ya existe por número de cuenta
-            if (cuentas.Any(c => c.NúmeroDeCuenta == cuenta.NúmeroDeCuenta))
+            if (cuentas.Any(c => c.NumeroDeCuenta == cuenta.NumeroDeCuenta))
             {
-                Console.WriteLine($"⚠️ Ya existe una cuenta con el número {cuenta.NúmeroDeCuenta}. No se puede agregar.");
+                Console.WriteLine($"⚠️ Ya existe una cuenta con el número {cuenta.NumeroDeCuenta}. No se puede agregar.");
                 return;
             }
 

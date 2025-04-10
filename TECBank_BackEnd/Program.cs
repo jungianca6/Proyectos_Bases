@@ -61,10 +61,10 @@ pruebaEscrituraClientes.Ejecutar(ClienteA);
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 JasonLectura pruebaLecturaClientes = new JasonLectura();
 
-pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
 
 if (listaPorNombre.Count > 0)
 {
@@ -164,9 +164,10 @@ Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
 var cuentaA = new CuentaModel
 {
-    NúmeroDeCuenta = "C123",
+    NumeroDeCuenta = "C123",
     Nombre = "Cuenta Corriente",
-    Descripción = "Cuenta para pagos rápidos",
+    Descripcion = "Cuenta para pagos rápidos",
+    Usuario = ClienteA.Usuario, 
     Moneda = "CRC",
     TipoDeCuenta = "Corriente"
 };
@@ -181,9 +182,9 @@ var cuentasA = pruebaLecturaClientes.LeerCuentas();
 
 foreach (var cuenta in cuentasA)
 {
-    Console.WriteLine($"Número de Cuenta: {cuenta.NúmeroDeCuenta}");
+    Console.WriteLine($"Número de Cuenta: {cuenta.NumeroDeCuenta}");
     Console.WriteLine($"Nombre: {cuenta.Nombre}");
-    Console.WriteLine($"Descripción: {cuenta.Descripción}");
+    Console.WriteLine($"Descripción: {cuenta.Descripcion}");
     Console.WriteLine($"Moneda: {cuenta.Moneda}");
     Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
     Console.WriteLine("------------------------------------------------------------");
@@ -194,7 +195,7 @@ Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CUENTA ===========");
 
 var cuentaEditada = new CuentaModel
 {
-    Descripción = "Cuenta editada para pagos internacionales"
+    Descripcion = "Cuenta editada para pagos internacionales"
 };
 
 pruebaEditarClientes.EditarCuenta("C123", cuentaEditada);
@@ -207,9 +208,9 @@ var cuentasB = pruebaLecturaClientes.LeerCuentas();
 
 foreach (var cuenta in cuentasB)
 {
-    Console.WriteLine($"Número de Cuenta: {cuenta.NúmeroDeCuenta}");
+    Console.WriteLine($"Número de Cuenta: {cuenta.NumeroDeCuenta}");
     Console.WriteLine($"Nombre: {cuenta.Nombre}");
-    Console.WriteLine($"Descripción: {cuenta.Descripción}");
+    Console.WriteLine($"Descripción: {cuenta.Descripcion}");
     Console.WriteLine($"Moneda: {cuenta.Moneda}");
     Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
     Console.WriteLine("------------------------------------------------------------");

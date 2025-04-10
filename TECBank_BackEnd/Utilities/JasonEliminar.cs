@@ -20,7 +20,7 @@ namespace TECBank_BackEnd.Pruebas
         {
             Jason json = new Jason();
             var cuentas = json.LeerCuentas();
-            var cuentaEliminada = cuentas.RemoveAll(c => c.NúmeroDeCuenta == numeroCuenta);
+            var cuentaEliminada = cuentas.RemoveAll(c => c.NumeroDeCuenta == numeroCuenta);
             json.GuardarCuentas(cuentas);
 
             Console.WriteLine(cuentaEliminada > 0

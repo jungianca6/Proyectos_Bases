@@ -56,12 +56,15 @@ namespace TECBank_BackEnd.Pruebas
             Jason holas = new Jason();
             var cuentas = holas.LeerCuentas();
 
-            var cuentaExistente = cuentas.FirstOrDefault(c => c.NúmeroDeCuenta == numeroCuenta);
+            var cuentaExistente = cuentas.FirstOrDefault(c => c.NumeroDeCuenta == numeroCuenta);
 
             if (cuentaExistente != null)
             {
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Descripción))
-                    cuentaExistente.Descripción = nuevosDatos.Descripción;
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Descripcion))
+                    cuentaExistente.Descripcion = nuevosDatos.Descripcion;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
+                    cuentaExistente.Usuario = nuevosDatos.Usuario;
 
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Moneda))
                     cuentaExistente.Moneda = nuevosDatos.Moneda;
