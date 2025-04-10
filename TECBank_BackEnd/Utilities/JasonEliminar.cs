@@ -27,5 +27,17 @@ namespace TECBank_BackEnd.Pruebas
                 ? $"🗑️ Cuenta {numeroCuenta} eliminada correctamente."
                 : $"⚠️ No se encontró cuenta con número {numeroCuenta}.");
         }
+
+        public void EliminarTarjeta(string numero)
+        {
+            Jason json = new Jason();
+            var tarjetas = json.LeerTarjetas();
+            var tarjetaEliminada = tarjetas.RemoveAll(t => t.Numero == numero);
+            json.GuardarTarjetas(tarjetas);
+
+            Console.WriteLine(tarjetaEliminada > 0
+                ? $"🗑️ Tarjeta {numero} eliminada correctamente."
+                : $"⚠️ No se encontró tarjeta con número {numero}.");
+        }
     }
 }

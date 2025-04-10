@@ -84,5 +84,40 @@ namespace TECBank_BackEnd.Pruebas
                 Console.WriteLine($"⚠️ No se encontró una cuenta con número {numeroCuenta}.");
             }
         }
+        public void EditarTarjeta(string numero, TarjetaModel nuevosDatos)
+        {
+            Jason jason = new Jason();
+            var tarjetas = jason.LeerTarjetas();
+
+            var tarjeta = tarjetas.FirstOrDefault(t => t.Numero == numero);
+
+            if (tarjeta != null)
+            {
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.NumeroDeCuenta))
+                    tarjeta.NumeroDeCuenta = nuevosDatos.NumeroDeCuenta;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.TipoDeTarjeta))
+                    tarjeta.TipoDeTarjeta = nuevosDatos.TipoDeTarjeta;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.CCV))
+                    tarjeta.CCV = nuevosDatos.CCV;
+
+                if (nuevosDatos.SaldoDisponible > 0)
+                    tarjeta.SaldoDisponible = nuevosDatos.SaldoDisponible;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.ID_Cliente))
+                    tarjeta.ID_Cliente = nuevosDatos.ID_Cliente;
+
+                if (nuevosDatos.FechaDeExpiracion > DateTime.MinValue)
+                    tarjeta.FechaDeExpiracion = nuevosDatos.FechaDeExpiracion;
+
+                jason.GuardarTarjetas(tarjetas);
+                Console.WriteLine($"✅ Tarjeta {numero} actualizada parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró la tarjeta {numero}.");
+            }
+        }
     }
 }

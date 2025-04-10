@@ -23,19 +23,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-var ClienteA = new ClienteModel
-{
-    Cedula = "1243",
-    Nombre = "jorge1",
-    Apellido1 = "e",
-    Apellido2 = "s",
-    Direccion = "S2e",
-    Telefono = "8828-8888",
-    IngresoMensual = 1210,
-    TipoDeCliente = "Pr2mium",
-    Usuario = "sapo",
-    Contrasena = "32"
-};
+
 
 var app = builder.Build();
 
@@ -53,18 +41,37 @@ app.UseHttpsRedirection();
 app.UseAuthorization(); // Aquí se autoriza el acceso
 app.MapControllers(); // Mapea los controladores
 
+
+
+
+
+
+
+var ClienteA = new ClienteModel
+{
+    Cedula = "1243",
+    Nombre = "jorge1",
+    Apellido1 = "e",
+    Apellido2 = "s",
+    Direccion = "S2e",
+    Telefono = "8828-8888",
+    IngresoMensual = 1210,
+    TipoDeCliente = "Pr2mium",
+    Usuario = "sapo",
+    Contrasena = "32"
+};
+
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
-JasonEscritura pruebaEscrituraClientes = new JasonEscritura();
-pruebaEscrituraClientes.Ejecutar(ClienteA);
+JasonEscritura Escritura = new JasonEscritura();
+Escritura.Ejecutar(ClienteA);
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-JasonLectura pruebaLecturaClientes = new JasonLectura();
+JasonLectura Lectura = new JasonLectura();
 
-pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
+var listaPorNombre = Lectura.Ejecutar("Nombre", "jorge1");
 
 if (listaPorNombre.Count > 0)
 {
@@ -90,7 +97,7 @@ else
 
 Console.WriteLine("=========== 🔍 FILTRO POR CÉDULA ===========");
 // Filtrar clientes por cédula "1233"
-var listaPorCedula = pruebaLecturaClientes.Ejecutar("Cedula", "1233");
+var listaPorCedula = Lectura.Ejecutar("Cedula", "1233");
 
 if (listaPorCedula.Count > 0)
 {
@@ -115,7 +122,7 @@ else
 }
 Console.WriteLine("===========  🔍 sin filtro ===========");
 
-var listaTodos = pruebaLecturaClientes.Ejecutar();
+var listaTodos = Lectura.Ejecutar();
 
 if (listaTodos.Count > 0)
 {
@@ -140,7 +147,7 @@ else
 }
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
-JasonEditare pruebaEditarClientes = new JasonEditare();
+JasonEditare Editare = new JasonEditare();
 
 var cambiosParciales = new ClienteModel
 {
@@ -149,19 +156,32 @@ var cambiosParciales = new ClienteModel
     // Los demás campos los dejamos vacíos
 };
 
-pruebaEditarClientes.EditarClienteParcial("1233", cambiosParciales);
+Editare.EditarClienteParcial("1233", cambiosParciales);
 
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-pruebaLecturaClientes.Ejecutar();
+Lectura.Ejecutar();
 
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
-JasonEliminar pruebaEliminacionClientes = new JasonEliminar();
-pruebaEliminacionClientes.EliminarPorCedula("12332");
+JasonEliminar Elimionacion = new JasonEliminar();
+Elimionacion.EliminarPorCedula("12332");
 
-Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
+Console.WriteLine("================================================================");
 
-pruebaLecturaClientes.Ejecutar();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var cuentaA = new CuentaModel
 {
     NumeroDeCuenta = "C123",
@@ -174,11 +194,11 @@ var cuentaA = new CuentaModel
 
 // 🟩 Escritura de cuenta
 Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE CUENTA ===========");
-pruebaEscrituraClientes.GuardarCuenta(cuentaA);
+Escritura.GuardarCuenta(cuentaA);
 
 // 🟩 Lectura de cuentas
 Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
-var cuentasA = pruebaLecturaClientes.LeerCuentas();
+var cuentasA = Lectura.LeerCuentas();
 
 foreach (var cuenta in cuentasA)
 {
@@ -198,13 +218,13 @@ var cuentaEditada = new CuentaModel
     Descripcion = "Cuenta editada para pagos internacionales"
 };
 
-pruebaEditarClientes.EditarCuenta("C123", cuentaEditada);
+Editare.EditarCuenta("C123", cuentaEditada);
 
 // 🟩 Eliminación de cuenta
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE CUENTA ===========");
-pruebaEliminacionClientes.EliminarCuenta("C1223");
+Elimionacion.EliminarCuenta("C1223");
 Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
-var cuentasB = pruebaLecturaClientes.LeerCuentas("NumeroDeCuenta", "C123");
+var cuentasB = Lectura.LeerCuentas("NumeroDeCuenta", "C123");
 
 foreach (var cuenta in cuentasB)
 {
@@ -214,6 +234,83 @@ foreach (var cuenta in cuentasB)
     Console.WriteLine($"Moneda: {cuenta.Moneda}");
     Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
     Console.WriteLine("------------------------------------------------------------");
+}
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+
+
+// 🟦 TARJETAS - EJEMPLOS
+
+var tarjetaA = new TarjetaModel
+{
+    Numero = "T001",
+    NumeroDeCuenta = "C123",
+    TipoDeTarjeta = "Débito",
+    FechaDeExpiracion = new DateTime(2027, 12, 31),
+    CCV = "123",
+    SaldoDisponible = 50000.75m,
+    ID_Cliente = ClienteA.Cedula
+};
+
+// Escritura
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE TARJETA ===========");
+Escritura.GuardarTarjeta(tarjetaA);
+
+// Lectura (todas)
+Console.WriteLine("=========== 🔍 LECTURA DE TARJETAS (TODAS) ===========");
+var tarjetasTodas = Lectura.LeerTarjetas();
+
+foreach (var tarjeta in tarjetasTodas)
+{
+    Console.WriteLine($"Número: {tarjeta.Numero}");
+    Console.WriteLine($"Cuenta Asociada: {tarjeta.NumeroDeCuenta}");
+    Console.WriteLine($"Tipo: {tarjeta.TipoDeTarjeta}");
+    Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion.ToShortDateString()}");
+    Console.WriteLine($"CCV: {tarjeta.CCV}");
+    Console.WriteLine($"Saldo Disponible: {tarjeta.SaldoDisponible}");
+    Console.WriteLine($"ID Cliente: {tarjeta.ID_Cliente}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// Lectura con filtro
+Console.WriteLine("=========== 🔍 FILTRO TARJETA POR TIPO ===========");
+var tarjetasDebito = Lectura.LeerTarjetas("TipoDeTarjeta", "Débito");
+
+foreach (var tarjeta in tarjetasDebito)
+{
+    Console.WriteLine($"➡️ Tarjeta Débito: {tarjeta.Numero} con saldo {tarjeta.SaldoDisponible}");
+}
+
+// Edición parcial
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE TARJETA ===========");
+
+var tarjetaEditada = new TarjetaModel
+{
+    SaldoDisponible = 75000,
+    TipoDeTarjeta = "Crédito"
+};
+
+Editare.EditarTarjeta("T001", tarjetaEditada);
+
+// Eliminación
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE TARJETA ===========");
+Elimionacion.EliminarTarjeta("T001");
+
+// Confirmación de eliminación
+Console.WriteLine("=========== 🔍 CONFIRMACIÓN: LECTURA DE TARJETAS (TODAS) ===========");
+var tarjetasFinal = Lectura.LeerTarjetas();
+foreach (var tarjeta in tarjetasFinal)
+{
+    Console.WriteLine($"✅ Tarjeta restante: {tarjeta.Numero}");
 }
 
 app.Run();
