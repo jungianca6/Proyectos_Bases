@@ -10,9 +10,6 @@ namespace TECBank_BackEnd.Controllers
     [Route("/[controller]")]
     public class MenuInicioController : ControllerBase
     {
-        // Instancia pública para pruebas de lectura de clientes (no se usa directamente en este controlador)
-        public PruebaLecturaClientes pruebaLectura;
-
         // POST: MenuInicio/Registro
         [HttpPost("Registro")]
         public ActionResult Registro([FromBody] ClienteModel data)
@@ -20,7 +17,7 @@ namespace TECBank_BackEnd.Controllers
             try
             {
                 // Crear una instancia del escritor de clientes de prueba
-                PruebaEscrituraClientes escrituraClientes = new PruebaEscrituraClientes();
+                JasonEscritura escrituraClientes = new JasonEscritura();
 
                 // Ejecutar el método para registrar los datos del cliente
                 escrituraClientes.Ejecutar(data);
@@ -46,7 +43,7 @@ namespace TECBank_BackEnd.Controllers
         public ActionResult Login([FromBody] LoginDataInputModel data)
         {
             // Crear una instancia del lector de clientes
-            PruebaLecturaClientes lector = new PruebaLecturaClientes();
+            JasonLectura lector = new JasonLectura();
 
             // Buscar el cliente por nombre de usuario
             ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);

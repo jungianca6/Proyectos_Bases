@@ -2,6 +2,17 @@
 {
     public class PagoDataInputModel
     {
+        public string Nombre { get; set; }
+
+        public string NumeroDeCuenta { get; set; }
+
+        public string Apellido1 { get; set; }
+        public string Apellido2 { get; set; }
+        public float Monto { get; set; }
+        public string ID { get; set; }
+        public string Moneda { get; set; }
+        public String Cuenta_Emisora { get; set; }
+        public String Numero_de_Tarjeta { get; set; }
 
     }
 }
