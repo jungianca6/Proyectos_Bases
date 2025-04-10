@@ -6,5 +6,13 @@
     "Moneda": "CRC",
     "TipoDeCuenta": "Corriente",
     "Nombre": "Cuenta Corriente"
+  },
+  {
+    "NumeroDeCuenta": "10589819",
+    "Descripcion": "",
+    "Usuario": "SpaceBa",
+    "Moneda": "Colones",
+    "TipoDeCuenta": "",
+    "Nombre": "Brayan"
   }
 ]

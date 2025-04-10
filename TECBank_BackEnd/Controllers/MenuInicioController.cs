@@ -34,7 +34,7 @@ namespace TECBank_BackEnd.Controllers
                 nueva_cuenta.Moneda = "Colones";
                 nueva_cuenta.NumeroDeCuenta = id.ToString();
 
-
+                escrituraJson.GuardarCuenta(nueva_cuenta);
 
                 // Crear una respuesta indicando éxito
                 var response = new { success = true };
@@ -73,8 +73,9 @@ namespace TECBank_BackEnd.Controllers
                 }
                 else
                 {
+                    CuentaModel cuenta = lector.BuscarCuentaPorUsuario(data.usuario);
                     // Si la contraseña es correcta, devolver el cliente como usuario actual
-                    var response = new { success = true, usuario_actual = cliente };
+                    var response = new { success = true, usuario_actual = cliente, cuenta_actual = cuenta };
                     return Ok(response);
                 }
             }

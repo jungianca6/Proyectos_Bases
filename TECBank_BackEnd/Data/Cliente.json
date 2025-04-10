@@ -11,5 +11,18 @@
     "Usuario": "sapo",
     "Contrasena": "32",
     "AdminRol": true
+  },
+  {
+    "Cedula": "119170146",
+    "Direccion": "mi casa",
+    "Telefono": "61942879",
+    "IngresoMensual": 10,
+    "Nombre": "Brayan",
+    "Apellido1": "Alpizar",
+    "Apellido2": "Elizondo",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "SpaceBa",
+    "Contrasena": "1234",
+    "AdminRol": false
   }
 ]

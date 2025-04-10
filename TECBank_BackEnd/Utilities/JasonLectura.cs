@@ -70,5 +70,17 @@ namespace TECBank_BackEnd.Pruebas
                 c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
             );
         }
+
+        public CuentaModel? BuscarCuentaPorUsuario(string usuario)
+        {
+            Jason json = new Jason();
+            var cuentas = json.LeerCuentas();
+
+            return cuentas.FirstOrDefault(c =>
+                c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
+
     }
 }
