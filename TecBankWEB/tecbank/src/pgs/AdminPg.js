@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminPg.module.css';
-
+import axios from "axios";
 
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
@@ -24,7 +24,7 @@ if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
 
-  const handleSubmit = async (e) => {
+  const handleSubmitAgregar = async (e) => {
     e.preventDefault();
 
     // Prepare the data to send to the backend
