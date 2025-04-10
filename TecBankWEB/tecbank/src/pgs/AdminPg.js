@@ -2,6 +2,16 @@ import React from "react";
 import styles from './AdminPg.module.css';
 
 function AdminPG() {
+  const [cuenta, setCuenta] = useState(null);
+
+  useEffect(() => {
+      // Cargar cuenta actual desde localStorage
+      const cuentaGuardada = localStorage.getItem("cuenta_actual");
+      if (cuentaGuardada) {
+          setCuenta(JSON.parse(cuentaGuardada));
+      }
+  }, []);
+
   return (
     <div className="admin">
     <div className={styles.body}>

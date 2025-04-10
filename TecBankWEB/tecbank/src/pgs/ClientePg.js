@@ -2,6 +2,17 @@ import React from "react";
 import styles from './ClientePg.module.css';
 
 function ClientePG() {
+  
+  const [cuenta, setCuenta] = useState(null);
+
+  useEffect(() => {
+      // Cargar cuenta actual desde localStorage
+      const cuentaGuardada = localStorage.getItem("cuenta_actual");
+      if (cuentaGuardada) {
+          setCuenta(JSON.parse(cuentaGuardada));
+      }
+  }, []);
+
   return (
     <div className="cliente">
     <div className={styles.body}>
