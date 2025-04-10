@@ -254,7 +254,7 @@ var tarjetaA = new TarjetaModel
 {
     Numero = "T001",
     NumeroDeCuenta = "C123",
-    TipoDeTarjeta = "Débito",
+    TipoDeTarjeta = "Debito",
     FechaDeExpiracion = new DateTime(2027, 12, 31),
     CCV = "123",
     SaldoDisponible = 50000.75m,
@@ -296,14 +296,14 @@ Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE TARJETA ===========");
 var tarjetaEditada = new TarjetaModel
 {
     SaldoDisponible = 75000,
-    TipoDeTarjeta = "Crédito"
+    TipoDeTarjeta = "Credito"
 };
 
 Editare.EditarTarjeta("T001", tarjetaEditada);
 
 // Eliminación
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE TARJETA ===========");
-Elimionacion.EliminarTarjeta("T001");
+Elimionacion.EliminarTarjeta("T0021");
 
 // Confirmación de eliminación
 Console.WriteLine("=========== 🔍 CONFIRMACIÓN: LECTURA DE TARJETAS (TODAS) ===========");

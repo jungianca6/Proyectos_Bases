@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "Numero": "T001",
+    "NumeroDeCuenta": "C123",
+    "TipoDeTarjeta": "Credito",
+    "FechaDeExpiracion": "2027-12-31T00:00:00",
+    "CCV": "123",
+    "SaldoDisponible": 75000,
+    "ID_Cliente": "1243"
+  }
+]
