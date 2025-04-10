@@ -1,18 +1,5 @@
 [
   {
-    "Cedula": "1233",
-    "Direccion": "Nueva Casa en Cartago",
-    "Telefono": "6000-0000",
-    "IngresoMensual": 1210,
-    "Nombre": "jorge1",
-    "Apellido1": "e",
-    "Apellido2": "s",
-    "TipoDeCliente": "Pr2mium",
-    "Usuario": "sapo",
-    "Contrasena": "32",
-    "AdminRol": false
-  },
-  {
     "Cedula": "1243",
     "Direccion": "S2e",
     "Telefono": "8828-8888",
@@ -21,21 +8,8 @@
     "Apellido1": "e",
     "Apellido2": "s",
     "TipoDeCliente": "Pr2mium",
-    "Usuario": "sapo2",
+    "Usuario": "sapo",
     "Contrasena": "32",
-    "AdminRol": false
-  },
-  {
-    "Cedula": "1234",
-    "Direccion": "e",
-    "Telefono": "1",
-    "IngresoMensual": 1,
-    "Nombre": "e",
-    "Apellido1": "e",
-    "Apellido2": "e",
-    "TipoDeCliente": "Fisico",
-    "Usuario": "1",
-    "Contrasena": "e",
     "AdminRol": false
   }
 ]

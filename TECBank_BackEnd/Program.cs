@@ -55,16 +55,16 @@ app.MapControllers(); // Mapea los controladores
 
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
-PruebaEscrituraClientes pruebaEscrituraClientes = new PruebaEscrituraClientes();
+JasonEscritura pruebaEscrituraClientes = new JasonEscritura();
 pruebaEscrituraClientes.Ejecutar(ClienteA);
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-PruebaLecturaClientes pruebaLecturaClientes = new PruebaLecturaClientes();
+JasonLectura pruebaLecturaClientes = new JasonLectura();
 
-pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
-var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge1");
+var listaPorNombre = pruebaLecturaClientes.Ejecutar("Nombre", "jorge12");
 
 if (listaPorNombre.Count > 0)
 {
@@ -140,7 +140,7 @@ else
 }
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CLIENTE ===========");
 
-PruebaEditarClientes pruebaEditarClientes = new PruebaEditarClientes();
+JasonEditare pruebaEditarClientes = new JasonEditare();
 
 var cambiosParciales = new ClienteModel
 {
@@ -156,11 +156,64 @@ Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
 pruebaLecturaClientes.Ejecutar();
 
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN ===========");
-PruebaEliminacionClientes pruebaEliminacionClientes = new PruebaEliminacionClientes();
+JasonEliminar pruebaEliminacionClientes = new JasonEliminar();
 pruebaEliminacionClientes.EliminarPorCedula("12332");
 
 Console.WriteLine("=========== 🔍 SIN FILTRO (TODOS) ===========");
-pruebaLecturaClientes.Ejecutar();
 
+pruebaLecturaClientes.Ejecutar();
+var cuentaA = new CuentaModel
+{
+    NumeroDeCuenta = "C123",
+    Nombre = "Cuenta Corriente",
+    Descripcion = "Cuenta para pagos rápidos",
+    Usuario = ClienteA.Usuario, 
+    Moneda = "CRC",
+    TipoDeCuenta = "Corriente"
+};
+
+// 🟩 Escritura de cuenta
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE CUENTA ===========");
+pruebaEscrituraClientes.GuardarCuenta(cuentaA);
+
+// 🟩 Lectura de cuentas
+Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
+var cuentasA = pruebaLecturaClientes.LeerCuentas();
+
+foreach (var cuenta in cuentasA)
+{
+    Console.WriteLine($"Número de Cuenta: {cuenta.NumeroDeCuenta}");
+    Console.WriteLine($"Nombre: {cuenta.Nombre}");
+    Console.WriteLine($"Descripción: {cuenta.Descripcion}");
+    Console.WriteLine($"Moneda: {cuenta.Moneda}");
+    Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// 🟩 Edición de cuenta
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE CUENTA ===========");
+
+var cuentaEditada = new CuentaModel
+{
+    Descripcion = "Cuenta editada para pagos internacionales"
+};
+
+pruebaEditarClientes.EditarCuenta("C123", cuentaEditada);
+
+// 🟩 Eliminación de cuenta
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE CUENTA ===========");
+pruebaEliminacionClientes.EliminarCuenta("C1223");
+Console.WriteLine("=========== 🔍 LECTURA DE CUENTAS (TODAS) ===========");
+var cuentasB = pruebaLecturaClientes.LeerCuentas();
+
+foreach (var cuenta in cuentasB)
+{
+    Console.WriteLine($"Número de Cuenta: {cuenta.NumeroDeCuenta}");
+    Console.WriteLine($"Nombre: {cuenta.Nombre}");
+    Console.WriteLine($"Descripción: {cuenta.Descripcion}");
+    Console.WriteLine($"Moneda: {cuenta.Moneda}");
+    Console.WriteLine($"Tipo de Cuenta: {cuenta.TipoDeCuenta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
 
 app.Run();

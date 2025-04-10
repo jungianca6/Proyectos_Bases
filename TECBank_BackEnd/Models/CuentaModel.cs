@@ -3,7 +3,9 @@
     public class CuentaModel
     {   
         public string NumeroDeCuenta { get; set; }
-        public string Descripción { get; set; }
+        public string Descripcion { get; set; }
+
+        public string Usuario { get; set; } 
         public string Moneda { get; set; }
         public string TipoDeCuenta { get; set; }
         public string Nombre { get; set; }

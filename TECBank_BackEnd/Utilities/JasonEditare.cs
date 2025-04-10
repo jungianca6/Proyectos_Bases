@@ -3,18 +3,17 @@ using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Pruebas
 {
-    public class PruebaEditarClientes
+    public class JasonEditare
     {
         public void EditarClienteParcial(string cedula, ClienteModel nuevosDatos)
         {
-            Holas holas = new Holas();
+            Jason holas = new Jason();
             var clientes = holas.LeerClientes();
 
             var clienteExistente = clientes.FirstOrDefault(c => c.Cedula == cedula);
 
             if (clienteExistente != null)
             {
-                // Solo modificar si se proporciona un valor distinto
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
                     clienteExistente.Nombre = nuevosDatos.Nombre;
 
@@ -49,6 +48,40 @@ namespace TECBank_BackEnd.Pruebas
             else
             {
                 Console.WriteLine($"⚠️ No se encontró un cliente con cédula {cedula}.");
+            }
+        }
+
+        public void EditarCuenta(string numeroCuenta, CuentaModel nuevosDatos)
+        {
+            Jason holas = new Jason();
+            var cuentas = holas.LeerCuentas();
+
+            var cuentaExistente = cuentas.FirstOrDefault(c => c.NumeroDeCuenta == numeroCuenta);
+
+            if (cuentaExistente != null)
+            {
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Descripcion))
+                    cuentaExistente.Descripcion = nuevosDatos.Descripcion;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
+                    cuentaExistente.Usuario = nuevosDatos.Usuario;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Moneda))
+                    cuentaExistente.Moneda = nuevosDatos.Moneda;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.TipoDeCuenta))
+                    cuentaExistente.TipoDeCuenta = nuevosDatos.TipoDeCuenta;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
+                    cuentaExistente.Nombre = nuevosDatos.Nombre;
+
+                holas.GuardarCuentas(cuentas);
+
+                Console.WriteLine($"✅ Cuenta {numeroCuenta} actualizada parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró una cuenta con número {numeroCuenta}.");
             }
         }
     }
