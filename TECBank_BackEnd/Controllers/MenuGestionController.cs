@@ -6,7 +6,7 @@ using TECBank_BackEnd.Pruebas;
 namespace TECBank_BackEnd.Controllers
 {
     [ApiController]
-    [Route("cuenta/[controller]")]
+    [Route("[controller]")]
     public class MenuGestionController : ControllerBase
     {
         // POST: MenuGestion/AgregarTarjeta
@@ -32,6 +32,7 @@ namespace TECBank_BackEnd.Controllers
                     nueva_tarjeta.CCV = data.CCV;
                     nueva_tarjeta.NumeroDeCuenta = data.numeroDeCuenta;
                     nueva_tarjeta.FechaDeExpiracion = data.fechaDeExpiracion;
+                    nueva_tarjeta.Numero = data.numeroDeTarjeta;
 
                     JasonEscritura jasonEscritura = new JasonEscritura();
 

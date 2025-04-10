@@ -23,19 +23,6 @@
     "TipoDeCliente": "Fisico",
     "Usuario": "SpaceBa",
     "Contrasena": "1234",
-    "AdminRol": false
-  },
-  {
-    "Cedula": "11111",
-    "Direccion": "mi casa",
-    "Telefono": "61942879",
-    "IngresoMensual": 10,
-    "Nombre": "Brayan",
-    "Apellido1": "Alpizar",
-    "Apellido2": "Elizondo",
-    "TipoDeCliente": "Fisico",
-    "Usuario": "fantasma",
-    "Contrasena": "1234",
     "AdminRol": true
   }
 ]
