@@ -10,12 +10,16 @@ function ClientePG() {
       <br />
       <hr />
       <br />
+
       <h2>Cuentas</h2>
       <br />
-      <h3>Depósitos</h3>
-      <br />
-      <h3>Retiros</h3>
-      <br />
+      <h3>Mis movimientos</h3>
+      
+      <div className="col-md-4 d-flex align-items-end">
+          <button type="submit" className="btn btn-primary">Ver mis movimientos</button>
+        </div>
+        <br />
+
       <h3>Transferencias</h3>
       <br />
       <form>
@@ -34,8 +38,10 @@ function ClientePG() {
       <br />
       <hr />
       <br />
+
       <h2>Tarjetas</h2>
       <br />
+
       <h3>Pago de tarjetas de crédito</h3>
       <br />
       <form>
@@ -52,6 +58,7 @@ function ClientePG() {
           <button type="submit" className="btn btn-primary">Pagar</button>
         </div>
       <br />
+
       <h3>Listado de compras</h3>
       <br />
       <form className="row g-3">
@@ -72,10 +79,13 @@ function ClientePG() {
       <br />
       <hr />
       <br />
+
       <h2>Préstamos</h2>
       <br />
+
       <h3>Pagos normales</h3>
       <br />
+
       <h3>Pagos extraordinarios</h3>
     </div>
     </div>

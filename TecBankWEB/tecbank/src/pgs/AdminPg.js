@@ -10,8 +10,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+      
       <h2>Roles</h2>
       <br />
+
       <h3>Ingreso y modificación de roles</h3>
       <br />
       <form>
@@ -37,6 +39,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
         <br />
+
         <h3>Eliminación de roles</h3>
         <br />
         <form>
@@ -50,8 +53,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+
       <h2>Clientes</h2>
       <br />
+
       <h3>Ingreso y modificación de clientes</h3>
       <br />
       <form>
@@ -123,6 +128,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
         <br />
+
         <h3>Eliminación de clientes</h3>
         <br />
         <form>
@@ -136,8 +142,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+
       <h2>Cuentas</h2>
       <br />
+
       <h3>Ingreso y modificación de cuentas</h3>
       <br />
       <form>
@@ -182,6 +190,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
         <br />
+
         <h3>Eliminación de cuentas</h3>
         <br />
         <form>
@@ -193,6 +202,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Eliminar</button>
         </div>
       <br />
+
       <h3>Depósito/Retiro de efectivo a cuenta</h3>
         <br />
         <form>
@@ -215,8 +225,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+
       <h2>Tarjetas</h2>
       <br />
+
       <h3>Ingreso y modificación de tarjetas</h3>
       <br />
       <form>
@@ -256,6 +268,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
         <br />
+
         <h3>Eliminación de tarjetas</h3>
         <br />
         <form>
@@ -269,8 +282,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+
       <h2>Asesores de crédito</h2>
       <br />
+
       <h3>Ingreso y modificación de asesores</h3>
       <br />
       <form>
@@ -306,6 +321,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
         <br />
+
         <h3>Eliminación de asesores</h3>
         <br />
         <form>
@@ -317,6 +333,7 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Eliminar</button>
         </div>
         <br />
+
         <h3>Reporte sobre asesor</h3>
       <br />
       <form>
@@ -330,8 +347,10 @@ function AdminPG() {
       <br />
       <hr />
       <br />
+
       <h2>Préstamos</h2>
       <br />
+
       <h3>Ingreso de préstamos</h3>
       <br />
       <form>
@@ -366,16 +385,21 @@ function AdminPG() {
           <button type="submit" className="btn btn-primary">Ingresar</button>
         </div>
         <br />
+
         <h3>Cálculo de pagos</h3>
         <br />
+
         <h3>Pagos</h3>
         <br />
+
         <h3>Pagos extraordinarios</h3>
         <br />
       <hr />
       <br />
+
       <h2>Gestión de Mora</h2>
       <br />
+      
       <h3>Reporte sobre mora</h3>
       <br />
       <form>
