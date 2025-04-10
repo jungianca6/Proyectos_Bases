@@ -11,6 +11,7 @@ function Login({ setUser }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isRegistering, setIsRegistering] = useState(false);
+    const [cuenta, setCuenta] = useState(null);
     const [newUser, setNewUser] = useState({
         nombre: "",
         apellido1: "",
@@ -32,6 +33,11 @@ function Login({ setUser }) {
         // Cargar usuarios guardados al iniciar
         const savedUsers = JSON.parse(localStorage.getItem("usuarios")) || [];
         setUsers(savedUsers);
+
+        const cuentaGuardada = JSON.parse(localStorage.getItem("cuenta_actual"));
+        if (cuentaGuardada) {
+            setCuenta(cuentaGuardada);
+        }
     }, []);
 
     const handleLogin = async (e) => {
@@ -70,7 +76,8 @@ function Login({ setUser }) {
 
                 setUser(usuario); // Aquí guardas el usuario completo
                 localStorage.setItem("usuario_actual", JSON.stringify(usuario)); // Guarda el usuario actualmente loggeado en la web.
-
+                
+                setCuenta(cuenta);
                 localStorage.setItem("cuenta_actual", JSON.stringify(cuenta));
         
                 alert("Logeo exitoso");

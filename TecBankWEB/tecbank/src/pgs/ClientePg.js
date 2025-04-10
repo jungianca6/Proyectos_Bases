@@ -8,6 +8,13 @@ function ClientePG() {
       <div className={styles.container}>
       <h1>TecBank</h1>
       <br />
+
+      <div className="datos-en-linea">
+      <p><strong>Usuario:</strong> {cuenta.Usuario}</p>
+      <p><strong>Número de Cuenta:</strong> {cuenta.NumeroDeCuenta}</p>
+      </div>
+
+      <br />
       <hr />
       <br />
 

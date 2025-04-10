@@ -15,6 +15,18 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+.datos-en-linea {
+  display: flex;
+  justify-content: center;
+  gap: 40px; 
+  margin-top: 20px;
+}
+
+.datos-en-linea p {
+  font-size: 1.2rem;
+  margin: 0;
+}
   
 :global(.admin h1),
 :global(.admin h2),

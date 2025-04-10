@@ -8,6 +8,13 @@ function AdminPG() {
         <div className={styles.container}>
       <h1>TecBank</h1>
       <br />
+
+      <div className="datos-en-linea">
+      <p><strong>Usuario:</strong> {cuenta.Usuario}</p>
+      <p><strong>Número de Cuenta:</strong> {cuenta.NumeroDeCuenta}</p>
+      </div>
+
+      <br />
       <hr />
       <br />
       
@@ -399,7 +406,7 @@ function AdminPG() {
 
       <h2>Gestión de Mora</h2>
       <br />
-      
+
       <h3>Reporte sobre mora</h3>
       <br />
       <form>
