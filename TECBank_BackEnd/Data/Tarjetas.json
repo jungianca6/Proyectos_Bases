@@ -8,14 +8,6 @@
     "SaldoDisponible": 75000
   },
   {
-    "Numero": "209347897234",
-    "NumeroDeCuenta": "99193059",
-    "TipoDeTarjeta": "Fantasma",
-    "FechaDeExpiracion": "12/2027",
-    "CCV": "123",
-    "SaldoDisponible": 10000
-  },
-  {
     "Numero": "1232141234",
     "NumeroDeCuenta": "sapo1",
     "TipoDeTarjeta": "Debito",

@@ -67,9 +67,8 @@ namespace TECBank_BackEnd.Controllers
 
                     TarjetaModel tarjeta_con_cambios = new TarjetaModel();
 
-
-                    if (!string.IsNullOrWhiteSpace(data.numeroDeTarjeta))
-                        tarjeta_con_cambios.Numero = data.numeroDeTarjeta;
+                    if (!string.IsNullOrWhiteSpace(data.numeroDeCuenta))
+                        tarjeta_con_cambios.NumeroDeCuenta = data.numeroDeCuenta;
 
                     if (!string.IsNullOrWhiteSpace(data.tipoDeTarjeta))
                         tarjeta_con_cambios.TipoDeTarjeta = data.tipoDeTarjeta;
@@ -84,7 +83,7 @@ namespace TECBank_BackEnd.Controllers
                     if (data.saldo != 0)
                         tarjeta_con_cambios.SaldoDisponible = data.saldo;
 
-                    tarjeta_con_cambios.NumeroDeCuenta = data.numeroDeCuenta;
+                    tarjeta_con_cambios.Numero = data.numeroDeTarjeta;
 
 
                     Console.WriteLine("Datos de tarjeta_con_cambios:");
@@ -97,7 +96,7 @@ namespace TECBank_BackEnd.Controllers
 
 
                     JasonEditar jasonEditar = new JasonEditar();
-                    jasonEditar.EditarTarjeta(tarjeta_con_cambios.NumeroDeCuenta, tarjeta_con_cambios);
+                    jasonEditar.EditarTarjeta(tarjeta_con_cambios.Numero, tarjeta_con_cambios);
 
                     var response = new { success = true, message = "La tarjeta se modifico con exito" };
                     return Ok(response);
@@ -124,13 +123,12 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonEliminar jasonEliminar = new JasonEliminar();
                 jasonEliminar.EliminarTarjeta(data.numeroDetarjeta);
+                var response = new { success = true, message = "La tarjeta se elimino con exito" };
 
-
-                return Ok();
+                return Ok(response);
             }
             catch (Exception ex)
             {
-
                 // Retornar la respuesta con código 400 (BadRequest)
                 return BadRequest();
             }
