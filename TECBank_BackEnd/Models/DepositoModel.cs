@@ -1,9 +1,9 @@
 ﻿namespace TECBank_BackEnd.Models
 {
-    public class DepositoModel
+    public class DepositoModel : MovimientoModel
     {
-        public CuentaModel CuentaEmisora { get; set; }
-        public CuentaModel CuentaDestino { get; set; }
+        public string CuentaEmisora { get; set; }
+        public string CuentaDestino { get; set; }
 
         public void RealizarDepósito() { /* Implementación */ }
     }
