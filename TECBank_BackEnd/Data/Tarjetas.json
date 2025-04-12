@@ -3,45 +3,13 @@
     "Numero": "T001",
     "NumeroDeCuenta": "C123",
     "TipoDeTarjeta": "Credito",
-    "FechaDeExpiracion": "2027-12-31T00:00:00",
+    "FechaDeExpiracion": "2027/12/31",
     "CCV": "123",
     "SaldoDisponible": 75000
   },
   {
-    "Numero": "123456789012346",
-    "NumeroDeCuenta": "0011223344",
-    "TipoDeTarjeta": "Visa",
-    "FechaDeExpiracion": "12/2027",
-    "CCV": "123",
-    "SaldoDisponible": 5000
-  },
-  {
-    "Numero": "12345678901234",
-    "NumeroDeCuenta": "0011223344",
-    "TipoDeTarjeta": "Visa",
-    "FechaDeExpiracion": "12/2027",
-    "CCV": "123",
-    "SaldoDisponible": 5000
-  },
-  {
-    "Numero": "12345678901",
-    "NumeroDeCuenta": "0011223344",
-    "TipoDeTarjeta": "Visa",
-    "FechaDeExpiracion": "12/2027",
-    "CCV": "123",
-    "SaldoDisponible": 5000
-  },
-  {
-    "Numero": "123456701",
-    "NumeroDeCuenta": "0011223344",
-    "TipoDeTarjeta": "Visa",
-    "FechaDeExpiracion": "12/2027",
-    "CCV": "123",
-    "SaldoDisponible": 5000
-  },
-  {
     "Numero": "209347897234",
-    "NumeroDeCuenta": "0011223344",
+    "NumeroDeCuenta": "99193059",
     "TipoDeTarjeta": "Fantasma",
     "FechaDeExpiracion": "12/2027",
     "CCV": "123",

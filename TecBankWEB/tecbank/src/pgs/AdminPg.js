@@ -63,11 +63,11 @@ const handleSubmitCuenta = async (e, accionp) => {
   try {
     if (accionp === 'ingresar') {
       // Enviar para agregar la tarjeta
-      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/AgregarTarjeta', cuentaData);
+      const response = await axios.post('https://localhost:7190/MenuGestion/AgregarTarjeta', cuentaData);
       console.log('Cliente ingresado con éxito:', response.data);
     } else if (accionp === 'modificar') {
       // Enviar para modificar la tarjeta
-      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/ModificarTarjeta', cuentaData);
+      const response = await axios.post('https://localhost:7190/MenuGestion/ModificarTarjeta', cuentaData);
       console.log('Cliente modificado con éxito:', response.data);
     }
   } catch (error) {

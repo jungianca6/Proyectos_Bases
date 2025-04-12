@@ -10,19 +10,19 @@
     "TipoDeCliente": "Pr2mium",
     "Usuario": "sapo",
     "Contrasena": "32",
-    "AdminRol": true
+    "AdminRol": false
   },
   {
-    "Cedula": "119170146",
-    "Direccion": "mi casa",
+    "Cedula": "1",
+    "Direccion": "10807",
     "Telefono": "61942879",
-    "IngresoMensual": 10,
-    "Nombre": "Brayan",
-    "Apellido1": "Alpizar",
-    "Apellido2": "Elizondo",
+    "IngresoMensual": 5000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
     "TipoDeCliente": "Fisico",
-    "Usuario": "SpaceBa",
-    "Contrasena": "1234",
+    "Usuario": "sapo1",
+    "Contrasena": "32",
     "AdminRol": true
   }
 ]
