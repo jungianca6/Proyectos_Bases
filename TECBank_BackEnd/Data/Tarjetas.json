@@ -14,5 +14,13 @@
     "FechaDeExpiracion": "12/2027",
     "CCV": "123",
     "SaldoDisponible": 5000
+  },
+  {
+    "Numero": "12345678901234",
+    "NumeroDeCuenta": "0011223344",
+    "TipoDeTarjeta": "Visa",
+    "FechaDeExpiracion": "12/2027",
+    "CCV": "123",
+    "SaldoDisponible": 5000
   }
 ]
