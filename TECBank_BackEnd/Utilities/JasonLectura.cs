@@ -96,6 +96,9 @@ namespace TECBank_BackEnd.Pruebas
                 "Nombre" => empleados.Where(e => e.Nombre == valor).ToList(),
                 "Apellido1" => empleados.Where(e => e.Apellido1 == valor).ToList(),
                 "Apellido2" => empleados.Where(e => e.Apellido2 == valor).ToList(),
+                "Rol" => empleados.Where(e => e.Rol == valor).ToList(),
+                "DescripcionDeRol" => empleados.Where(e => e.DescripcionDeRol == valor).ToList(),
+
                 "FechaDeNacimiento" => empleados.Where(e => e.FechaDeNacimiento.ToString() == valor).ToList(),
                 "Usuario" => empleados.Where(e => e.Usuario == valor).ToList(),
                 "Contraseña" => empleados.Where(e => e.Contraseña == valor).ToList(),
