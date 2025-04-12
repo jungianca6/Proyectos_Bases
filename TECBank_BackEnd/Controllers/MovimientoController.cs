@@ -29,7 +29,11 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
                 nuevo_pago.Moneda = data.Moneda;
 
+
                 JasonLectura jasonLectura = new JasonLectura();
+
+
+
                 TarjetaModel tarjeta_a_modificar = jasonLectura.BuscarTarjetaPorNumero(nuevo_pago.Numero_de_Tarjeta);
 
                 int nuevo_monto = tarjeta_a_modificar.SaldoDisponible + data.Monto;

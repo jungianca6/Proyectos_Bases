@@ -113,27 +113,23 @@ namespace TECBank_BackEnd.Controllers
                 if (jasonEliminar.EliminarPorCedula(data.Cedula))
                 {
                     
-
-
                     foreach (var Cuenta in CuentasA)
                     {
 
-
-
                         var Tarjetas = jasonLectura.LeerTarjetas("NumeroDeCuenta", Cuenta.NumeroDeCuenta);
                         
-                            foreach (var tarjeta in Tarjetas)
+                        foreach (var tarjeta in Tarjetas)
                         {
                             JasonEditar.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
                         }
                         jasonEliminar.EliminarCuenta(Cuenta.NumeroDeCuenta);
                     }
-                    var response = new { success = true, message = "La Cliente se elimino con exito" };
+                    var response = new { success = true, message = "El Cliente se elimino con exito" };
                     return Ok(response);
                 }
                 else
                 {
-                    var response = new { success = true, message = "La Cliente no se elimino" };
+                    var response = new { success = true, message = "El Cliente no se elimino" };
                     return Ok(response);
                 }
 
