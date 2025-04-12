@@ -5,14 +5,7 @@
     "Usuario": "sapo",
     "Moneda": "CRC",
     "TipoDeCuenta": "Corriente",
-    "Nombre": "Cuenta Corriente"
-  },
-  {
-    "NumeroDeCuenta": "99193059",
-    "Descripcion": "",
-    "Usuario": "sapo1",
-    "Moneda": "Colones",
-    "TipoDeCuenta": "",
-    "Nombre": "sapo"
+    "Nombre": "Cuenta Corriente",
+    "Monto": null
   }
 ]

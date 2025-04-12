@@ -176,6 +176,16 @@ namespace TECBank_BackEnd.Pruebas
             );
         }
 
+        public CuentaModel? BuscarCuentaPorNumero(string numero_de_cuenta)
+        {
+            Jason json = new Jason();
+            var cuentas = json.LeerCuentas();
+
+            return cuentas.FirstOrDefault(c =>
+                c.NumeroDeCuenta?.Equals(numero_de_cuenta, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
         public TarjetaModel? BuscarTarjetaPorNumero(string numero_tarjeta)
         {
             Jason json = new Jason();

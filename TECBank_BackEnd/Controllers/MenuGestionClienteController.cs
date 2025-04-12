@@ -99,17 +99,20 @@ namespace TECBank_BackEnd.Controllers
         {
             try
             {
-                JasonEditar JasonEditar = new JasonEditar();
+                JasonEditar JasonEdicion = new JasonEditar();
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEliminar jasonEliminar = new JasonEliminar();
                 ClienteModel? cliente = jasonLectura.BuscarPorCedula(data.Cedula);
 
                 var CuentasA = jasonLectura.LeerCuentas("Usuario", cliente.Usuario);
+
+
                 var tarjetaEditada = new TarjetaModel
                 {
-                    NumeroDeCuenta = ""
+                    NumeroDeCuenta = "0" // Esto no tiene ningun sentido
                 };
+
                 if (jasonEliminar.EliminarPorCedula(data.Cedula))
                 {
                     
@@ -118,10 +121,18 @@ namespace TECBank_BackEnd.Controllers
 
                         var Tarjetas = jasonLectura.LeerTarjetas("NumeroDeCuenta", Cuenta.NumeroDeCuenta);
                         
-                        foreach (var tarjeta in Tarjetas)
+                            foreach (var tarjeta in Tarjetas)
                         {
-                            JasonEditar.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
+                            Console.WriteLine($"Número: {tarjeta.Numero}");
+                            Console.WriteLine($"Cuenta Asociada: {tarjeta.NumeroDeCuenta}");
+                            Console.WriteLine($"Tipo: {tarjeta.TipoDeTarjeta}");
+                            Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion}");
+                            Console.WriteLine($"CCV: {tarjeta.CCV}");
+                            Console.WriteLine($"Saldo Disponible: {tarjeta.SaldoDisponible}");
+                            Console.WriteLine("------------------------------------------------------------");
+                            JasonEdicion.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
                         }
+                        
                         jasonEliminar.EliminarCuenta(Cuenta.NumeroDeCuenta);
                     }
                     var response = new { success = true, message = "El Cliente se elimino con exito" };

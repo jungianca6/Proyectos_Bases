@@ -32,6 +32,9 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
 
+                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(nuevo_pago.Cuenta_Emisora);
+
+   
 
 
                 TarjetaModel tarjeta_a_modificar = jasonLectura.BuscarTarjetaPorNumero(nuevo_pago.Numero_de_Tarjeta);
