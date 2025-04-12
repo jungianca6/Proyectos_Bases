@@ -121,11 +121,19 @@ namespace TECBank_BackEnd.Controllers
 
 
                         var Tarjetas = jasonLectura.LeerTarjetas("NumeroDeCuenta", Cuenta.NumeroDeCuenta);
-                        
-                            foreach (var tarjeta in Tarjetas)
+
+                        foreach (var tarjeta in Tarjetas)
                         {
+                            Console.WriteLine($"Número: {tarjeta.Numero}");
+                            Console.WriteLine($"Cuenta Asociada: {tarjeta.NumeroDeCuenta}");
+                            Console.WriteLine($"Tipo: {tarjeta.TipoDeTarjeta}");
+                            Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion}");
+                            Console.WriteLine($"CCV: {tarjeta.CCV}");
+                            Console.WriteLine($"Saldo Disponible: {tarjeta.SaldoDisponible}");
+                            Console.WriteLine("------------------------------------------------------------");
                             JasonEditar.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
                         }
+                        
                         jasonEliminar.EliminarCuenta(Cuenta.NumeroDeCuenta);
                     }
                     var response = new { success = true, message = "La Cliente se elimino con exito" };
