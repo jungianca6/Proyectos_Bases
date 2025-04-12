@@ -90,23 +90,7 @@ namespace TECBank_BackEnd.Utilities
         }
 
         // DEPOSITOS
-        public List<DepositoModel> LeerDepositos()
-        {
-            if (!File.Exists(archivoDepositos))
-                return new List<DepositoModel>();
 
-            var json = File.ReadAllText(archivoDepositos);
-            if (string.IsNullOrWhiteSpace(json))
-                return new List<DepositoModel>();
-
-            return JsonSerializer.Deserialize<List<DepositoModel>>(json) ?? new List<DepositoModel>();
-        }
-
-        public void GuardarDepositos(List<DepositoModel> depositos)
-        {
-            var json = JsonSerializer.Serialize(depositos, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(archivoDepositos, json);
-        }
 
         // EMPLEADOS
         public List<EmpleadoModel> LeerEmpleados()

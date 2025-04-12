@@ -31,14 +31,6 @@ namespace TECBank_BackEnd.Pruebas
             return tarjetaEliminada > 0;
         }
 
-        public bool EliminarDeposito(string idDeposito)
-        {
-            Jason json = new Jason();
-            var depositos = json.LeerDepositos();
-            var depositoEliminado = depositos.RemoveAll(d => d.ID == idDeposito);
-            json.GuardarDepositos(depositos);
-            return depositoEliminado > 0;
-        }
 
         public bool EliminarEmpleado(string idEmpleado)
         {
