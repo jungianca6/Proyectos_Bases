@@ -86,15 +86,6 @@ namespace TECBank_BackEnd.Controllers
                     tarjeta_con_cambios.Numero = data.numeroDeTarjeta;
 
 
-                    Console.WriteLine("Datos de tarjeta_con_cambios:");
-                    Console.WriteLine("Número: " + tarjeta_con_cambios.Numero);
-                    Console.WriteLine("Tipo de Tarjeta: " + tarjeta_con_cambios.TipoDeTarjeta);
-                    Console.WriteLine("Fecha de Expiración: " + tarjeta_con_cambios.FechaDeExpiracion);
-                    Console.WriteLine("CCV: " + tarjeta_con_cambios.CCV);
-                    Console.WriteLine("Saldo Disponible: " + tarjeta_con_cambios.SaldoDisponible);
-                    Console.WriteLine("Número de Cuenta: " + tarjeta_con_cambios.NumeroDeCuenta);
-
-
                     JasonEditar jasonEditar = new JasonEditar();
                     jasonEditar.EditarTarjeta(tarjeta_con_cambios.Numero, tarjeta_con_cambios);
 
@@ -133,6 +124,53 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest();
             }
         }
+
+
+        // POST: MenuGestion/AgregarTarjeta
+        [HttpPost("AgregarCuenta")]
+        public ActionResult AgregarCuenta([FromBody] AgregarTarjetaDataInputModel data)
+        {
+            try
+            {
+                JasonLectura jasonLectura = new JasonLectura();
+                var tarjetas = jasonLectura.LeerTarjetas();  // Asumiendo que este método te da las tarjetas almacenadas
+
+                if (tarjetas.Any(t => t.NumeroDeCuenta == data.numeroDeCuenta && t.Numero == data.numeroDeTarjeta))
+                {
+                    // Crear una respuesta indicando que la tarjeta ya existe
+                    var response = new { success = false, message = "La tarjeta ya existe" };
+                    return Ok(response);  // Regresar la respuesta
+                }
+                else
+                {
+
+                    TarjetaModel nueva_tarjeta = new TarjetaModel();
+                    nueva_tarjeta.TipoDeTarjeta = data.tipoDeTarjeta;
+                    nueva_tarjeta.SaldoDisponible = data.saldo;
+                    nueva_tarjeta.CCV = data.CCV;
+                    nueva_tarjeta.NumeroDeCuenta = data.numeroDeCuenta;
+                    nueva_tarjeta.FechaDeExpiracion = data.fechaDeExpiracion;
+                    nueva_tarjeta.Numero = data.numeroDeTarjeta;
+
+                    JasonEscritura jasonEscritura = new JasonEscritura();
+
+                    jasonEscritura.GuardarTarjeta(nueva_tarjeta);
+
+                    // Crear una respuesta indicando que la tarjeta ya existe
+                    var response = new { success = true, message = "Tarjeta Agregada con exito" };
+                    return Ok(response);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest();
+            }
+        }
+
+       
 
     }
 }
