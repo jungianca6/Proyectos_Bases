@@ -114,7 +114,7 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonEliminar jasonEliminar = new JasonEliminar();
 
-                if (jasonEliminar.EliminarTarjeta(data.numeroDetarjeta))
+                if (jasonEliminar.EliminarTarjeta(data.numeroDeCuenta)) 
                 {
                     var response = new { success = true, message = "La tarjeta se elimino con exito" };
                     return Ok(response);
