@@ -108,13 +108,13 @@ namespace TECBank_BackEnd.Controllers
         }
         // POST: MenuGestion/EliminarTarjeta
         [HttpPost("EliminarTarjeta")]
-        public ActionResult EliminarTarjeta([FromBody] EliminacionCuentaDataInputModel data)
+        public ActionResult EliminarTarjeta([FromBody] EliminacionTarjetaDataInputModel data)
         {
             try
             {
                 JasonEliminar jasonEliminar = new JasonEliminar();
 
-                if (jasonEliminar.EliminarTarjeta(data.numeroDeCuenta)) 
+                if (jasonEliminar.EliminarTarjeta(data.numeroDetarjeta)) 
                 {
                     var response = new { success = true, message = "La tarjeta se elimino con exito" };
                     return Ok(response);
@@ -149,9 +149,9 @@ namespace TECBank_BackEnd.Controllers
 
                 nueva_cuenta.Usuario = data.Usuario;
                 nueva_cuenta.Nombre = data.Nombre;
-                nueva_cuenta.TipoDeCuenta = "";
-                nueva_cuenta.Descripcion = "";
-                nueva_cuenta.Moneda = "Colones";
+                nueva_cuenta.TipoDeCuenta = data.TipoDeCuenta;
+                nueva_cuenta.Descripcion = data.Descripcion;
+                nueva_cuenta.Moneda = data.Moneda;
                 nueva_cuenta.NumeroDeCuenta = id.ToString();
 
                 escrituraJson.GuardarCuenta(nueva_cuenta);
@@ -186,9 +186,9 @@ namespace TECBank_BackEnd.Controllers
                 nueva_cuenta.NumeroDeCuenta = data.NumeroDeCuenta.ToString();
                 nueva_cuenta.Usuario = data.Usuario;
                 nueva_cuenta.Nombre = data.Nombre;
-                nueva_cuenta.TipoDeCuenta = "";
-                nueva_cuenta.Descripcion = "";
-                nueva_cuenta.Moneda = "Colones";
+                nueva_cuenta.TipoDeCuenta = data.TipoDeCuenta;
+                nueva_cuenta.Descripcion = data.Descripcion;
+                nueva_cuenta.Moneda = data.Moneda;
 
                 edicionJson.EditarCuenta(nueva_cuenta.NumeroDeCuenta, nueva_cuenta);
 
