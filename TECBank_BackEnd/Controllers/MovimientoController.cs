@@ -89,20 +89,20 @@ namespace TECBank_BackEnd.Controllers
         {
             try {
 
-                TransferenciaModel nuevo_pago = new TransferenciaModel();
+                TransferenciaModel nueva_transferencia = new TransferenciaModel();
                 Random random = new Random();
                 string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
 
                 // Asignacion de valores
-                nuevo_pago.Nombre = data.Nombre;
-                nuevo_pago.Apellido1 = data.Apellido1;
-                nuevo_pago.Apellido2 = data.Apellido2;
-                nuevo_pago.ID = id;
-                nuevo_pago.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                nuevo_pago.Cuenta_Emisora = data.Cuenta_Emisora;
-                nuevo_pago.Cuenta_Receptora = data.Cuenta_Receptora;
-                nuevo_pago.Moneda = data.Moneda;
-                nuevo_pago.Monto = data.Monto;
+                nueva_transferencia.Nombre = data.Nombre;
+                nueva_transferencia.Apellido1 = data.Apellido1;
+                nueva_transferencia.Apellido2 = data.Apellido2;
+                nueva_transferencia.ID = id;
+                nueva_transferencia.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                nueva_transferencia.Cuenta_Emisora = data.Cuenta_Emisora;
+                nueva_transferencia.Cuenta_Receptora = data.Cuenta_Receptora;
+                nueva_transferencia.Moneda = data.Moneda;
+                nueva_transferencia.Monto = data.Monto;
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
@@ -124,6 +124,9 @@ namespace TECBank_BackEnd.Controllers
                     jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
 
                     var response = new { success = true, message = "Transferencia realizada con exito" };
+
+
+
                     return Ok(response);
 
                 }
@@ -147,16 +150,56 @@ namespace TECBank_BackEnd.Controllers
 
         // POST: Movimiento/Retiro
         [HttpPost("Retiro")]
-        public ActionResult Retiro([FromBody] MovimientoModel data)
+        public ActionResult Retiro([FromBody] RetiroDataInputModel data)
         {
-            // Lógica para obtener datos
-            return Ok();
-        }
+            try {
 
-        // POST: Movimiento/Deposito
-        [HttpPost("Deposito")]
-        public ActionResult Deposito([FromBody] MovimientoModel data)
-        {
+                RetiroModel nuevo_retiro = new RetiroModel();
+                Random random = new Random();
+                string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
+
+                // Asignacion de valores
+                nuevo_retiro.Nombre = data.Nombre;
+                nuevo_retiro.Apellido1 = data.Apellido1;
+                nuevo_retiro.Apellido2 = data.Apellido2;
+                nuevo_retiro.ID = id;
+                nuevo_retiro.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                nuevo_retiro.CuentaARetirar = data.CuentaARetirar;
+                nuevo_retiro.Moneda = data.Moneda;
+                nuevo_retiro.Monto = data.Monto;
+
+                JasonLectura jasonLectura = new JasonLectura();
+                JasonEditar jasonEditar = new JasonEditar();
+
+                CuentaModel cuenta_a_retirar = jasonLectura.BuscarCuentaPorNumero(data.CuentaARetirar);
+
+                if (cuenta_a_retirar.Monto >= data.Monto)
+                {
+                    cuenta_a_retirar.Monto = cuenta_a_retirar.Monto - data.Monto;
+                    jasonEditar.EditarCuenta(cuenta_a_retirar.NumeroDeCuenta, cuenta_a_retirar);
+
+                    var response = new { success = true, message = "Retiro hecho con exito" };
+
+
+
+                    return Ok(response);
+                }
+                else {
+                    var response = new { success = false, message = "No se realizo el retiro, fondos insuficientes"};
+
+                    return Ok(response);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = false, message = ex.Message };
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest(response);
+            }
+
             // Lógica para obtener datos
             return Ok();
         }
