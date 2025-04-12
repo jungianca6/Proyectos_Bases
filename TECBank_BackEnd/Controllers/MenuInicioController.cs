@@ -20,7 +20,7 @@ namespace TECBank_BackEnd.Controllers
                 JasonEscritura escrituraJson = new JasonEscritura();
 
                 // Ejecutar el método para registrar los datos del cliente
-                escrituraJson.Ejecutar(data);
+                escrituraJson.GuardarCliente(data);
 
                 CuentaModel nueva_cuenta = new CuentaModel();
 

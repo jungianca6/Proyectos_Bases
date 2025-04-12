@@ -113,10 +113,17 @@ namespace TECBank_BackEnd.Controllers
             try
             {
                 JasonEliminar jasonEliminar = new JasonEliminar();
-                jasonEliminar.EliminarTarjeta(data.numeroDetarjeta);
-                var response = new { success = true, message = "La tarjeta se elimino con exito" };
 
-                return Ok(response);
+                if (jasonEliminar.EliminarTarjeta(data.numeroDetarjeta))
+                {
+                    var response = new { success = true, message = "La tarjeta se elimino con exito" };
+                    return Ok(response);
+                }
+                else {
+                    var response = new { success = true, message = "La tarjeta no se elimino con exito" };
+                    return Ok(response);
+                }
+
             }
             catch (Exception ex)
             {
@@ -126,45 +133,38 @@ namespace TECBank_BackEnd.Controllers
         }
 
 
-        // POST: MenuGestion/AgregarTarjeta
+        // POST: MenuGestion/AgregarCuenta
         [HttpPost("AgregarCuenta")]
-        public ActionResult AgregarCuenta([FromBody] AgregarTarjetaDataInputModel data)
+        public ActionResult AgregarCuenta([FromBody] CuentaModel data)
         {
             try
             {
-                JasonLectura jasonLectura = new JasonLectura();
-                var tarjetas = jasonLectura.LeerTarjetas();  // Asumiendo que este método te da las tarjetas almacenadas
+                // Crear una instancia del escritor de clientes de prueba
+                JasonEscritura escrituraJson = new JasonEscritura();
 
-                if (tarjetas.Any(t => t.NumeroDeCuenta == data.numeroDeCuenta && t.Numero == data.numeroDeTarjeta))
-                {
-                    // Crear una respuesta indicando que la tarjeta ya existe
-                    var response = new { success = false, message = "La tarjeta ya existe" };
-                    return Ok(response);  // Regresar la respuesta
-                }
-                else
-                {
+                CuentaModel nueva_cuenta = new CuentaModel();
 
-                    TarjetaModel nueva_tarjeta = new TarjetaModel();
-                    nueva_tarjeta.TipoDeTarjeta = data.tipoDeTarjeta;
-                    nueva_tarjeta.SaldoDisponible = data.saldo;
-                    nueva_tarjeta.CCV = data.CCV;
-                    nueva_tarjeta.NumeroDeCuenta = data.numeroDeCuenta;
-                    nueva_tarjeta.FechaDeExpiracion = data.fechaDeExpiracion;
-                    nueva_tarjeta.Numero = data.numeroDeTarjeta;
+                Random random = new Random();
+                int id = random.Next(10_000_000, 100_000_000); // Entre 10,000,000 y 99,999,999
 
-                    JasonEscritura jasonEscritura = new JasonEscritura();
+                nueva_cuenta.Usuario = data.Usuario;
+                nueva_cuenta.Nombre = data.Nombre;
+                nueva_cuenta.TipoDeCuenta = "";
+                nueva_cuenta.Descripcion = "";
+                nueva_cuenta.Moneda = "Colones";
+                nueva_cuenta.NumeroDeCuenta = id.ToString();
 
-                    jasonEscritura.GuardarTarjeta(nueva_tarjeta);
+                escrituraJson.GuardarCuenta(nueva_cuenta);
 
-                    // Crear una respuesta indicando que la tarjeta ya existe
-                    var response = new { success = true, message = "Tarjeta Agregada con exito" };
-                    return Ok(response);
+                // Crear una respuesta indicando éxito
+                var response = new { success = true };
 
-                }
+                // Retornar la respuesta con código 200 (OK)
+                return Ok(response);
+
             }
             catch (Exception ex)
             {
-
                 // Retornar la respuesta con código 400 (BadRequest)
                 return BadRequest();
             }

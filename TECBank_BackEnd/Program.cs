@@ -64,7 +64,7 @@ var ClienteA = new ClienteModel
 // 🟩 Ejecutar pruebas de lectura y escritura de clientes
 Console.WriteLine("\n=========== 📝 PRUEBA DE ESCRITURA DE CLIENTES ===========");
 JasonEscritura Escritura = new JasonEscritura();
-Escritura.Ejecutar(ClienteA);
+Escritura.GuardarCliente(ClienteA);
 
 Console.WriteLine("=========== 🔍 FILTRO POR NOMBRE ===========");
 JasonLectura Lectura = new JasonLectura();

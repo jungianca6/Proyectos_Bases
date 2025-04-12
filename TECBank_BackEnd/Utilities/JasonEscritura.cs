@@ -5,7 +5,7 @@ namespace TECBank_BackEnd.Pruebas
 {
     public class JasonEscritura
     {
-        public void Ejecutar(ClienteModel cliente)
+        public void GuardarCliente(ClienteModel cliente)
         {
             Jason json = new Jason();
             var clientes = json.LeerClientes();
