@@ -146,6 +146,25 @@ namespace TECBank_BackEnd.Pruebas
                 _ => retiros
             };
         }
+        public List<TransferenciaModel> LeerTransferencias(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var transferencias = json.LeerTransferencias();
+
+            return filtro switch
+            {
+                "ID" => transferencias.Where(t => t.ID == valor).ToList(),
+                "CuentaEmisora" => transferencias.Where(t => t.Cuenta_Emisora == valor).ToList(),
+                "CuentaDestino" => transferencias.Where(t => t.Cuenta_Receptora == valor).ToList(),
+                "Monto" => transferencias.Where(t => t.Monto.ToString() == valor).ToList(),
+                "Moneda" => transferencias.Where(t => t.Moneda == valor).ToList(),
+                "Fecha" => transferencias.Where(t => t.Fecha == valor).ToList(),
+                "Apellido1" => transferencias.Where(t => t.Apellido1 == valor).ToList(),
+                "Apellido2" => transferencias.Where(t => t.Apellido2 == valor).ToList(),
+                _ => transferencias
+            };
+        }
+
 
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
