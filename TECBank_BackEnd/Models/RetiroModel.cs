@@ -4,6 +4,6 @@
     {
         public string CuentaARetirar { get; set; }
 
-        public String Monto { get; set; }
+        public int Monto { get; set; }
     }
 }
