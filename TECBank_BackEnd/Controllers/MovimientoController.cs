@@ -85,14 +85,53 @@ namespace TECBank_BackEnd.Controllers
 
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]
-        public ActionResult Transferencia([FromBody] MovimientoModel data)
+        public ActionResult Transferencia([FromBody] TransferenciaDataInputModel data)
         {
-            try { 
+            try {
 
+                TransferenciaModel nuevo_pago = new TransferenciaModel();
+                Random random = new Random();
+                string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
 
+                // Asignacion de valores
+                nuevo_pago.Nombre = data.Nombre;
+                nuevo_pago.Apellido1 = data.Apellido1;
+                nuevo_pago.Apellido2 = data.Apellido2;
+                nuevo_pago.ID = id;
+                nuevo_pago.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                nuevo_pago.Cuenta_Emisora = data.Cuenta_Emisora;
+                nuevo_pago.Cuenta_Receptora = data.Cuenta_Receptora;
+                nuevo_pago.Moneda = data.Moneda;
+                nuevo_pago.Monto = data.Monto;
 
+                JasonLectura jasonLectura = new JasonLectura();
+                JasonEditar jasonEditar = new JasonEditar();
 
-            }
+                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
+
+                CuentaModel cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
+
+                CuentaModel cuenta_para_editar = new CuentaModel();
+
+                if (cuenta_emisora.Monto >= data.Monto)
+                {
+                    cuenta_para_editar.Monto = cuenta_receptora.Monto + data.Monto;
+
+                    jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_para_editar);
+
+                    cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
+
+                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
+
+                    var response = new { success = true, message = "Transferencia realizada con exito" };
+                    return Ok(response);
+
+                }
+                else {
+                    var response = new { success = false, message = "No hay fondos suficientes para realizar la transferencia" };
+                    return Ok(response);
+                }
+                }
             catch (Exception ex)
             {
                 // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error

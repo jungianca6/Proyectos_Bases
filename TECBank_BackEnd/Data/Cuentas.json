@@ -1,12 +1,12 @@
 [
   {
-    "NumeroDeCuenta": "C123",
+    "NumeroDeCuenta": "12193459",
     "Descripcion": "Cuenta editada para pagos internacionales",
     "Usuario": "sapo",
     "Moneda": "CRC",
     "TipoDeCuenta": "Corriente",
     "Nombre": "Cuenta Corriente",
-    "Monto": 1
+    "Monto": 85000
   },
   {
     "NumeroDeCuenta": "99193059",
@@ -15,6 +15,6 @@
     "Moneda": "Colones",
     "TipoDeCuenta": "",
     "Nombre": "sapo",
-    "Monto": 0
+    "Monto": 515000
   }
 ]

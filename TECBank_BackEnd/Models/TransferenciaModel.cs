@@ -4,6 +4,6 @@
     {
         public String Cuenta_Emisora { get; set; }
         public String Cuenta_Receptora { get; set; }
-        public String Monto { get; set; }
+        public int Monto { get; set; }
     }
 }
