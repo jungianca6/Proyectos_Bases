@@ -140,7 +140,9 @@ namespace TECBank_BackEnd.Pruebas
                 "CuentaARetirar" => retiros.Where(r => r.CuentaARetirar == valor).ToList(),
                 "Apellido1" => retiros.Where(r => r.Apellido1 == valor).ToList(),
                 "Apellido2" => retiros.Where(r => r.Apellido2 == valor).ToList(),
-                "Monto" => retiros.Where(r => r.Monto.ToString() == valor).ToList(),
+                "Monto" => int.TryParse(valor, out int monto)
+                            ? retiros.Where(r => r.Monto == monto).ToList()
+                            : new List<RetiroModel>(), // si no se puede convertir, devuelve vacío
                 "Moneda" => retiros.Where(r => r.Moneda == valor).ToList(),
                 "Fecha" => retiros.Where(r => r.Fecha == valor).ToList(),
                 _ => retiros
@@ -156,7 +158,9 @@ namespace TECBank_BackEnd.Pruebas
                 "ID" => transferencias.Where(t => t.ID == valor).ToList(),
                 "CuentaEmisora" => transferencias.Where(t => t.Cuenta_Emisora == valor).ToList(),
                 "CuentaDestino" => transferencias.Where(t => t.Cuenta_Receptora == valor).ToList(),
-                "Monto" => transferencias.Where(t => t.Monto.ToString() == valor).ToList(),
+                "Monto" => int.TryParse(valor, out int monto)
+                            ? transferencias.Where(t => t.Monto == monto).ToList()
+                            : new List<TransferenciaModel>(), // Si no es un valor numérico, devuelve vacío
                 "Moneda" => transferencias.Where(t => t.Moneda == valor).ToList(),
                 "Fecha" => transferencias.Where(t => t.Fecha == valor).ToList(),
                 "Apellido1" => transferencias.Where(t => t.Apellido1 == valor).ToList(),

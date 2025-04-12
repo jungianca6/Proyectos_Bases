@@ -170,6 +170,7 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
+                JasonEscritura jasonEscritura = new JasonEscritura();
 
                 CuentaModel cuenta_a_retirar = jasonLectura.BuscarCuentaPorNumero(data.CuentaARetirar);
 
@@ -180,7 +181,7 @@ namespace TECBank_BackEnd.Controllers
 
                     var response = new { success = true, message = "Retiro hecho con exito" };
 
-
+                    jasonEscritura.GuardarRetiro(nuevo_retiro);
 
                     return Ok(response);
                 }
