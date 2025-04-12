@@ -6,8 +6,8 @@
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
         public string Cedula { get; set; }
-        public string Rol { get; set; }
-        public DateTime FechaDeNacimiento { get; set; }
+        public bool AdminRol { get; set; }
+        public string FechaDeNacimiento { get; set; }
         public string Usuario { get; set; }
         public string Contraseña { get; set; }
     }

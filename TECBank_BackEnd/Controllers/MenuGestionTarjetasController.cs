@@ -120,7 +120,7 @@ namespace TECBank_BackEnd.Controllers
                     return Ok(response);
                 }
                 else {
-                    var response = new { success = true, message = "La tarjeta no se elimino con exito" };
+                    var response = new { success = true, message = "La tarjeta no se elimino" };
                     return Ok(response);
                 }
 

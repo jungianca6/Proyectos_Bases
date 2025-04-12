@@ -331,8 +331,8 @@ var empleadoA = new EmpleadoModel
     Nombre = "Carlos",
     Apellido1 = "Perez",
     Apellido2 = "Gomez",
-    FechaDeNacimiento = new DateTime(1985, 5, 15),
-    Rol = "Gerente",
+    FechaDeNacimiento = "13/09/2004",
+    AdminRol = true,
     Usuario = "carlos.g",
     Contraseña = "1234secure"
 };
@@ -349,9 +349,9 @@ foreach (var empleado in empleadosA)
 {
     Console.WriteLine($"Nombre Completo: {empleado.Nombre} {empleado.Apellido1} {empleado.Apellido2}");
     Console.WriteLine($"Cédula: {empleado.Cedula}");
-    Console.WriteLine($"Rol: {empleado.Rol}");
+    Console.WriteLine($"Rol: {empleado.AdminRol}");
     Console.WriteLine($"Usuario: {empleado.Usuario}");
-    Console.WriteLine($"Fecha de Nacimiento: {empleado.FechaDeNacimiento.ToShortDateString()}");
+    Console.WriteLine($"Fecha de Nacimiento: {empleado.FechaDeNacimiento}");
     Console.WriteLine("------------------------------------------------------------");
 }
 
@@ -359,7 +359,7 @@ foreach (var empleado in empleadosA)
 Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE EMPLEADO ===========");
 var empleadoEditado = new EmpleadoModel
 {
-    Rol = "Director"
+    AdminRol = false
 };
 Editare.EditarEmpleado("1234", empleadoEditado);
 

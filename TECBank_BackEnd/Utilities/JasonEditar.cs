@@ -139,10 +139,7 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido2))
                     empleado.Apellido2 = nuevosDatos.Apellido2;
 
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Rol))
-                    empleado.Rol = nuevosDatos.Rol;
-
-                if (nuevosDatos.FechaDeNacimiento > DateTime.MinValue)
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaDeNacimiento))
                     empleado.FechaDeNacimiento = nuevosDatos.FechaDeNacimiento;
 
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
