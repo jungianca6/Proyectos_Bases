@@ -28,35 +28,48 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_pago.Cuenta_Emisora = data.NumeroDeCuenta;
                 nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
                 nuevo_pago.Moneda = data.Moneda;
+                nuevo_pago.Monto = data.Monto;
 
 
                 JasonLectura jasonLectura = new JasonLectura();
-
-                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(nuevo_pago.Cuenta_Emisora);
-
-   
-
-
-                TarjetaModel tarjeta_a_modificar = jasonLectura.BuscarTarjetaPorNumero(nuevo_pago.Numero_de_Tarjeta);
-
-                int nuevo_monto = tarjeta_a_modificar.SaldoDisponible + data.Monto;
-
-                TarjetaModel tarjeta_modificada = new TarjetaModel();
-
-                tarjeta_modificada.SaldoDisponible = nuevo_monto;
-
                 JasonEditar jasonEditar = new JasonEditar();
-                jasonEditar.EditarTarjeta(nuevo_pago.Numero_de_Tarjeta, tarjeta_modificada);
 
-                JasonEscritura jasonEscritura = new JasonEscritura();
-                jasonEscritura.GuardarPago(nuevo_pago);
+                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.NumeroDeCuenta);
 
-                var response = new { success = true, message = "El pago se hizo con exito" };
+                CuentaModel cuenta_para_editar = new CuentaModel();
+
+                if (cuenta_emisora.Monto >= data.Monto)
+                {
+
+                    TarjetaModel tarjeta_a_modificar = jasonLectura.BuscarTarjetaPorNumero(nuevo_pago.Numero_de_Tarjeta);
+
+                    int nuevo_monto = tarjeta_a_modificar.SaldoDisponible + data.Monto;
+
+                    TarjetaModel tarjeta_modificada = new TarjetaModel();
+
+                    tarjeta_modificada.SaldoDisponible = nuevo_monto;
 
 
-                // Lógica para obtener datos
-                return Ok(response);
+                    jasonEditar.EditarTarjeta(nuevo_pago.Numero_de_Tarjeta, tarjeta_modificada);
 
+                    JasonEscritura jasonEscritura = new JasonEscritura();
+                    jasonEscritura.GuardarPago(nuevo_pago);
+
+
+                    var response = new { success = true, message = "El pago se hizo con exito" };
+
+                    cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
+
+                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
+
+                    // Lógica para obtener datos
+                    return Ok(response);
+
+                }
+                else {
+                    var response = new { success = false, message = "No hay fondos suficientes en la cuenta" };
+                    return Ok(response);
+                }
 
             }
             catch (Exception ex)

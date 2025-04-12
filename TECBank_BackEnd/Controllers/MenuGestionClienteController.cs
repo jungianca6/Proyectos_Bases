@@ -123,13 +123,6 @@ namespace TECBank_BackEnd.Controllers
                         
                             foreach (var tarjeta in Tarjetas)
                         {
-                            Console.WriteLine($"Número: {tarjeta.Numero}");
-                            Console.WriteLine($"Cuenta Asociada: {tarjeta.NumeroDeCuenta}");
-                            Console.WriteLine($"Tipo: {tarjeta.TipoDeTarjeta}");
-                            Console.WriteLine($"Expira: {tarjeta.FechaDeExpiracion}");
-                            Console.WriteLine($"CCV: {tarjeta.CCV}");
-                            Console.WriteLine($"Saldo Disponible: {tarjeta.SaldoDisponible}");
-                            Console.WriteLine("------------------------------------------------------------");
                             JasonEdicion.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
                         }
                         

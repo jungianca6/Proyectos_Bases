@@ -5,7 +5,7 @@
         public String Cuenta_Emisora { get; set; }
         public String Numero_de_Tarjeta { get; set; }
 
-        public String Monto { get; set; }
+        public int Monto { get; set; }
 
     }
 

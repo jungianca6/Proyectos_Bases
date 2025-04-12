@@ -75,7 +75,7 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
                     cuentaExistente.Nombre = nuevosDatos.Nombre;
 
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Monto))
+                if (nuevosDatos.Monto != null)
                     cuentaExistente.Monto = nuevosDatos.Monto;
 
                 holas.GuardarCuentas(cuentas);

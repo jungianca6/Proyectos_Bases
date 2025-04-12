@@ -2,23 +2,23 @@
   {
     "Cuenta_Emisora": "99193059",
     "Numero_de_Tarjeta": "1232141234",
-    "Monto": null,
+    "Monto": 1,
     "Nombre": "Carlos",
     "Apellido1": "S\u00E1nchez",
     "Apellido2": "Ram\u00EDrez",
-    "Fecha": "12/04/2025 03:21",
-    "ID": "98445142",
+    "Fecha": "12/04/2025 04:04",
+    "ID": "72188970",
     "Moneda": "CRC"
   },
   {
     "Cuenta_Emisora": "99193059",
     "Numero_de_Tarjeta": "1232141234",
-    "Monto": null,
+    "Monto": 1,
     "Nombre": "Carlos",
     "Apellido1": "S\u00E1nchez",
     "Apellido2": "Ram\u00EDrez",
-    "Fecha": "12/04/2025 03:21",
-    "ID": "68087904",
+    "Fecha": "12/04/2025 04:06",
+    "ID": "50957229",
     "Moneda": "CRC"
   }
 ]

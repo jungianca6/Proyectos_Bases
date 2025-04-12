@@ -10,7 +10,7 @@
         public string TipoDeCuenta { get; set; }
         public string Nombre { get; set; }
 
-        public string Monto { get; set; }
+        public int Monto { get; set; }
 
         public void Retirar(decimal monto) { /* Implementación */ }
         public void Depositar(decimal monto) { /* Implementación */ }
