@@ -9,6 +9,10 @@ namespace TECBank_BackEnd.Utilities
         private readonly string archivoClientes;
         private readonly string archivoCuentas;
         private readonly string archivoTarjetas;
+        private readonly string archivoDepositos;
+        private readonly string archivoEmpleados;
+        private readonly string archivoPagos;
+        private readonly string archivoRetiros;
 
         public Jason()
         {
@@ -20,6 +24,10 @@ namespace TECBank_BackEnd.Utilities
             archivoClientes = Path.Combine(carpeta, "Cliente.json");
             archivoCuentas = Path.Combine(carpeta, "Cuentas.json");
             archivoTarjetas = Path.Combine(carpeta, "Tarjetas.json");
+            archivoDepositos = Path.Combine(carpeta, "Deposito.json");
+            archivoEmpleados = Path.Combine(carpeta, "Empleados.json");
+            archivoPagos = Path.Combine(carpeta, "Pago.json");
+            archivoRetiros = Path.Combine(carpeta, "Retiro.json");
         }
 
         // CLIENTES
@@ -77,6 +85,82 @@ namespace TECBank_BackEnd.Utilities
         {
             var json = JsonSerializer.Serialize(tarjetas, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(archivoTarjetas, json);
+        }
+
+        // DEPOSITOS
+        public List<DepositoModel> LeerDepositos()
+        {
+            if (!File.Exists(archivoDepositos))
+                return new List<DepositoModel>();
+
+            var json = File.ReadAllText(archivoDepositos);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<DepositoModel>();
+
+            return JsonSerializer.Deserialize<List<DepositoModel>>(json) ?? new List<DepositoModel>();
+        }
+
+        public void GuardarDepositos(List<DepositoModel> depositos)
+        {
+            var json = JsonSerializer.Serialize(depositos, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoDepositos, json);
+        }
+
+        // EMPLEADOS
+        public List<EmpleadoModel> LeerEmpleados()
+        {
+            if (!File.Exists(archivoEmpleados))
+                return new List<EmpleadoModel>();
+
+            var json = File.ReadAllText(archivoEmpleados);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<EmpleadoModel>();
+
+            return JsonSerializer.Deserialize<List<EmpleadoModel>>(json) ?? new List<EmpleadoModel>();
+        }
+
+        public void GuardarEmpleados(List<EmpleadoModel> empleados)
+        {
+            var json = JsonSerializer.Serialize(empleados, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoEmpleados, json);
+        }
+
+        // PAGOS
+        public List<PagoModel> LeerPagos()
+        {
+            if (!File.Exists(archivoPagos))
+                return new List<PagoModel>();
+
+            var json = File.ReadAllText(archivoPagos);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<PagoModel>();
+
+            return JsonSerializer.Deserialize<List<PagoModel>>(json) ?? new List<PagoModel>();
+        }
+
+        public void GuardarPagos(List<PagoModel> pagos)
+        {
+            var json = JsonSerializer.Serialize(pagos, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoPagos, json);
+        }
+
+        // RETIROS
+        public List<RetiroModel> LeerRetiros()
+        {
+            if (!File.Exists(archivoRetiros))
+                return new List<RetiroModel>();
+
+            var json = File.ReadAllText(archivoRetiros);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<RetiroModel>();
+
+            return JsonSerializer.Deserialize<List<RetiroModel>>(json) ?? new List<RetiroModel>();
+        }
+
+        public void GuardarRetiros(List<RetiroModel> retiros)
+        {
+            var json = JsonSerializer.Serialize(retiros, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoRetiros, json);
         }
     }
 }
