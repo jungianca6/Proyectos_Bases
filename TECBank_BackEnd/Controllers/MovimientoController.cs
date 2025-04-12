@@ -25,7 +25,7 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_pago.ID = id;
                 nuevo_pago.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
                 nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
-                nuevo_pago.Cuenta_Emisora = data.Cuenta_Emisora;
+                nuevo_pago.Cuenta_Emisora = data.NumeroDeCuenta;
                 nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
                 nuevo_pago.Moneda = data.Moneda;
 
@@ -67,6 +67,21 @@ namespace TECBank_BackEnd.Controllers
         [HttpPost("Transferencia")]
         public ActionResult Transferencia([FromBody] MovimientoModel data)
         {
+            try { 
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = false, message = ex.Message };
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest(response);
+            }
+
             // Lógica para obtener datos
             return Ok();
         }

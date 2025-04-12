@@ -2,7 +2,6 @@
 {
     public class EliminacionClienteDataInputModel
     {
-        public string Usuario {  get; set; }
         public string Cedula { get; set; }
 
     }
