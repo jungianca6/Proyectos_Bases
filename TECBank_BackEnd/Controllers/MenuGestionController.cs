@@ -170,7 +170,45 @@ namespace TECBank_BackEnd.Controllers
             }
         }
 
-       
+        // POST: MenuGestion/AgregarCuenta
+        [HttpPost("ModificarCuenta")]
+        public ActionResult ModificarCuenta([FromBody] CuentaModel data)
+        {
+            try
+            {
+                // Crear una instancia del escritor de clientes de prueba
+                JasonEditar edicionJson = new JasonEditar();
+
+                CuentaModel nueva_cuenta = new CuentaModel();
+
+                Random random = new Random();
+
+                nueva_cuenta.NumeroDeCuenta = data.NumeroDeCuenta.ToString();
+                nueva_cuenta.Usuario = data.Usuario;
+                nueva_cuenta.Nombre = data.Nombre;
+                nueva_cuenta.TipoDeCuenta = "";
+                nueva_cuenta.Descripcion = "";
+                nueva_cuenta.Moneda = "Colones";
+
+                edicionJson.EditarCuenta(nueva_cuenta.NumeroDeCuenta, nueva_cuenta);
+
+                // Crear una respuesta indicando éxito
+                var response = new { success = true };
+
+                // Retornar la respuesta con código 200 (OK)
+                return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest();
+            }
+        }
+
+
+
+
 
     }
 }
