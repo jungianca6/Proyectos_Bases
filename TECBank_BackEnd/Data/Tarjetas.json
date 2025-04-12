@@ -22,5 +22,29 @@
     "FechaDeExpiracion": "12/2027",
     "CCV": "123",
     "SaldoDisponible": 5000
+  },
+  {
+    "Numero": "12345678901",
+    "NumeroDeCuenta": "0011223344",
+    "TipoDeTarjeta": "Visa",
+    "FechaDeExpiracion": "12/2027",
+    "CCV": "123",
+    "SaldoDisponible": 5000
+  },
+  {
+    "Numero": "123456701",
+    "NumeroDeCuenta": "0011223344",
+    "TipoDeTarjeta": "Visa",
+    "FechaDeExpiracion": "12/2027",
+    "CCV": "123",
+    "SaldoDisponible": 5000
+  },
+  {
+    "Numero": "209347897234",
+    "NumeroDeCuenta": "0011223344",
+    "TipoDeTarjeta": "Fantasma",
+    "FechaDeExpiracion": "12/2027",
+    "CCV": "123",
+    "SaldoDisponible": 10000
   }
 ]
