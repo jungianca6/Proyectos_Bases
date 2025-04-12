@@ -11,7 +11,27 @@ function AdminPG() {
   const [fechaExp, setFechaExp] = useState('');
   const [codigoSeg, setCodigoSeg] = useState('');
   const [saldoDisponible, setSaldoDisponible] = useState(0);
-  
+
+  const [cedulaCliente, setcedulaCliente] = useState('');
+  const [cedulaECliente, setcedulaECliente] = useState('');
+  const [direccionCliente, setdireccionCliente] = useState('');
+  const [telefonoCliente, settelefonoCliente] = useState('');
+  const [ingresoCliente, setingresoCliente] = useState('');
+  const [nombreCliente, setnombreCliente] = useState('');
+  const [apellido1Cliente, setapellido1Cliente] = useState('');
+  const [apellido2Cliente, setapellido2Cliente] = useState('');
+  const [tipoCliente, settipoCliente] = useState('');
+  const [usuarioCliente, setusuarioCliente] = useState('');
+  const [contrasenaCliente, setcontrasenaCliente] = useState('');
+
+  const [numeroCuenta, setNumeroDeCuenta] = useState('');
+  const [numeroECuenta, setNumeroEDeCuenta] = useState('');
+  const [descripcionCuenta, setDescripcion] = useState('');
+  const [usuarioCuenta, setUsuario] = useState('');
+  const [monedaCuenta, setMoneda] = useState('');
+  const [tipoDeCuenta, setTipoDeCuenta] = useState('');
+  const [nombreCuenta, setNombre] = useState('');
+
   useEffect(() => {
     // Cargar cuenta actual desde localStorage
     const cuentaGuardada = localStorage.getItem("cuenta_actual");
@@ -24,13 +44,114 @@ if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
 
+const handleSubmitCuenta = async (e, accionp) => {
+  e.preventDefault();
+
+  console.log('Acción seleccionada:', accionp);
+
+  const cuentaData = {
+    numeroCuenta: numeroCuenta,
+    descripcion: descripcionCuenta,
+    usuario: usuarioCuenta,
+    moneda: monedaCuenta,
+    tipoDeCuenta: tipoDeCuenta,
+    nombre: nombreCuenta
+  };
+
+  console.log('Datos a enviar:', cuentaData);
+
+  try {
+    if (accionp === 'ingresar') {
+      // Enviar para agregar la tarjeta
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/AgregarTarjeta', cuentaData);
+      console.log('Cliente ingresado con éxito:', response.data);
+    } else if (accionp === 'modificar') {
+      // Enviar para modificar la tarjeta
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/ModificarTarjeta', cuentaData);
+      console.log('Cliente modificado con éxito:', response.data);
+    }
+  } catch (error) {
+    console.error('Error al realizar la operación:', error);
+  }
+};
+
+const handleSubmitEliminarCuenta = async (e) => {
+  e.preventDefault();
+
+  // Prepare the data to send to the backend 
+  const cuentaEData = {
+    cedula: String(numeroECuenta), 
+  };
+
+  try {
+    // Send data to backend using Axios 
+    const response = await axios.delete(`https://localhost:7190/cuenta/MenuGestion/EliminarTarjeta/${numeroECuenta}`, { data: cuentaEData });
+    console.log('Tarjeta eliminada con éxito:', response.data);
+  } catch (error) {
+    console.error('Error al eliminar la tarjeta:', error);
+  }
+};
+
+const handleSubmitCliente = async (e, accionp) => {
+  e.preventDefault();
+
+  console.log('Acción seleccionada:', accionp);
+
+  const clienteData = {
+        nombre: nombreCliente,
+        apellido1: apellido1Cliente,
+        apellido2: apellido2Cliente,
+        cedula: cedulaCliente,
+        direccion: direccionCliente,
+        telefono: telefonoCliente,
+        ingresoMensual: ingresoCliente,
+        tipoDeCliente: tipoCliente,
+        usuario: usuarioCliente,
+        contrasena: contrasenaCliente,
+        adminRol: false
+  };
+
+  console.log('Datos a enviar:', clienteData);
+
+  try {
+    if (accionp === 'ingresar') {
+      // Enviar para agregar la tarjeta
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/AgregarTarjeta', clienteData);
+      console.log('Cliente ingresado con éxito:', response.data);
+    } else if (accionp === 'modificar') {
+      // Enviar para modificar la tarjeta
+      const response = await axios.post('https://localhost:7190/cuenta/MenuGestion/ModificarTarjeta', clienteData);
+      console.log('Cliente modificado con éxito:', response.data);
+    }
+  } catch (error) {
+    console.error('Error al realizar la operación:', error);
+  }
+};
+
+const handleSubmitEliminarCliente = async (e) => {
+  e.preventDefault();
+
+  // Prepare the data to send to the backend 
+  const clienteEData = {
+    cedula: String(cedulaECliente), 
+  };
+
+  try {
+    // Send data to backend using Axios 
+    const response = await axios.delete(`https://localhost:7190/cuenta/MenuGestion/EliminarTarjeta/${cedulaECliente}`, { data: clienteEData });
+    console.log('Tarjeta eliminada con éxito:', response.data);
+  } catch (error) {
+    console.error('Error al eliminar la tarjeta:', error);
+  }
+};
+
 const handleSubmitTarjeta = async (e, accionp) => {
   e.preventDefault();
 
   console.log('Acción seleccionada:', accionp);
 
   const tarjetaData = {
-    numeroDeTarjeta: numeroTarjeta,
+    numeroDeTarjeta: String(numeroTarjeta),
     tipoDeTarjeta: tipoTarjeta,
     fechaDeExpiracion: fechaExp,
     CCV: codigoSeg,
@@ -59,13 +180,13 @@ const handleSubmitTarjeta = async (e, accionp) => {
     e.preventDefault();
   
     // Prepare the data to send to the backend (solo número de tarjeta)
-    const tarjetaData = {
-      numeroDeTarjeta: numeroTarjetaE, // Solo el número de la tarjeta
+    const tarjetaEData = {
+      numeroDeTarjeta: String(numeroTarjetaE), // Solo el número de la tarjeta
     };
   
     try {
       // Send data to backend using Axios (endpoint para eliminar tarjeta)
-      const response = await axios.delete(`https://localhost:7190/cuenta/MenuGestion/EliminarTarjeta/${numeroTarjeta}`, { data: tarjetaData });
+      const response = await axios.delete(`https://localhost:7190/cuenta/MenuGestion/EliminarTarjeta/${numeroTarjetaE}`, { data: tarjetaEData });
       console.log('Tarjeta eliminada con éxito:', response.data);
     } catch (error) {
       console.error('Error al eliminar la tarjeta:', error);
@@ -136,68 +257,104 @@ const handleSubmitTarjeta = async (e, accionp) => {
       <br />
 
       <h3>Ingreso y modificación de clientes</h3>
+      <form onSubmit={handleSubmitCliente}>
       <br />
-      <form>
         <label> Nombre: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
+        <input 
+        type="text" 
+        name="nombreCliente" 
+        className="form-control" 
+        value={nombreCliente} 
+        onChange={(e) => setnombreCliente(e.target.value)} 
+      />
+
       <br />
-      <form>
         <label> Apellido 1: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
+        <input 
+        type="text" 
+        name="apellido1Cliente" 
+        className="form-control" 
+        value={apellido1Cliente} 
+        onChange={(e) => setapellido1Cliente(e.target.value)} 
+      />
       <br />
-      <form>
         <label> Apellido 2: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
+        <input 
+        type="text" 
+        name="apellido2Cliente" 
+        className="form-control" 
+        value={apellido2Cliente} 
+        onChange={(e) => setapellido2Cliente(e.target.value)} 
+      />
       <br />
-      <form>
+      
         <label> Cédula: </label>
-        <input type="number" name="rol" className="form-control" />
-      </form>
+        <input 
+        type="number" 
+        name="cedulaCliente" 
+        className="form-control" 
+        value={cedulaCliente} 
+        onChange={(e) => setcedulaCliente(e.target.value)} 
+      />
       <br />
-      <form>
         <label> Dirección: </label>
-        <input type="text" name="rol" className="form-control" />
-      </form>
+        <input 
+        type="text" 
+        name="direccionCliente" 
+        className="form-control" 
+        value={direccionCliente} 
+        onChange={(e) => setdireccionCliente(e.target.value)} 
+      />
       <br />
-      <form>
     <label> Teléfono: </label>
     <input 
-        type="tel" 
-        name="telefono" 
-        className="form-control" 
-        pattern="[0-9]{8}" 
-        title="Ingrese un número de 10 dígitos" 
-        required 
-        />
-        </form>
+      type="number" 
+      name="telefonoCliente" 
+      className="form-control" 
+      value={telefonoCliente} 
+      onChange={(e) => settelefonoCliente(e.target.value)} 
+    />
       <br />
-      <form>
         <label> Ingreso mensual (colones): </label>
-        <input type="number" name="rol" className="form-control" />
-      </form>
+        <input 
+        type="number" 
+        name="ingresoCliente" 
+        className="form-control" 
+        value={ingresoCliente} 
+        onChange={(e) => setingresoCliente(e.target.value)} 
+      />
       <br />
-      <form>
         <label> Tipo de cliente: </label>
-            <select name="rol" className="form-control">
-            <option value="">Seleccione...</option>
-            <option value="Físico">Físico</option>
-            <option value="Jurídico">Jurídico</option>
-        </select>
-        </form>
+        <select
+        name="tipoCliente"
+        className="form-control"
+        value={tipoCliente}
+        onChange={(e) => settipoCliente(e.target.value)}
+      >
+        <option value="">Selecciona tipo de cliente</option>
+        <option value="Fisico">Físico</option>
+        <option value="Juridico">Jurídico</option>
+      </select>
         <br />
-      <form>
         <label> Usuario: </label>
-        <input type="text" name="rol" className="form-control" />
-      </form>
+        <input 
+        type="text" 
+        name="usuarioCliente" 
+        className="form-control" 
+        value={usuarioCliente} 
+        onChange={(e) => setusuarioCliente(e.target.value)} 
+      />
       <br />
-      <form>
         <label> Contraseña: </label>
-        <input type="text" name="rol" className="form-control" />
-      </form>
-      <br />
+        <input 
+        type="password" 
+        name="contrasenaCliente" 
+        className="form-control" 
+        value={contrasenaCliente} 
+        onChange={(e) => setcontrasenaCliente(e.target.value)} 
+      />
+
+    <br />
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Ingresar</button>
         </div>
@@ -205,18 +362,26 @@ const handleSubmitTarjeta = async (e, accionp) => {
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
+        </form>
         <br />
 
         <h3>Eliminación de clientes</h3>
         <br />
-        <form>
+        <form onSubmit={handleSubmitEliminarCliente}>
         <label> Cédula: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+        <input 
+        type="number" 
+        name="cedulaCliente" 
+        className="form-control" 
+        value={cedulaECliente} 
+        onChange={(e) => setcedulaECliente(e.target.value)} 
+      />
+      
       <br />
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Eliminar</button>
         </div>
+        </form>
       <br />
       <hr />
       <br />
@@ -226,59 +391,101 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
       <h3>Ingreso y modificación de cuentas</h3>
       <br />
-      <form>
-        <label> Número de cuenta: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Descripción: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Moneda: </label>
-            <select name="moneda" className="form-control">
-            <option value="">Seleccione...</option>
-            <option value="Colones">Colones</option>
-            <option value="Dólares">Dólares</option>
-            <option value="Euros">Euros</option>
-        </select>
-        </form>
+      <form onSubmit={handleSubmitCuenta}>
+      <label> Número de cuenta: </label>
+      <input 
+        type="text" 
+        name="numeroCuenta" 
+        className="form-control" 
+        value={numeroCuenta} 
+        onChange={(e) => setNumeroDeCuenta(e.target.value)} 
+      />
         <br />
-        <form>
+
+        <label> Descripción: </label>
+        <input 
+        type="text" 
+        name="descripcionCuenta" 
+        className="form-control" 
+        value={descripcionCuenta} 
+        onChange={(e) => setDescripcion(e.target.value)} 
+      />
+        <br />
+
+        <label> Usuario: </label>
+        <input 
+        type="text" 
+        name="usuarioCuenta" 
+        className="form-control" 
+        value={usuarioCuenta} 
+        onChange={(e) => setUsuario(e.target.value)} 
+      />
+        <br />
+
+        <label> Moneda: </label>
+        <select
+        name="monedaCuenta"
+        className="form-control"
+        value={monedaCuenta}
+        onChange={(e) => setMoneda(e.target.value)}
+      >
+        <option value="">Selecciona una moneda</option>
+        <option value="Colones">Colones</option>
+        <option value="Dolares">Dólares</option>
+        <option value="Euros">Euros</option>
+      </select>
+        <br />
+
         <label> Tipo de cuenta: </label>
-            <select name="tipo_cuenta" className="form-control">
-            <option value="">Seleccione...</option>
-            <option value="Ahorros">Ahorros</option>
-            <option value="Corriente">Corriente</option>
-        </select>
-        </form>
-      <br />
-      <form>
-        <label> Cliente: </label>
-        <input type="text" name="cliente" className="form-control" />
-      </form>
-      <br />
+        <select
+        name="tipoDeCuenta"
+        className="form-control"
+        value={tipoDeCuenta}
+        onChange={(e) => setTipoDeCuenta(e.target.value)}
+      >
+        <option value="">Selecciona el tipo de cuenta</option>
+        <option value="Ahorros">Ahorros</option>
+        <option value="Corriente">Corriente</option>
+      </select>
+        <br />
+
+        <label> Nombre del cliente: </label>
+        <input 
+          type="text" 
+          name="nombreCuenta" 
+          className="form-control" 
+          value={nombreCuenta} 
+          onChange={(e) => setNombre(e.target.value)} 
+        />
+        <br />
+
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Ingresar</button>
         </div>
         <br />
+
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Modificar</button>
         </div>
+        </form>
         <br />
 
         <h3>Eliminación de cuentas</h3>
         <br />
-        <form>
+        <form onSubmit={handleSubmitEliminarCuenta}>
         <label> Número de cuenta: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+        <input 
+        type="number" 
+        name="numeroECuenta" 
+        className="form-control" 
+        value={numeroECuenta} 
+        onChange={(e) => setNumeroEDeCuenta(e.target.value)} 
+      />
       <br />
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Eliminar</button>
         </div>
+        </form>
       <br />
 
       <h3>Depósito/Retiro de efectivo a cuenta</h3>
@@ -376,7 +583,16 @@ const handleSubmitTarjeta = async (e, accionp) => {
           </div>
           <br />
           <div className="col-md-4 d-flex align-items-end">
-            <button type="submit" className="btn btn-warning" onClick={() => {}}>Modificar</button>
+          <button 
+          type="button" 
+          className="btn btn-warning" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitTarjeta(e, 'modificar');  // Pasa el evento correctamente
+          }}
+        >
+          Modificar
+          </button>
           </div>
           <br />
         </form>
@@ -386,16 +602,25 @@ const handleSubmitTarjeta = async (e, accionp) => {
         <form onSubmit={handleSubmitEliminarTarjeta}>
         <label> Número de tarjeta: </label>
         <input 
-        type="button" 
-        name="numeroTarjeta" 
-        className="form-control" 
-        value={numeroTarjeta} 
-        onChange={(e) => setNumeroTarjetaE(e.target.value)} 
-      />
+            type="number" 
+            name="numeroTarjetaE" 
+            className="form-control" 
+            value={numeroTarjetaE} 
+            onChange={(e) => setNumeroTarjetaE(e.target.value)} 
+          />
       </form>
       <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-danger">Eliminar</button>
+        <button 
+          type="button" 
+          className="btn btn-danger" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitEliminarTarjeta(e);  // Pasa el evento correctamente
+          }}
+        >
+          Eliminar
+          </button>
         </div>
       <br />
       <hr />
