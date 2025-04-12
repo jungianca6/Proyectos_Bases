@@ -365,7 +365,7 @@ Editare.EditarEmpleado("1234", empleadoEditado);
 
 // 🟩 Eliminación de empleado
 Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE EMPLEADO ===========");
-Elimionacion.EliminarEmpleado("1234");
+Elimionacion.EliminarEmpleado("12dasd34");
 Console.WriteLine("================================================================");
 
 
