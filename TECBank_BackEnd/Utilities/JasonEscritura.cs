@@ -116,20 +116,20 @@ namespace TECBank_BackEnd.Pruebas
             Console.WriteLine($"✅ Retiro con ID {retiro.ID} agregado correctamente.");
         }
 
-        public void GuardarTransferencia(RetiroModel Transferencia)
+        public void GuardarTransferencia(TransferenciaModel transferencia)
         {
             Jason json = new Jason();
-            var retiros = json.LeerRetiros();
+            var transferencias = json.LeerTransferencias();
 
-            if (retiros.Any(r => r.ID == Transferencia.ID))
+            if (transferencias.Any(t => t.ID == transferencia.ID))
             {
-                Console.WriteLine($"⚠️ Ya existe un retiro con el ID {Transferencia.ID}. No se puede agregar.");
+                Console.WriteLine($"⚠️ Ya existe una transferencia con el ID {transferencia.ID}. No se puede agregar.");
                 return;
             }
 
-            retiros.Add(Transferencia);
-            json.GuardarRetiros(retiros);
-            Console.WriteLine($"✅ Retiro con ID {Transferencia.ID} agregado correctamente.");
+            transferencias.Add(transferencia);
+            json.GuardarTransferencias(transferencias);
+            Console.WriteLine($"✅ Transferencia con ID {transferencia.ID} agregada correctamente.");
         }
     }
 }
