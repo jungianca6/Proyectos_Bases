@@ -4,7 +4,7 @@
     "Apellido1": "Perez",
     "Apellido2": "Gomez",
     "Cedula": "1234",
-    "Rol": "Director",
+    "AdminRol": false,
     "FechaDeNacimiento": "1985-05-15T00:00:00",
     "Usuario": "carlos.g",
     "Contrase\u00F1a": "1234secure"
