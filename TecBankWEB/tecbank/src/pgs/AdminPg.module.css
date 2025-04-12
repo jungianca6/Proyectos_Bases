@@ -16,16 +16,19 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.datos-en-linea {
+.datos-en-linea2 {
   display: flex;
   justify-content: center;
   gap: 40px; 
   margin-top: 20px;
+  
+ 
 }
 
-.datos-en-linea p {
+.datos-en-linea2 p {
   font-size: 1.2rem;
   margin: 0;
+  color: #343a40;
 }
   
 :global(.admin h1),

@@ -6,7 +6,7 @@ function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
   
 
-  
+
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [numeroTarjetaE, setNumeroTarjetaE] = useState('');
   const [tipoTarjeta, setTipoTarjeta] = useState('');
@@ -35,6 +35,11 @@ function AdminPG() {
   const [tipoDeCuenta, setTipoDeCuenta] = useState('');
   const [nombreCuenta, setNombre] = useState('');
 
+  const [numeroCuentaD, setNumeroDeCuentaDR] = useState('');
+  const [montoD, setmontoDR] = useState('');
+  const [nombreD, setnombreDR] = useState('');
+  const [apellido1D, setapellido1DR] = useState('');
+  const [apellido2D, setapellido2DR] = useState('');
 
 
   useEffect(() => {
@@ -48,6 +53,40 @@ function AdminPG() {
 if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
+
+const handleSubmitDeposito = async (e, accionp) => {
+  e.preventDefault();
+
+  console.log('Acción seleccionada:', accionp);
+
+  const drData = {
+    NumeroDeCuenta: numeroCuenta,
+    Descripcion: descripcionCuenta,
+    Usuario: usuarioCuenta,
+    Moneda: monedaCuenta,
+    TipoDeCuenta: tipoDeCuenta,
+    Nombre: nombreCuenta
+  };
+
+  console.log('Datos a enviar:', drData);
+
+  try {
+    if (accionp === 'ingresar') {
+      // Enviar para agregar la tarjeta
+      const response = await axios.post('https://localhost:7190/MenuGestionCuentas/AgregarCuenta', drData);
+      console.log('Cliente ingresado con éxito:', response.data);
+      alert("Cuenta agregada con éxito");
+    } else if (accionp === 'modificar') {
+      // Enviar para modificar la tarjeta
+      const response = await axios.post('https://localhost:7190/MenuGestionCuentas/ModificarCuenta', drData);
+      console.log('Cliente modificado con éxito:', response.data);
+      alert("Cuenta modificada con éxito");
+    }
+  } catch (error) {
+    console.error('Error al realizar la operación:', error);
+    alert("No se pudo realizar el cambio");
+  }
+};
 
 const handleSubmitCuenta = async (e, accionp) => {
   e.preventDefault();
@@ -219,9 +258,9 @@ const handleSubmitTarjeta = async (e, accionp) => {
       <h1>TecBank</h1>
       <br />
 
-      <div className="datos-en-linea">
-      <p><strong>Usuario:</strong> {cuenta.usuario}</p>
-      <p><strong>Número de Cuenta:</strong> {cuenta.numeroDeCuenta}</p>
+      <div className="datos-en-linea2">
+      <p style={{ color: '#808080' }}><strong>Usuario:</strong> {cuenta.usuario}</p>
+      <p style={{ color: '#808080' }}><strong>Número de Cuenta:</strong> {cuenta.numeroDeCuenta}</p>
       </div>
 
       <br />
@@ -537,14 +576,23 @@ const handleSubmitTarjeta = async (e, accionp) => {
         <br />
         <form>
         <label> Número de cuenta: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
-      <br />
-        <form>
+        <input 
+        type="number" 
+        name="numeroCuentaDR" 
+        className="form-control" 
+        value={numeroCuentaD} 
+        onChange={(e) => setNumeroDeCuentaDR(e.target.value)} 
+      />
+        <br />
         <label> Monto: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
-      <br />
+        <input 
+          type="number" 
+          name="montoDR" 
+          className="form-control" 
+          value={montoD} 
+          onChange={(e) => setmontoDR(e.target.value)} 
+        />
+        <br />
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Depositar</button>
         </div>
@@ -552,6 +600,7 @@ const handleSubmitTarjeta = async (e, accionp) => {
         <div className="col-md-4 d-flex align-items-end">
           <button type="submit" className="btn btn-primary">Retirar</button>
         </div>
+      </form>
       <br />
       <hr />
       <br />
