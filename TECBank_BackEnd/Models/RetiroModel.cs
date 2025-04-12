@@ -2,6 +2,8 @@
 {
     public class RetiroModel : MovimientoModel
     {
-        public CuentaModel CuentaARetirar { get; set; }
+        public string CuentaARetirar { get; set; }
+
+        public String Monto { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "Nombre" => cuentas.Where(c => c.Nombre == valor).ToList(),
+                "Monto" => cuentas.Where(c => c.Monto == valor).ToList(),
                 "NumeroDeCuenta" => cuentas.Where(c => c.NumeroDeCuenta == valor).ToList(),
                 "Descripcion" => cuentas.Where(c => c.Descripcion == valor).ToList(),
                 "Usuario" => cuentas.Where(c => c.Usuario == valor).ToList(),
@@ -73,7 +74,6 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "ID" => depositos.Where(d => d.ID == valor).ToList(),
-                "NumeroDeCuenta" => depositos.Where(d => d.NumeroDeCuenta == valor).ToList(),
                 "Apellido1" => depositos.Where(d => d.Apellido1 == valor).ToList(),
                 "Apellido2" => depositos.Where(d => d.Apellido2 == valor).ToList(),
                 "Monto" => depositos.Where(d => d.Monto.ToString() == valor).ToList(),
@@ -118,7 +118,6 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "ID" => pagos.Where(p => p.ID == valor).ToList(),
-                "NumeroDeCuenta" => pagos.Where(p => p.NumeroDeCuenta == valor).ToList(),
                 "Apellido1" => pagos.Where(p => p.Apellido1 == valor).ToList(),
                 "Apellido2" => pagos.Where(p => p.Apellido2 == valor).ToList(),
                 "Monto" => pagos.Where(p => p.Monto.ToString() == valor).ToList(),
@@ -138,7 +137,7 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "ID" => retiros.Where(r => r.ID == valor).ToList(),
-                "NumeroDeCuenta" => retiros.Where(r => r.NumeroDeCuenta == valor).ToList(),
+                "CuentaARetirar" => retiros.Where(r => r.CuentaARetirar == valor).ToList(),
                 "Apellido1" => retiros.Where(r => r.Apellido1 == valor).ToList(),
                 "Apellido2" => retiros.Where(r => r.Apellido2 == valor).ToList(),
                 "Monto" => retiros.Where(r => r.Monto.ToString() == valor).ToList(),
@@ -165,6 +164,16 @@ namespace TECBank_BackEnd.Pruebas
 
             return cuentas.FirstOrDefault(c =>
                 c.Usuario?.Equals(usuario, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
+        public TarjetaModel? BuscarTarjetaPorNumero(string numero_tarjeta)
+        {
+            Jason json = new Jason();
+            var tarjetas = json.LeerTarjetas();
+
+            return tarjetas.FirstOrDefault(t =>
+                t.Numero?.Equals(numero_tarjeta, StringComparison.OrdinalIgnoreCase) == true
             );
         }
 

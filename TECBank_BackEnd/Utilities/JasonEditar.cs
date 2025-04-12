@@ -75,6 +75,9 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
                     cuentaExistente.Nombre = nuevosDatos.Nombre;
 
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Monto))
+                    cuentaExistente.Monto = nuevosDatos.Monto;
+
                 holas.GuardarCuentas(cuentas);
 
                 Console.WriteLine($"✅ Cuenta {numeroCuenta} actualizada parcialmente.");
@@ -157,74 +160,6 @@ namespace TECBank_BackEnd.Pruebas
             else
             {
                 Console.WriteLine($"⚠️ No se encontró el empleado con cédula {cedula}.");
-            }
-        }
-
-        public void EditarPago(string cuentaEmisora, PagoModel nuevosDatos)
-        {
-            Jason jason = new Jason();
-            var pagos = jason.LeerPagos();
-
-            var pago = pagos.FirstOrDefault(p => p.Cuenta_Emisora == cuentaEmisora);
-
-            if (pago != null)
-            {
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Cuenta_Emisora))
-                    pago.Cuenta_Emisora = nuevosDatos.Cuenta_Emisora;
-
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Numero_de_Tarjeta))
-                    pago.Numero_de_Tarjeta = nuevosDatos.Numero_de_Tarjeta;
-
-                jason.GuardarPagos(pagos);
-                Console.WriteLine($"✅ Pago de cuenta emisora {cuentaEmisora} actualizado parcialmente.");
-            }
-            else
-            {
-                Console.WriteLine($"⚠️ No se encontró el pago con cuenta emisora {cuentaEmisora}.");
-            }
-        }
-
-        public void EditarRetiro(string cedulaCliente, RetiroModel nuevosDatos)
-        {
-            Jason jason = new Jason();
-            var retiros = jason.LeerRetiros();
-
-            var retiro = retiros.FirstOrDefault(r => r.CuentaARetirar.Usuario == cedulaCliente);
-
-            if (retiro != null && nuevosDatos.CuentaARetirar != null)
-            {
-                retiro.CuentaARetirar = nuevosDatos.CuentaARetirar;
-
-                jason.GuardarRetiros(retiros);
-                Console.WriteLine($"✅ Retiro para cliente {cedulaCliente} actualizado parcialmente.");
-            }
-            else
-            {
-                Console.WriteLine($"⚠️ No se encontró un retiro para cliente {cedulaCliente}.");
-            }
-        }
-
-        public void EditarDeposito(string cuentaOrigen, DepositoModel nuevosDatos)
-        {
-            Jason jason = new Jason();
-            var depositos = jason.LeerDepositos();
-
-            var deposito = depositos.FirstOrDefault(d => d.CuentaEmisora == cuentaOrigen);
-
-            if (deposito != null)
-            {
-                if (nuevosDatos.CuentaEmisora != null)
-                    deposito.CuentaEmisora = nuevosDatos.CuentaEmisora;
-
-                if (nuevosDatos.CuentaDestino != null)
-                    deposito.CuentaDestino = nuevosDatos.CuentaDestino;
-
-                jason.GuardarDepositos(depositos);
-                Console.WriteLine($"✅ Depósito desde cuenta {cuentaOrigen} actualizado parcialmente.");
-            }
-            else
-            {
-                Console.WriteLine($"⚠️ No se encontró un depósito desde la cuenta {cuentaOrigen}.");
             }
         }
     }

@@ -8,7 +8,7 @@
 
         public string Apellido1 { get; set; }
         public string Apellido2 { get; set; }
-        public float Monto { get; set; }
+        public int Monto { get; set; }
         public string ID { get; set; }
         public string Moneda { get; set; }
         public String Cuenta_Emisora { get; set; }

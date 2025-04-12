@@ -1,0 +1,28 @@
+[
+  {
+    "Cedula": "1243",
+    "Direccion": "S2e",
+    "Telefono": "8828-8888",
+    "IngresoMensual": 1210,
+    "Nombre": "jorge1",
+    "Apellido1": "e",
+    "Apellido2": "s",
+    "TipoDeCliente": "Pr2mium",
+    "Usuario": "sapo",
+    "Contrasena": "32",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "1",
+    "Direccion": "10807",
+    "Telefono": "61942879",
+    "IngresoMensual": 5000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "sapo1",
+    "Contrasena": "32",
+    "AdminRol": true
+  }
+]

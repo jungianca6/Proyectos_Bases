@@ -46,7 +46,7 @@ app.MapControllers(); // Mapea los controladores
 
 
 
-
+/*
 var ClienteA = new ClienteModel
 {
     Cedula = "1243",
@@ -484,6 +484,7 @@ var retiroA = new RetiroModel
     Moneda = "CRC"
 };
 
+
 // 🟩 Escritura de retiro
 Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE RETIRO ===========");
 Escritura.GuardarRetiro(retiroA);
@@ -501,7 +502,7 @@ foreach (var retiro in retirosA)
 }
 
 Console.WriteLine("================================================================");
-
+*/
 
 
 

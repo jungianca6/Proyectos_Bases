@@ -13,7 +13,7 @@ namespace TECBank_BackEnd.Data_Input_Models
         public float Monto { get; set; }
         public string ID { get; set; }
         public string Moneda { get; set; }
-        public CuentaModel CuentaARetirar { get; set; }
+        public string CuentaARetirar { get; set; }
 
     }
 }
