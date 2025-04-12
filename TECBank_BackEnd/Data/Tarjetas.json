@@ -9,8 +9,8 @@
   },
   {
     "Numero": "1232141234",
-    "NumeroDeCuenta": "sapo1",
-    "TipoDeTarjeta": "Debito",
+    "NumeroDeCuenta": "sapo2",
+    "TipoDeTarjeta": "Credito",
     "FechaDeExpiracion": "1111-11-11",
     "CCV": "123",
     "SaldoDisponible": 50

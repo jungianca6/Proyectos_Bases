@@ -60,7 +60,7 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonLectura jasonLectura = new JasonLectura();
                 var tarjetas = jasonLectura.LeerTarjetas();  // Asumiendo que este método te da las tarjetas almacenadas
-                var tarjetaExistente = tarjetas.FirstOrDefault(t => t.NumeroDeCuenta == data.numeroDeCuenta && t.Numero == data.numeroDeTarjeta);
+                var tarjetaExistente = tarjetas.FirstOrDefault(t =>  t.Numero == data.numeroDeTarjeta);
 
                 if (tarjetaExistente != null)
                 {

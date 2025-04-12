@@ -1,6 +1,8 @@
 [
   {
     "Nombre": "Carlos",
+    "Rol": null,
+    "DescripcionDeRol": null,
     "Apellido1": "Perez",
     "Apellido2": "Gomez",
     "Cedula": "1234",
