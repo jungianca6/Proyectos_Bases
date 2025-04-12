@@ -22,6 +22,11 @@ namespace TECBank_BackEnd.Pruebas
                 "TipoDeCliente" => clientes.Where(c => c.TipoDeCliente == valor).ToList(),
                 "Usuario" => clientes.Where(c => c.Usuario == valor).ToList(),
                 "Contrasena" => clientes.Where(c => c.Contrasena == valor).ToList(),
+                "AdminRol" =>
+                    bool.TryParse(valor, out var parsedValor)
+                        ? clientes.Where(c => c.AdminRol == parsedValor).ToList()
+                        : new List<ClienteModel>(),
+
                 _ => clientes
             };
         }
@@ -91,9 +96,16 @@ namespace TECBank_BackEnd.Pruebas
                 "Nombre" => empleados.Where(e => e.Nombre == valor).ToList(),
                 "Apellido1" => empleados.Where(e => e.Apellido1 == valor).ToList(),
                 "Apellido2" => empleados.Where(e => e.Apellido2 == valor).ToList(),
+                "Rol" => empleados.Where(e => e.Rol == valor).ToList(),
+                "DescripcionDeRol" => empleados.Where(e => e.DescripcionDeRol == valor).ToList(),
+
                 "FechaDeNacimiento" => empleados.Where(e => e.FechaDeNacimiento.ToString() == valor).ToList(),
                 "Usuario" => empleados.Where(e => e.Usuario == valor).ToList(),
                 "Contraseña" => empleados.Where(e => e.Contraseña == valor).ToList(),
+                "AdminRol" =>
+                    bool.TryParse(valor, out var parsedValor)
+                        ? empleados.Where(c => c.AdminRol == parsedValor).ToList()
+                        : new List<EmpleadoModel>(),
                 _ => empleados
             };
         }

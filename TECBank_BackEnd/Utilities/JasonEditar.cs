@@ -132,7 +132,10 @@ namespace TECBank_BackEnd.Pruebas
             {
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
                     empleado.Nombre = nuevosDatos.Nombre;
-
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Rol))
+                    empleado.Rol = nuevosDatos.Rol;
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.DescripcionDeRol))
+                    empleado.DescripcionDeRol = nuevosDatos.DescripcionDeRol;
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido1))
                     empleado.Apellido1 = nuevosDatos.Apellido1;
 
