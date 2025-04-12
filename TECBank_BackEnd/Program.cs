@@ -281,7 +281,7 @@ foreach (var tarjeta in tarjetasTodas)
 
 // Lectura con filtro
 Console.WriteLine("=========== 🔍 FILTRO TARJETA POR TIPO ===========");
-var tarjetasDebito = Lectura.LeerTarjetas("TipoDeTarjeta", "Débito");
+var tarjetasDebito = Lectura.LeerTarjetas("Numero", "T001");
 
 foreach (var tarjeta in tarjetasDebito)
 {
@@ -294,7 +294,7 @@ Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE TARJETA ===========");
 var tarjetaEditada = new TarjetaModel
 {
     SaldoDisponible = 75000,
-    TipoDeTarjeta = "Credito"
+    TipoDeTarjeta = "zorra"
 };
 
 Editare.EditarTarjeta("T001", tarjetaEditada);
@@ -310,5 +310,199 @@ foreach (var tarjeta in tarjetasFinal)
 {
     Console.WriteLine($"✅ Tarjeta restante: {tarjeta.Numero}");
 }
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var empleadoA = new EmpleadoModel
+{
+    Cedula = "1234",
+    Nombre = "Carlos",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    FechaDeNacimiento = new DateTime(1985, 5, 15),
+    Rol = "Gerente",
+    Usuario = "carlos.g",
+    Contraseña = "1234secure"
+};
+
+// 🟩 Escritura de empleado
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE EMPLEADO ===========");
+Escritura.GuardarEmpleado(empleadoA);
+
+// 🟩 Lectura de empleados
+Console.WriteLine("=========== 🔍 LECTURA DE EMPLEADOS (TODOS) ===========");
+var empleadosA = Lectura.LeerEmpleados();
+
+foreach (var empleado in empleadosA)
+{
+    Console.WriteLine($"Nombre Completo: {empleado.Nombre} {empleado.Apellido1} {empleado.Apellido2}");
+    Console.WriteLine($"Cédula: {empleado.Cedula}");
+    Console.WriteLine($"Rol: {empleado.Rol}");
+    Console.WriteLine($"Usuario: {empleado.Usuario}");
+    Console.WriteLine($"Fecha de Nacimiento: {empleado.FechaDeNacimiento.ToShortDateString()}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// 🟩 Edición de empleado
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE EMPLEADO ===========");
+var empleadoEditado = new EmpleadoModel
+{
+    Rol = "Director"
+};
+Editare.EditarEmpleado("1234", empleadoEditado);
+
+// 🟩 Eliminación de empleado
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE EMPLEADO ===========");
+Elimionacion.EliminarEmpleado("1234");
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+
+
+var depositoA = new DepositoModel
+{
+    CuentaEmisora = "C123",
+    CuentaDestino = "C456",
+    Nombre = "Carlos",
+    NumeroDeCuenta = "C123",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    Fecha = "2025-04-11",
+    Monto = 1500.00m,
+    ID = "D001",
+    Moneda = "CRC"
+};
+
+// 🟩 Escritura de depósito
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE DEPÓSITO ===========");
+Escritura.GuardarDeposito(depositoA);
+
+// 🟩 Lectura de depósitos
+Console.WriteLine("=========== 🔍 LECTURA DE DEPÓSITOS (TODOS) ===========");
+var depositosA = Lectura.LeerDepositos();
+
+foreach (var deposito in depositosA)
+{
+    Console.WriteLine($"ID: {deposito.ID}");
+    Console.WriteLine($"Monto: {deposito.Monto} {deposito.Moneda}");
+    Console.WriteLine($"Cuenta Emisora: {deposito.CuentaEmisora}");
+    Console.WriteLine($"Cuenta Destino: {deposito.CuentaDestino}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+var pagoA = new PagoModel
+{
+    Cuenta_Emisora = "C123",
+    Numero_de_Tarjeta = "T001",
+    Nombre = "Carlos",
+    NumeroDeCuenta = "C123",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    Fecha = "2025-04-11",
+    Monto = 200.00m,
+    ID = "P001",
+    Moneda = "CRC"
+};
+
+// 🟩 Escritura de pago
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE PAGO ===========");
+Escritura.GuardarPago(pagoA);
+
+// 🟩 Lectura de pagos
+Console.WriteLine("=========== 🔍 LECTURA DE PAGOS (TODOS) ===========");
+var pagosA = Lectura.LeerPagos();
+
+foreach (var pago in pagosA)
+{
+    Console.WriteLine($"ID: {pago.ID}");
+    Console.WriteLine($"Monto: {pago.Monto} {pago.Moneda}");
+    Console.WriteLine($"Cuenta Emisora: {pago.Cuenta_Emisora}");
+    Console.WriteLine($"Número de Tarjeta: {pago.Numero_de_Tarjeta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+var retiroA = new RetiroModel
+{
+    CuentaARetirar = new CuentaModel
+    {
+        NumeroDeCuenta = "C123",
+        Nombre = "Cuenta Corriente",
+        Descripcion = "Cuenta para pagos rápidos",
+        Usuario = "carlos.g",
+        Moneda = "CRC",
+        TipoDeCuenta = "Corriente"
+    },
+    Nombre = "Carlos",
+    NumeroDeCuenta = "C123",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    Fecha = "2025-04-11",
+    Monto = 500.00m,
+    ID = "R001",
+    Moneda = "CRC"
+};
+
+// 🟩 Escritura de retiro
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE RETIRO ===========");
+Escritura.GuardarRetiro(retiroA);
+
+// 🟩 Lectura de retiros
+Console.WriteLine("=========== 🔍 LECTURA DE RETIROS (TODOS) ===========");
+var retirosA = Lectura.LeerRetiros();
+
+foreach (var retiro in retirosA)
+{
+    Console.WriteLine($"ID: {retiro.ID}");
+    Console.WriteLine($"Monto: {retiro.Monto} {retiro.Moneda}");
+    Console.WriteLine($"Cuenta para Retirar: {retiro.CuentaARetirar.NumeroDeCuenta}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+Console.WriteLine("================================================================");
+
+
+
 
 app.Run();

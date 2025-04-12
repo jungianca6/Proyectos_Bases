@@ -39,5 +39,52 @@ namespace TECBank_BackEnd.Pruebas
                 ? $"🗑️ Tarjeta {numero} eliminada correctamente."
                 : $"⚠️ No se encontró tarjeta con número {numero}.");
         }
+                public void EliminarDeposito(string idDeposito)
+        {
+            Jason json = new Jason();
+            var depositos = json.LeerDepositos();
+            var depositoEliminado = depositos.RemoveAll(d => d.ID == idDeposito); // Usando ID heredado de MovimientoModel
+            json.GuardarDepositos(depositos);
+
+            Console.WriteLine(depositoEliminado > 0
+                ? $"🗑️ Depósito {idDeposito} eliminado correctamente."
+                : $"⚠️ No se encontró el depósito con ID {idDeposito}.");
+        }
+
+        public void EliminarEmpleado(string idEmpleado)
+        {
+            Jason json = new Jason();
+            var empleados = json.LeerEmpleados();
+            var eliminados = empleados.RemoveAll(e => e.Cedula == idEmpleado);
+            json.GuardarEmpleados(empleados);
+
+            Console.WriteLine(eliminados > 0
+                ? $"🗑️ Empleado con cédula {idEmpleado} eliminado correctamente."
+                : $"⚠️ No se encontró el empleado con cédula {idEmpleado}.");
+        }
+
+        public void EliminarPago(string idPago)
+        {
+            Jason json = new Jason();
+            var pagos = json.LeerPagos();
+            var pagoEliminado = pagos.RemoveAll(p => p.ID == idPago); // Usando ID heredado de MovimientoModel
+            json.GuardarPagos(pagos);
+
+            Console.WriteLine(pagoEliminado > 0
+                ? $"🗑️ Pago {idPago} eliminado correctamente."
+                : $"⚠️ No se encontró el pago con ID {idPago}.");
+        }
+
+        public void EliminarRetiro(string idRetiro)
+        {
+            Jason json = new Jason();
+            var retiros = json.LeerRetiros();
+            var retiroEliminado = retiros.RemoveAll(r => r.ID == idRetiro); // Usando ID heredado de MovimientoModel
+            json.GuardarRetiros(retiros);
+
+            Console.WriteLine(retiroEliminado > 0
+                ? $"🗑️ Retiro {idRetiro} eliminado correctamente."
+                : $"⚠️ No se encontró el retiro con ID {idRetiro}.");
+        }
     }
 }

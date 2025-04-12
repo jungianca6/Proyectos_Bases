@@ -60,6 +60,83 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
+        public List<DepositoModel> LeerDepositos(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var depositos = json.LeerDepositos();
+
+            return filtro switch
+            {
+                "ID" => depositos.Where(d => d.ID == valor).ToList(),
+                "NumeroDeCuenta" => depositos.Where(d => d.NumeroDeCuenta == valor).ToList(),
+                "Apellido1" => depositos.Where(d => d.Apellido1 == valor).ToList(),
+                "Apellido2" => depositos.Where(d => d.Apellido2 == valor).ToList(),
+                "Monto" => depositos.Where(d => d.Monto.ToString() == valor).ToList(),
+                "Moneda" => depositos.Where(d => d.Moneda == valor).ToList(),
+                "Fecha" => depositos.Where(d => d.Fecha == valor).ToList(),
+                "CuentaEmisora" => depositos.Where(d => d.CuentaEmisora == valor).ToList(),
+                "CuentaDestino" => depositos.Where(d => d.CuentaDestino == valor).ToList(),
+                _ => depositos
+            };
+        }
+
+        public List<EmpleadoModel> LeerEmpleados(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var empleados = json.LeerEmpleados();
+
+            return filtro switch
+            {
+                "Cedula" => empleados.Where(e => e.Cedula == valor).ToList(),
+                "Nombre" => empleados.Where(e => e.Nombre == valor).ToList(),
+                "Apellido1" => empleados.Where(e => e.Apellido1 == valor).ToList(),
+                "Apellido2" => empleados.Where(e => e.Apellido2 == valor).ToList(),
+                "Rol" => empleados.Where(e => e.Rol == valor).ToList(),
+                "FechaDeNacimiento" => empleados.Where(e => e.FechaDeNacimiento.ToString() == valor).ToList(),
+                "Usuario" => empleados.Where(e => e.Usuario == valor).ToList(),
+                "Contraseña" => empleados.Where(e => e.Contraseña == valor).ToList(),
+                _ => empleados
+            };
+        }
+
+        public List<PagoModel> LeerPagos(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var pagos = json.LeerPagos();
+
+            return filtro switch
+            {
+                "ID" => pagos.Where(p => p.ID == valor).ToList(),
+                "NumeroDeCuenta" => pagos.Where(p => p.NumeroDeCuenta == valor).ToList(),
+                "Apellido1" => pagos.Where(p => p.Apellido1 == valor).ToList(),
+                "Apellido2" => pagos.Where(p => p.Apellido2 == valor).ToList(),
+                "Monto" => pagos.Where(p => p.Monto.ToString() == valor).ToList(),
+                "Moneda" => pagos.Where(p => p.Moneda == valor).ToList(),
+                "Fecha" => pagos.Where(p => p.Fecha == valor).ToList(),
+                "Cuenta_Emisora" => pagos.Where(p => p.Cuenta_Emisora == valor).ToList(),
+                "Numero_de_Tarjeta" => pagos.Where(p => p.Numero_de_Tarjeta == valor).ToList(),
+                _ => pagos
+            };
+        }
+
+        public List<RetiroModel> LeerRetiros(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var retiros = json.LeerRetiros();
+
+            return filtro switch
+            {
+                "ID" => retiros.Where(r => r.ID == valor).ToList(),
+                "NumeroDeCuenta" => retiros.Where(r => r.NumeroDeCuenta == valor).ToList(),
+                "Apellido1" => retiros.Where(r => r.Apellido1 == valor).ToList(),
+                "Apellido2" => retiros.Where(r => r.Apellido2 == valor).ToList(),
+                "Monto" => retiros.Where(r => r.Monto.ToString() == valor).ToList(),
+                "Moneda" => retiros.Where(r => r.Moneda == valor).ToList(),
+                "Fecha" => retiros.Where(r => r.Fecha == valor).ToList(),
+                _ => retiros
+            };
+        }
+
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
             Jason json = new Jason();

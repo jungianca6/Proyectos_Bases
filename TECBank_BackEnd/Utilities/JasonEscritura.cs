@@ -52,5 +52,68 @@ namespace TECBank_BackEnd.Pruebas
             json.GuardarTarjetas(tarjetas);
             Console.WriteLine($"✅ Tarjeta {tarjeta.Numero} agregada correctamente.");
         }
+        public void GuardarDeposito(DepositoModel deposito)
+        {
+            Jason json = new Jason();
+            var depositos = json.LeerDepositos();
+
+            if (depositos.Any(d => d.ID == deposito.ID))
+            {
+                Console.WriteLine($"⚠️ Ya existe un depósito con el ID {deposito.ID}. No se puede agregar.");
+                return;
+            }
+
+            depositos.Add(deposito);
+            json.GuardarDepositos(depositos);
+            Console.WriteLine($"✅ Depósito {deposito.ID} agregado correctamente.");
+        }
+
+        public void GuardarEmpleado(EmpleadoModel empleado)
+        {
+            Jason json = new Jason();
+            var empleados = json.LeerEmpleados();
+
+            if (empleados.Any(e => e.Cedula == empleado.Cedula))
+            {
+                Console.WriteLine($"⚠️ Ya existe un empleado con la cédula {empleado.Cedula}. No se puede agregar.");
+                return;
+            }
+
+            empleados.Add(empleado);
+            json.GuardarEmpleados(empleados);
+            Console.WriteLine($"✅ Empleado con cédula {empleado.Cedula} agregado correctamente.");
+        }
+
+        public void GuardarPago(PagoModel pago)
+        {
+            Jason json = new Jason();
+            var pagos = json.LeerPagos();
+
+            if (pagos.Any(p => p.ID == pago.ID))
+            {
+                Console.WriteLine($"⚠️ Ya existe un pago con el ID {pago.ID}. No se puede agregar.");
+                return;
+            }
+
+            pagos.Add(pago);
+            json.GuardarPagos(pagos);
+            Console.WriteLine($"✅ Pago con ID {pago.ID} agregado correctamente.");
+        }
+
+        public void GuardarRetiro(RetiroModel retiro)
+        {
+            Jason json = new Jason();
+            var retiros = json.LeerRetiros();
+
+            if (retiros.Any(r => r.ID == retiro.ID))
+            {
+                Console.WriteLine($"⚠️ Ya existe un retiro con el ID {retiro.ID}. No se puede agregar.");
+                return;
+            }
+
+            retiros.Add(retiro);
+            json.GuardarRetiros(retiros);
+            Console.WriteLine($"✅ Retiro con ID {retiro.ID} agregado correctamente.");
+        }
     }
 }
