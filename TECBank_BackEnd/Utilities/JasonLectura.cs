@@ -157,6 +157,15 @@ namespace TECBank_BackEnd.Pruebas
             );
         }
 
+        public ClienteModel? BuscarPorCedula(string cedula)
+        {
+            Jason json = new Jason();
+            var clientes = json.LeerClientes();
+
+            return clientes.FirstOrDefault(c =>
+                c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
         public CuentaModel? BuscarCuentaPorUsuario(string usuario)
         {
             Jason json = new Jason();

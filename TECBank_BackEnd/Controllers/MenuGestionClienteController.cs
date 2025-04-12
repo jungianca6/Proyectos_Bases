@@ -103,7 +103,9 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEliminar jasonEliminar = new JasonEliminar();
-                var CuentasA = jasonLectura.LeerCuentas("Usuario", data.Usuario);
+                ClienteModel? cliente = jasonLectura.BuscarPorCedula(data.Cedula);
+
+                var CuentasA = jasonLectura.LeerCuentas("Usuario", cliente.Usuario);
                 var tarjetaEditada = new TarjetaModel
                 {
                     NumeroDeCuenta = ""
