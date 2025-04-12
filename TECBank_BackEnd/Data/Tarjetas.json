@@ -14,5 +14,13 @@
     "FechaDeExpiracion": "12/2027",
     "CCV": "123",
     "SaldoDisponible": 10000
+  },
+  {
+    "Numero": "1232141234",
+    "NumeroDeCuenta": "sapo1",
+    "TipoDeTarjeta": "Debito",
+    "FechaDeExpiracion": "1111-11-11",
+    "CCV": "123",
+    "SaldoDisponible": 50
   }
 ]

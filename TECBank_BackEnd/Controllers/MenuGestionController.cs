@@ -65,7 +65,6 @@ namespace TECBank_BackEnd.Controllers
                 if (tarjetaExistente != null)
                 {
 
-
                     TarjetaModel tarjeta_con_cambios = new TarjetaModel();
 
 
@@ -88,10 +87,19 @@ namespace TECBank_BackEnd.Controllers
                     tarjeta_con_cambios.NumeroDeCuenta = data.numeroDeCuenta;
 
 
+                    Console.WriteLine("Datos de tarjeta_con_cambios:");
+                    Console.WriteLine("Número: " + tarjeta_con_cambios.Numero);
+                    Console.WriteLine("Tipo de Tarjeta: " + tarjeta_con_cambios.TipoDeTarjeta);
+                    Console.WriteLine("Fecha de Expiración: " + tarjeta_con_cambios.FechaDeExpiracion);
+                    Console.WriteLine("CCV: " + tarjeta_con_cambios.CCV);
+                    Console.WriteLine("Saldo Disponible: " + tarjeta_con_cambios.SaldoDisponible);
+                    Console.WriteLine("Número de Cuenta: " + tarjeta_con_cambios.NumeroDeCuenta);
+
+
                     JasonEditar jasonEditar = new JasonEditar();
                     jasonEditar.EditarTarjeta(tarjeta_con_cambios.NumeroDeCuenta, tarjeta_con_cambios);
 
-                    var response = new { success = false, message = "La tarjeta se modifico con exito" };
+                    var response = new { success = true, message = "La tarjeta se modifico con exito" };
                     return Ok(response);
                 }
                 else
@@ -110,10 +118,13 @@ namespace TECBank_BackEnd.Controllers
         }
         // POST: MenuGestion/EliminarTarjeta
         [HttpPost("EliminarTarjeta")]
-        public ActionResult EliminarTarjeta([FromBody] ClienteModel data)
+        public ActionResult EliminarTarjeta([FromBody] EliminacionTarjetaDataInputModel data)
         {
             try
             {
+                JasonEliminar jasonEliminar = new JasonEliminar();
+                jasonEliminar.EliminarTarjeta(data.numeroDetarjeta);
+
 
                 return Ok();
             }
