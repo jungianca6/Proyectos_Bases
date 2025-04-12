@@ -108,7 +108,7 @@ namespace TECBank_BackEnd.Controllers
         }
         // POST: MenuGestion/EliminarTarjeta
         [HttpPost("EliminarTarjeta")]
-        public ActionResult EliminarTarjeta([FromBody] EliminacionTarjetaDataInputModel data)
+        public ActionResult EliminarTarjeta([FromBody] EliminacionCuentaDataInputModel data)
         {
             try
             {
@@ -197,6 +197,34 @@ namespace TECBank_BackEnd.Controllers
 
                 // Retornar la respuesta con código 200 (OK)
                 return Ok(response);
+
+            }
+            catch (Exception ex)
+            {
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest();
+            }
+        }
+
+        // POST: MenuGestion/AgregarCuenta
+        [HttpPost("EliminarCuenta")]
+        public ActionResult EliminarCuenta([FromBody] EliminacionCuentaDataInputModel data)
+        {
+            try
+            {
+                JasonEliminar jasonEliminar = new JasonEliminar();
+
+                if (jasonEliminar.EliminarCuenta(data.numeroDeCuenta))
+                {
+
+                    var response = new { success = true, message = "La cuenta se elimino con exito" };
+                    return Ok(response);
+                }
+                else
+                {
+                    var response = new { success = true, message = "La cuenta no se elimino con exito" };
+                    return Ok(response);
+                }
 
             }
             catch (Exception ex)
