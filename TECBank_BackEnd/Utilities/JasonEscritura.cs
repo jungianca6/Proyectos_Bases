@@ -166,5 +166,24 @@ namespace TECBank_BackEnd.Pruebas
             Console.WriteLine($"✅ Pago con ID {pagoPrestamo.ID} agregado correctamente.");
         }
 
+
+
+
+        public void GuardarCalendarioPago(CalendarioPagoModel calendario)
+        {
+            Jason json = new Jason();
+            var calendarios = json.LeerCalendarioPagos();
+
+            if (calendarios.Any(c => c.ID_Prestamo == calendario.ID_Prestamo && c.ID_Prestamo == calendario.ID_Prestamo))
+            {
+                Console.WriteLine($"⚠️ Ya existe una cuota #{calendario.ID_Prestamo} para el préstamo con ID {calendario.ID_Prestamo}. No se puede agregar.");
+                return;
+            }
+
+            calendarios.Add(calendario);
+            json.GuardarCalendarioPagos(calendarios);
+            Console.WriteLine($"✅ Calendario de pago (cuota #{calendario.ID_Prestamo}) agregado correctamente al préstamo con ID {calendario.ID_Prestamo}.");
+        }
+
     }
 }

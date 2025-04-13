@@ -202,6 +202,46 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
+
+
+        public List<CalendarioPagoModel> LeerCalendariosPago(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var calendarios = json.LeerCalendarioPagos();
+
+            return filtro switch
+            {
+                "ID_Prestamo" => calendarios.Where(c => c.ID_Prestamo == valor).ToList(),
+                "FechaVencimiento" => calendarios.Where(c => c.FechaVencimiento == valor).ToList(),
+                "SaldoPendiente" => int.TryParse(valor, out int saldo)
+                                        ? calendarios.Where(c => c.SaldoPendiente == saldo).ToList()
+                                        : new List<CalendarioPagoModel>(),
+
+                // Filtro especial por mes dentro de cuotas
+                "Mes" => calendarios
+                            .Where(c => c.CuotasMensuales.Any(cm => cm.Mes == valor))
+                            .ToList(),
+
+                // Filtro especial por año
+                "Anio" => int.TryParse(valor, out int anio)
+                            ? calendarios.Where(c => c.CuotasMensuales.Any(cm => cm.Anio == anio)).ToList()
+                            : new List<CalendarioPagoModel>(),
+
+                // Filtro especial por fecha de pago
+                "FechaPago" => calendarios
+                                .Where(c => c.CuotasMensuales.Any(cm => cm.FechaPago == valor))
+                                .ToList(),
+
+                // Filtro por monto a pagar
+                "MontoAPagar" => int.TryParse(valor, out int monto)
+                                    ? calendarios.Where(c => c.CuotasMensuales.Any(cm => cm.MontoAPagar == monto)).ToList()
+                                    : new List<CalendarioPagoModel>(),
+
+                _ => calendarios
+            };
+        }
+
+
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
             Jason json = new Jason();
