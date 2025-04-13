@@ -81,6 +81,7 @@ namespace TECBank_BackEnd.Pruebas
                 "Apellido2" => empleados.Where(e => e.Apellido2 == valor).ToList(),
                 "Rol" => empleados.Where(e => e.Rol == valor).ToList(),
                 "DescripcionDeRol" => empleados.Where(e => e.DescripcionDeRol == valor).ToList(),
+                "IngresoMensual" => empleados.Where(c => c.IngresoMensual.ToString() == valor).ToList(),
 
                 "FechaDeNacimiento" => empleados.Where(e => e.FechaDeNacimiento.ToString() == valor).ToList(),
                 "Usuario" => empleados.Where(e => e.Usuario == valor).ToList(),
@@ -139,8 +140,8 @@ namespace TECBank_BackEnd.Pruebas
             return filtro switch
             {
                 "ID" => transferencias.Where(t => t.ID == valor).ToList(),
-                "CuentaEmisora" => transferencias.Where(t => t.Cuenta_Emisora == valor).ToList(),
-                "CuentaDestino" => transferencias.Where(t => t.Cuenta_Receptora == valor).ToList(),
+                "Cuenta_Emisora" => transferencias.Where(t => t.Cuenta_Emisora == valor).ToList(),
+                "Cuenta_Receptora" => transferencias.Where(t => t.Cuenta_Receptora == valor).ToList(),
                 "Monto" => int.TryParse(valor, out int monto)
                             ? transferencias.Where(t => t.Monto == monto).ToList()
                             : new List<TransferenciaModel>(), // Si no es un valor numérico, devuelve vacío

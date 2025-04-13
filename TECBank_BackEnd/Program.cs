@@ -332,6 +332,8 @@ var empleadoA = new EmpleadoModel
     Apellido1 = "Perez",
     Apellido2 = "Gomez",
     FechaDeNacimiento = "13/09/2004",
+    IngresoMensual = 1210,
+
     AdminRol = true,
     Usuario = "carlos.g",
     Contrasena = "1234secure"
@@ -453,6 +455,52 @@ foreach (var retiro in retirosA)
     Console.WriteLine($"ID: {retiro.ID}");
     Console.WriteLine($"Monto: {retiro.Monto} {retiro.Moneda}");
     Console.WriteLine($"Cuenta para Retirar: {retiro.CuentaARetirar}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var Transferencia = new TransferenciaModel
+{
+    Cuenta_Emisora = "dsadad",
+    Cuenta_Receptora = "dsadad",
+    Monto = 500,
+
+    Nombre = "Carlos",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    Fecha = "2025-04-11",
+    ID = "Rsd01",
+    Moneda = "CRC"
+};
+
+
+// 🟩 Escritura de retiro
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE tranfe ===========");
+Escritura.GuardarTransferencia(Transferencia);
+
+// 🟩 Lectura de retiros
+Console.WriteLine("=========== 🔍 LECTURA DE tranfe (TODOS) ===========");
+var TransferenciaA = Lectura.LeerTransferencias("Cuenta_Receptora", "dsadad");
+
+foreach (var transferencia in TransferenciaA)
+{
+    Console.WriteLine($"ID: {transferencia.ID}");
+    Console.WriteLine($"Monto: {transferencia.Monto} {transferencia.Moneda}");
+    Console.WriteLine($"Cuenta para tranfe: {transferencia.Cuenta_Emisora}");
     Console.WriteLine("------------------------------------------------------------");
 }
 

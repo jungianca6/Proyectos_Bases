@@ -153,6 +153,8 @@ namespace TECBank_BackEnd.Pruebas
 
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
                     empleado.Usuario = nuevosDatos.Usuario;
+                if (nuevosDatos.IngresoMensual != 0)
+                    empleado.IngresoMensual = nuevosDatos.IngresoMensual;
 
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Contrasena))
                     empleado.Contrasena = nuevosDatos.Contrasena;
