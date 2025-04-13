@@ -182,17 +182,6 @@ namespace TECBank_BackEnd.Pruebas
 
             if (asesor != null)
             {
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
-                    asesor.Nombre = nuevosDatos.Nombre;
-
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido1))
-                    asesor.Apellido1 = nuevosDatos.Apellido1;
-
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido2))
-                    asesor.Apellido2 = nuevosDatos.Apellido2;
-
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Fecha_de_Nacimiento))
-                    asesor.Fecha_de_Nacimiento = nuevosDatos.Fecha_de_Nacimiento;
 
                 if (nuevosDatos.Meta_Colones > 0)
                     asesor.Meta_Colones = nuevosDatos.Meta_Colones;

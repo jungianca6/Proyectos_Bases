@@ -67,9 +67,7 @@ namespace TECBank_BackEnd.Controllers
 
                 AsesorCreditoModel nuevoAsesor = new()
                 {
-                    Nombre = data.Nombre,
-                    Apellido1 = data.Apellido1,
-                    Apellido2 = data.Apellido2,
+
                     Cedula = data.Cedula,
                     Meta_Colones = data.Meta_Colones,
                     Meta_Creditos = []
@@ -110,9 +108,7 @@ namespace TECBank_BackEnd.Controllers
 
                 AsesorCreditoModel nuevoAsesor = new()
                 {
-                    Nombre = data.Nombre,
-                    Apellido1 = data.Apellido1,
-                    Apellido2 = data.Apellido2,
+
                     Cedula = data.Cedula,
                     Meta_Colones = data.Meta_Colones,
                     Meta_Creditos = data.Meta_Creditos
