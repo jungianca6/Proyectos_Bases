@@ -9,115 +9,196 @@ namespace TECBank_BackEnd.Controllers
     [Route("[controller]")]
     public class MenuGestionEmpleadosController : ControllerBase
     {
+        private readonly JasonEscritura escrituraJson = new();
+        private readonly JasonEditar edicionJson = new();
+        private readonly JasonEliminar eliminadorJson = new();
 
-        // POST: MenuGestionCuentas/AgregarCuenta
+        // Agrega un nuevo empleado
         [HttpPost("AgregarEmpleado")]
         public ActionResult AgregarEmpleado([FromBody] EmpleadoModel data)
         {
             try
             {
-                // Crear una instancia del escritor de clientes de prueba
-                JasonEscritura escrituraJson = new JasonEscritura();
+                EmpleadoModel nuevoEmpleado = new()
+                {
+                    Nombre = data.Nombre,
+                    Rol = data.Rol,
+                    DescripcionDeRol = data.DescripcionDeRol,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    AdminRol = data.AdminRol,
+                    FechaDeNacimiento = data.FechaDeNacimiento,
+                    Usuario = data.Usuario,
+                    Contrasena = data.Contrasena,
+                    IngresoMensual = data.IngresoMensual
+                };
 
-                EmpleadoModel nuevo_empleado = new EmpleadoModel();
+                escrituraJson.GuardarEmpleado(nuevoEmpleado);
 
-                Random random = new Random();
-                int id = random.Next(10_000_000, 100_000_000); // Entre 10,000,000 y 99,999,999
-
-                nuevo_empleado.Nombre = data.Nombre;
-                nuevo_empleado.Rol = data.Rol;
-                nuevo_empleado.DescripcionDeRol = data.DescripcionDeRol;
-                nuevo_empleado.Apellido1 = data.Apellido1;
-                nuevo_empleado.Apellido2 = data.Apellido2;
-                nuevo_empleado.Cedula = data.Cedula;
-                nuevo_empleado.AdminRol = data.AdminRol;
-                nuevo_empleado.FechaDeNacimiento = data.FechaDeNacimiento; nuevo_empleado.FechaDeNacimiento = data.FechaDeNacimiento;
-                nuevo_empleado.Usuario = data.Usuario;
-                nuevo_empleado.Contrasena = data.Contrasena;
-                nuevo_empleado.IngresoMensual = data.IngresoMensual;
-
-                // Crear una respuesta indicando éxito
-                var response = new { success = true};
-
-                // Retornar la respuesta con código 200 (OK)
-                return Ok(response);
-
+                return Ok(new { success = true });
             }
             catch (Exception ex)
             {
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest();
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
-        // POST: MenuGestionCuentas/AgregarCuenta
+        // Agrega un nuevo empleado
+        [HttpPost("AgregarAsesorDeCredito")]
+        public ActionResult AgregarAsesorDeCredito([FromBody] AgregarAsesorDeCreditoDataInputModel data)
+        {
+            try
+            {
+                EmpleadoModel nuevoEmpleado = new()
+                {
+                    Nombre = data.Nombre,
+                    Rol = data.Rol,
+                    DescripcionDeRol = data.DescripcionDeRol,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    AdminRol = true,
+                    FechaDeNacimiento = data.FechaDeNacimiento,
+                    Usuario = data.Usuario,
+                    Contrasena = data.Contrasena,
+                    IngresoMensual = data.IngresoMensual
+                };
+
+                AsesorCreditoModel nuevoAsesor = new()
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    Meta_Colones = data.Meta_Colones,
+                    Meta_Creditos = []
+                };
+
+                escrituraJson.GuardarAsesorCredito(nuevoAsesor);
+
+                escrituraJson.GuardarEmpleado(nuevoEmpleado);
+
+                return Ok(new { success = true, message = "Asesor agregado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Agrega un nuevo empleado
+        [HttpPost("EditarAsesorDeCredito")]
+        public ActionResult EditarAsesorDeCredito([FromBody] AgregarAsesorDeCreditoDataInputModel data)
+        {
+            try
+            {
+                EmpleadoModel nuevoEmpleado = new()
+                {
+                    Nombre = data.Nombre,
+                    Rol = data.Rol,
+                    DescripcionDeRol = data.DescripcionDeRol,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    AdminRol = true,
+                    FechaDeNacimiento = data.FechaDeNacimiento,
+                    Usuario = data.Usuario,
+                    Contrasena = data.Contrasena,
+                    IngresoMensual = data.IngresoMensual
+                };
+
+                AsesorCreditoModel nuevoAsesor = new()
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    Meta_Colones = data.Meta_Colones,
+                    Meta_Creditos = data.Meta_Creditos
+                };
+
+                edicionJson.EditarAsesorCredito(nuevoAsesor.Cedula,nuevoAsesor);
+
+                return Ok(new { success = true , message = "Asesor modificado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Agrega un nuevo empleado
+        [HttpPost("EliminarAsesorDeCredito")]
+        public ActionResult EliminarAsesorDeCredito([FromBody] EliminacionEmpleadoDataInputModel data)
+        {
+            try
+            {
+                eliminadorJson.EliminarEmpleado(data.Cedula);
+                eliminadorJson.EliminarAsesorCredito(data.Cedula);
+
+                return Ok(new { success = true, message = "Asesor modificado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+
+
+        // Modifica los datos de un empleado
         [HttpPost("ModificarEmpleado")]
         public ActionResult ModificarEmpleado([FromBody] EmpleadoModel data)
         {
             try
             {
-                // Crear una instancia del escritor de clientes de prueba
-                JasonEditar edicionJson = new JasonEditar();
+                EmpleadoModel empleadoActualizado = new()
+                {
+                    Nombre = data.Nombre,
+                    Rol = data.Rol,
+                    DescripcionDeRol = data.DescripcionDeRol,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    AdminRol = data.AdminRol,
+                    FechaDeNacimiento = data.FechaDeNacimiento,
+                    Usuario = data.Usuario,
+                    Contrasena = data.Contrasena,
+                    IngresoMensual = data.IngresoMensual
+                };
 
-                EmpleadoModel nueva_empleadoA = new EmpleadoModel();
+                edicionJson.EditarEmpleado(data.Cedula, empleadoActualizado);
 
-                Random random = new Random();
-
-                nueva_empleadoA.Nombre = data.Nombre;
-                nueva_empleadoA.Rol = data.Rol;
-                nueva_empleadoA.DescripcionDeRol = data.DescripcionDeRol;
-                nueva_empleadoA.Apellido1 = data.Apellido1;
-                nueva_empleadoA.Apellido2 = data.Apellido2;
-                nueva_empleadoA.Cedula = data.Cedula;
-                nueva_empleadoA.AdminRol = data.AdminRol;
-                nueva_empleadoA.FechaDeNacimiento = data.FechaDeNacimiento; nueva_empleadoA.FechaDeNacimiento = data.FechaDeNacimiento;
-                nueva_empleadoA.Usuario = data.Usuario;
-                nueva_empleadoA.Contrasena = data.Contrasena;
-                nueva_empleadoA.IngresoMensual = data.IngresoMensual;
-
-                edicionJson.EditarEmpleado(nueva_empleadoA.Cedula, nueva_empleadoA);
-
-                // Crear una respuesta indicando éxito
-                var response = new { success = true };
-
-                // Retornar la respuesta con código 200 (OK)
-                return Ok(response);
-
+                return Ok(new { success = true });
             }
             catch (Exception ex)
             {
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest();
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
-        // POST: MenuGestionCuentas/AgregarCuenta
+        // Elimina un empleado por cédula
         [HttpPost("EliminarEmpleado")]
         public ActionResult EliminarEmpleado([FromBody] EliminacionEmpleadoDataInputModel data)
         {
             try
             {
-                JasonEliminar jasonEliminar = new JasonEliminar();
+                bool eliminado = eliminadorJson.EliminarEmpleado(data.Cedula);
 
-                if (jasonEliminar.EliminarEmpleado(data.Cedula))
+                if (eliminado)
                 {
-
-                    var response = new { success = true, message = "La empleado se elimino con exito" };
-                    return Ok(response);
+                    return Ok(new { success = true, message = "El empleado se eliminó con éxito" });
                 }
                 else
                 {
-                    var response = new { success = true, message = "La empleado no se elimino" };
-                    return Ok(response);
+                    return Ok(new { success = true, message = "No se encontró el empleado a eliminar" });
                 }
-
             }
             catch (Exception ex)
             {
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest();
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
-
     }
 }

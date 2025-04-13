@@ -24,5 +24,16 @@
       5,
       7
     ]
+  },
+  {
+    "Nombre": "Koki puto",
+    "Apellido1": "Hernandez",
+    "Apellido2": "Soto",
+    "Cedula": "207890123",
+    "Fecha_de_Nacimiento": null,
+    "Meta_Colones": 5000000,
+    "Meta_Creditos": [
+      1
+    ]
   }
 ]

@@ -23,8 +23,58 @@ namespace TECBank_BackEnd.Controllers
         }
 
         // POST: Movimiento/Pago
-        [HttpPost("Pago")]
+        [HttpPost("PagoTarjeta")]
         public ActionResult Pago([FromBody] PagoDataInputModel data)
+        {
+            try
+            {
+                PagoModel nuevo_pago = new PagoModel
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    ID = GenerarID(),
+                    Fecha = ObtenerFechaActual(),
+                    Numero_de_Tarjeta = data.Numero_de_Tarjeta,
+                    Cuenta_Emisora = data.NumeroDeCuenta,
+                    Moneda = data.Moneda,
+                    Monto = data.Monto
+                };
+
+                JasonLectura jasonLectura = new JasonLectura();
+                JasonEditar jasonEditar = new JasonEditar();
+                JasonEscritura jasonEscritura = new JasonEscritura();
+
+                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.NumeroDeCuenta);
+
+                if (cuenta_emisora.Monto >= data.Monto)
+                {
+                    TarjetaModel tarjeta = jasonLectura.BuscarTarjetaPorNumero(data.Numero_de_Tarjeta);
+                    tarjeta.SaldoDisponible += data.Monto;
+                    jasonEditar.EditarTarjeta(data.Numero_de_Tarjeta, tarjeta);
+
+                    cuenta_emisora.Monto -= data.Monto;
+                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
+
+                    jasonEscritura.GuardarPago(nuevo_pago);
+
+                    return Ok(new { success = true, message = "El pago de la tarjeta se hizo con exito" });
+                }
+                else
+                {
+                    return Ok(new { success = false, message = "No hay fondos suficientes en la cuenta" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        /*
+        // POST: Movimiento/Pago
+        [HttpPost("PagoPrestamo")]
+        public ActionResult PagoPrestamo([FromBody] PagoDataInputModel data)
         {
             try
             {
@@ -70,6 +120,7 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        */
 
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]

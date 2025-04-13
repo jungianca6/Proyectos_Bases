@@ -6,5 +6,7 @@ namespace TECBank_BackEnd.Controllers
     [Route("reporte/[controller]")]
     public class ReporteController : ControllerBase
     {
+
+
     }
 }

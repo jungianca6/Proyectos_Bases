@@ -24,5 +24,18 @@
     "Usuario": "carlos.g",
     "Contrasena": "1234secure",
     "IngresoMensual": 0
+  },
+  {
+    "Nombre": "Laura",
+    "Rol": "AsesorDeCredito",
+    "DescripcionDeRol": "Encargada de evaluar solicitudes de cr\u00E9dito",
+    "Apellido1": "Hernandez",
+    "Apellido2": "Soto",
+    "Cedula": "207890123",
+    "AdminRol": true,
+    "FechaDeNacimiento": "12/04/2001",
+    "Usuario": "laura_h",
+    "Contrasena": "pass1234",
+    "IngresoMensual": 750000
   }
 ]
