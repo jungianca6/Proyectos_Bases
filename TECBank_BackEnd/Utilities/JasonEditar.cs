@@ -154,8 +154,8 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Usuario))
                     empleado.Usuario = nuevosDatos.Usuario;
 
-                if (!string.IsNullOrWhiteSpace(nuevosDatos.Contraseña))
-                    empleado.Contraseña = nuevosDatos.Contraseña;
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Contrasena))
+                    empleado.Contrasena = nuevosDatos.Contrasena;
 
                 if (empleado.AdminRol != nuevosDatos.AdminRol)
                     empleado.AdminRol = nuevosDatos.AdminRol;

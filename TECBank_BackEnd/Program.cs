@@ -334,7 +334,7 @@ var empleadoA = new EmpleadoModel
     FechaDeNacimiento = "13/09/2004",
     AdminRol = true,
     Usuario = "carlos.g",
-    Contraseña = "1234secure"
+    Contrasena = "1234secure"
 };
 
 // 🟩 Escritura de empleado
