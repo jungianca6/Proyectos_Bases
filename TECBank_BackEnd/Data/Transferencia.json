@@ -47,11 +47,22 @@
     "Cuenta_Emisora": "C123",
     "Cuenta_Receptora": "Z999",
     "Monto": 900,
-    "Nombre": "María",
-    "Apellido1": "Jiménez",
+    "Nombre": "Mar\u00EDa",
+    "Apellido1": "Jim\u00E9nez",
     "Apellido2": "Solano",
     "Fecha": "15/03/2024 16:10",
     "ID": "T04",
     "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "99193059",
+    "Cuenta_Receptora": "12193459",
+    "Monto": 10000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 02:33",
+    "ID": "12896953",
+    "Moneda": "Colones"
   }
 ]

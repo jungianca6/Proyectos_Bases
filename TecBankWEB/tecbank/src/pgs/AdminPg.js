@@ -35,11 +35,32 @@ function AdminPG() {
   const [tipoDeCuenta, setTipoDeCuenta] = useState('');
   const [nombreCuenta, setNombre] = useState('');
 
-  const [numeroCuentaD, setNumeroDeCuentaDR] = useState('');
-  const [montoD, setmontoDR] = useState('');
-  const [nombreD, setnombreDR] = useState('');
-  const [apellido1D, setapellido1DR] = useState('');
-  const [apellido2D, setapellido2DR] = useState('');
+  const [numeroCuentaDR, setNumeroDeCuentaDR] = useState('');
+  const [montoDR, setmontoDR] = useState('');
+
+  const [cedulaEmpleado, setcedulaEmpleado] = useState('');
+  const [cedulaEEmpleado, setcedulaEEmpleado] = useState('');
+  const [ingresoEmpleado, setingresoEmpleado] = useState('');
+  const [nombreEmpleado, setnombreEmpleado] = useState('');
+  const [apellido1Empleado, setapellido1Empleado] = useState('');
+  const [apellido2Empleado, setapellido2Empleado] = useState('');
+  const [rolEmpleado, setrolEmpleado] = useState('');
+  const [rolDescEmpleado, setrolDescEmpleado] = useState('');
+  const [fechaEmpleado, setfechaEmpleado] = useState('');
+  const [usuarioEmpleado, setusuarioEmpleado] = useState('');
+  const [contrasenaEmpleado, setcontrasenaEmpleado] = useState('');
+
+  const [cedulaAsesor, setcedulaAsesor] = useState('');
+  const [cedulaEAsesor, setcedulaEAsesor] = useState('');
+  const [ingresoAsesor, setingresoAsesor] = useState('');
+  const [nombreAsesor, setnombreAsesor] = useState('');
+  const [apellido1Asesor, setapellido1Asesor] = useState('');
+  const [apellido2Asesor, setapellido2Asesor] = useState('');
+  const [rolDescAsesor, setrolDescAsesor] = useState('');
+  const [fechaAsesor, setfechaAsesor] = useState('');
+  const [usuarioAsesor, setusuarioAsesor] = useState('');
+  const [contrasenaAsesor, setcontrasenaAsesor] = useState('');
+  const [metaAsesor, setmetaAsesor] = useState('');
 
 
   useEffect(() => {
@@ -54,7 +75,7 @@ if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
 }
 
-const handleSubmitDeposito = async (e, accionp) => {
+const handleSubmitDR = async (e, accionp) => {
   e.preventDefault();
 
   console.log('Acción seleccionada:', accionp);
@@ -71,12 +92,12 @@ const handleSubmitDeposito = async (e, accionp) => {
   console.log('Datos a enviar:', drData);
 
   try {
-    if (accionp === 'ingresar') {
+    if (accionp === 'depositar') {
       // Enviar para agregar la tarjeta
       const response = await axios.post('https://localhost:7190/MenuGestionCuentas/AgregarCuenta', drData);
       console.log('Cliente ingresado con éxito:', response.data);
       alert("Cuenta agregada con éxito");
-    } else if (accionp === 'modificar') {
+    } else if (accionp === 'retirar') {
       // Enviar para modificar la tarjeta
       const response = await axios.post('https://localhost:7190/MenuGestionCuentas/ModificarCuenta', drData);
       console.log('Cliente modificado con éxito:', response.data);
@@ -147,29 +168,30 @@ const handleSubmitCliente = async (e, accionp) => {
   console.log('Acción seleccionada:', accionp);
 
   const clienteData = {
-        nombre: nombreCliente,
-        apellido1: apellido1Cliente,
-        apellido2: apellido2Cliente,
-        cedula: cedulaCliente,
-        direccion: direccionCliente,
-        telefono: telefonoCliente,
-        ingresoMensual: ingresoCliente,
-        tipoDeCliente: tipoCliente,
-        usuario: usuarioCliente,
-        contrasena: contrasenaCliente,
-        adminRol: false
+        Cedula: cedulaCliente,
+        Direccion: direccionCliente,
+        Telefono: telefonoCliente,
+        IngresoMensual: parseFloat(ingresoCliente),
+        Nombre: nombreCliente,
+        Apellido1: apellido1Cliente,
+        Apellido2: apellido2Cliente,
+        TipoDeCliente: tipoCliente,
+        Usuario: usuarioCliente,
+        Contrasena: contrasenaCliente,
+
+        AdminRol: false
   };
 
   console.log('Datos a enviar:', clienteData);
 
   try {
     if (accionp === 'ingresar') {
-      const response = await axios.post('https://localhost:7190/cuenta/MenuGestionClientes/AgregarCliente', clienteData);
+      const response = await axios.post('https://localhost:7190/MenuGestionCliente/AgregarCliente', clienteData);
       console.log('Cliente ingresado con éxito:', response.data);
       alert("Cliente ingresado con éxito");
       
     } else if (accionp === 'modificar') {
-      const response = await axios.post('https://localhost:7190/cuenta/MenuGestionClientes/ModificarCliente', clienteData);
+      const response = await axios.post('https://localhost:7190/MenuGestionCliente/ModificarCliente', clienteData);
       console.log('Cliente modificado con éxito:', response.data);
       alert("Cliente modificado con éxito");
     }
@@ -184,17 +206,72 @@ const handleSubmitEliminarCliente = async (e) => {
 
   // Prepare the data to send to the backend 
   const clienteEData = {
-    cedula: String(cedulaECliente), 
+    Cedula: String(cedulaECliente), 
   };
 
   try {
     // Send data to backend using Axios 
-    const response = await axios.delete(`https://localhost:7190/MenuGestionClientes/EliminarCliente/${cedulaECliente}`, { data: clienteEData });
+    const response = await axios.post('https://localhost:7190/MenuGestionCliente/EliminarCliente', clienteEData);
     console.log('Tarjeta eliminada con éxito:', response.data);
     alert("Cliente eliminado con éxito");
   } catch (error) {
-    console.error('Error al eliminar la tarjeta:', error);
+    alert("No se pudo realizar el cambio", error);
+  }
+};
+
+const handleSubmitEmpleado = async (e, accionp) => {
+  e.preventDefault();
+
+  console.log('Acción seleccionada:', accionp);
+
+  const empleadoData = {
+        Nombre: nombreEmpleado,
+        Rol: rolEmpleado,
+        DescripcionDeRol: rolDescEmpleado,
+        Apellido1: apellido1Empleado,
+        Apellido2: apellido2Empleado,
+        Cedula: cedulaEmpleado,
+        AdminRol: true,
+        FechaDeNacimiento: fechaEmpleado,
+        Usuario: usuarioEmpleado,
+        Contrasena: contrasenaEmpleado,
+        IngresoMensual: ingresoEmpleado
+  };
+
+  console.log('Datos a enviar:', empleadoData);
+
+  try {
+    if (accionp === 'ingresar') {
+      const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/AgregarEmpleado', empleadoData);
+      console.log('Empleado ingresado con éxito:', response.data);
+      alert("Empleado ingresado con éxito");
+      
+    } else if (accionp === 'modificar') {
+      const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/ModificarEmpleado', empleadoData);
+      console.log('Empleado modificado con éxito:', response.data);
+      alert("Empleado modificado con éxito");
+    }
+  } catch (error) {
+    console.error('Error al realizar la operación:', error);
     alert("No se pudo realizar el cambio");
+  }
+};
+
+const handleSubmitEliminarEmpleado = async (e) => {
+  e.preventDefault();
+
+  // Prepare the data to send to the backend 
+  const empleadoEData = {
+    Cedula: cedulaEEmpleado, 
+  };
+
+  try {
+    // Send data to backend using Axios (endpoint para eliminar tarjeta)
+    const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/EliminarEmpleado', empleadoEData);
+    console.log('Tarjeta eliminada con éxito:', response.data);
+    alert("Empleado eliminado con éxito");
+  } catch (error) {
+    alert("No se pudo realizar el cambio", error);
   }
 };
 
@@ -249,6 +326,64 @@ const handleSubmitTarjeta = async (e, accionp) => {
       alert("No se pudo realizar el cambio", error);
     }
   };
+
+  const handleSubmitAsesor = async (e, accionp) => {
+    e.preventDefault();
+  
+    console.log('Acción seleccionada:', accionp);
+  
+    const asesorData = {
+          Nombre: nombreAsesor,
+          Rol: "Asesor de credito",
+          DescripcionDeRol: rolDescAsesor,
+          Apellido1: apellido1Asesor,
+          Apellido2: apellido2Asesor,
+          Cedula: cedulaAsesor,
+          AdminRol: true,
+          FechaDeNacimiento: fechaAsesor,
+          Usuario: usuarioAsesor,
+          Contrasena: contrasenaAsesor,
+          IngresoMensual: ingresoAsesor,
+          Meta_Colones: metaAsesor,
+          Meta_Creditos: []
+    };
+  
+    console.log('Datos a enviar:', asesorData);
+  
+    try {
+      if (accionp === 'ingresar') {
+        const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/AgregarAsesorDeCredito', asesorData);
+        console.log('Empleado ingresado con éxito:', response.data);
+        alert("Asesor ingresado con éxito");
+        
+      } else if (accionp === 'modificar') {
+        const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/EditarAsesorDeCredito', asesorData);
+        console.log('Empleado modificado con éxito:', response.data);
+        alert("Asesor modificado con éxito");
+      }
+    } catch (error) {
+      console.error('Error al realizar la operación:', error);
+      alert("No se pudo realizar el cambio");
+    }
+  };
+
+  const handleSubmitEliminarAsesor = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend 
+    const asesorEData = {
+      Cedula: cedulaEAsesor, 
+    };
+  
+    try {
+      // Send data to backend using Axios (endpoint para eliminar tarjeta)
+      const response = await axios.post('https://localhost:7190/MenuGestionEmpleados/EliminarAsesorDeCredito', asesorEData);
+      console.log('Tarjeta eliminada con éxito:', response.data);
+      alert("Asesor eliminado con éxito");
+    } catch (error) {
+      alert("No se pudo realizar el cambio", error);
+    }
+  };
   
 
   return (
@@ -263,49 +398,6 @@ const handleSubmitTarjeta = async (e, accionp) => {
       <p style={{ color: '#808080' }}><strong>Número de Cuenta:</strong> {cuenta.numeroDeCuenta}</p>
       </div>
 
-      <br />
-      <hr />
-      <br />
-      
-      <h2>Roles</h2>
-      <br />
-
-      <h3>Ingreso y modificación de roles</h3>
-      <br />
-      <form>
-        <label> Nombre: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Rol: </label>
-        <input type="text" name="rol" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Descripción: </label>
-        <input type="text" name="rol" className="form-control" />
-      </form>
-      <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Ingresar</button>
-        </div>
-      <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Modificar</button>
-        </div>
-        <br />
-
-        <h3>Eliminación de roles</h3>
-        <br />
-        <form>
-        <label> Nombre: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
-      <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Eliminar</button>
-        </div>
       <br />
       <hr />
       <br />
@@ -413,11 +505,29 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
     <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Ingresar</button>
+        <button 
+          type="button" 
+          className="btn btn-primary" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitCliente(e, 'ingresar');  // Pasa el evento correctamente
+          }}
+        >
+          Ingresar
+          </button>
         </div>
         <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Modificar</button>
+        <button 
+          type="button" 
+          className="btn btn-primary" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitCliente(e, 'modificar');  // Pasa el evento correctamente
+          }}
+        >
+          Modificar
+          </button>
         </div>
         </form>
         <br />
@@ -436,9 +546,192 @@ const handleSubmitTarjeta = async (e, accionp) => {
       
       <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Eliminar</button>
+        <button 
+          type="button" 
+          className="btn btn-danger" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitEliminarCliente(e);  // Pasa el evento correctamente
+          }}
+        >
+          Eliminar
+          </button>
         </div>
         </form>
+      <br />
+      <hr />
+      <br />
+
+      <h2>Empleados</h2>
+      <br />
+
+      <h3>Ingreso y modificación de empleados</h3>
+      <form onSubmit={handleSubmitEmpleado}>
+        <br />
+        <label>Nombre:</label>
+        <input 
+          type="text" 
+          name="nombreEmpleado" 
+          className="form-control" 
+          value={nombreEmpleado} 
+          onChange={(e) => setnombreEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Apellido 1:</label>
+        <input 
+          type="text" 
+          name="apellido1Empleado" 
+          className="form-control" 
+          value={apellido1Empleado} 
+          onChange={(e) => setapellido1Empleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Apellido 2:</label>
+        <input 
+          type="text" 
+          name="apellido2Empleado" 
+          className="form-control" 
+          value={apellido2Empleado} 
+          onChange={(e) => setapellido2Empleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Cédula:</label>
+        <input 
+          type="number" 
+          name="cedulaEmpleado" 
+          className="form-control" 
+          value={cedulaEmpleado} 
+          onChange={(e) => setcedulaEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Fecha de nacimiento:</label>
+        <input 
+          type="date" 
+          name="fechaEmpleado" 
+          className="form-control" 
+          value={fechaEmpleado} 
+          onChange={(e) => setfechaEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Ingreso mensual (colones):</label>
+        <input 
+          type="number" 
+          name="ingresoEmpleado" 
+          className="form-control" 
+          value={ingresoEmpleado} 
+          onChange={(e) => setingresoEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Rol:</label>
+        <select 
+        name="rolEmpleado" 
+        className="form-control" 
+        value={rolEmpleado} 
+        onChange={(e) => setrolEmpleado(e.target.value)}
+      >
+        <option value="">Selecciona un rol</option>
+        <option value="Asesor de credito">Asesores de crédito</option>
+        <option value="Cajero">Cajero</option>
+        <option value="Ejecutivo de cuentas">Ejecutivo de cuentas</option>
+        <option value="Gerente de sucursal">Gerente de sucursal</option>
+        <option value="Analista financiero">Analista financiero</option>
+        <option value="Oficial de cumplimiento">Oficial de cumplimiento</option>
+        <option value="Auditor interno">Auditor interno</option>
+        <option value="Asistente administrativo">Asistente administrativo</option>
+      </select>
+        <br />
+
+        <label>Descripción del Rol:</label>
+        <input 
+          type="text" 
+          name="rolDescEmpleado" 
+          className="form-control" 
+          value={rolDescEmpleado} 
+          onChange={(e) => setrolDescEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Usuario:</label>
+        <input 
+          type="text" 
+          name="usuarioEmpleado" 
+          className="form-control" 
+          value={usuarioEmpleado} 
+          onChange={(e) => setusuarioEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <label>Contraseña:</label>
+        <input 
+          type="password" 
+          name="contrasenaEmpleado" 
+          className="form-control" 
+          value={contrasenaEmpleado} 
+          onChange={(e) => setcontrasenaEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <div className="col-md-4 d-flex align-items-end">
+        <button 
+          type="button" 
+          className="btn btn-primary" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitEmpleado(e, 'ingresar');  // Pasa el evento correctamente
+          }}
+        >
+          Ingresar
+          </button>
+        </div>
+        <br />
+
+        <div className="col-md-4 d-flex align-items-end">
+        <button 
+          type="button" 
+          className="btn btn-primary" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitEmpleado(e, 'modificar');  // Pasa el evento correctamente
+          }}
+        >
+          Modificar
+          </button>
+        </div>
+      </form>
+      <br />
+
+      <h3>Eliminación de empleados</h3>
+      <br />
+      <form onSubmit={handleSubmitEliminarEmpleado}>
+        <label>Cédula:</label>
+        <input 
+          type="number" 
+          name="cedulaEEmpleado" 
+          className="form-control" 
+          value={cedulaEEmpleado} 
+          onChange={(e) => setcedulaEEmpleado(e.target.value)} 
+        />
+        <br />
+
+        <div className="col-md-4 d-flex align-items-end">
+        <button 
+          type="button" 
+          className="btn btn-danger" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitEliminarEmpleado(e);  // Pasa el evento correctamente
+          }}
+        >
+          Eliminar
+          </button>
+        </div>
+      </form>
       <br />
       <hr />
       <br />
@@ -574,13 +867,13 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
       <h3>Depósito/Retiro de efectivo a cuenta</h3>
         <br />
-        <form>
+        <form onSubmit={handleSubmitDR}>
         <label> Número de cuenta: </label>
         <input 
         type="number" 
         name="numeroCuentaDR" 
         className="form-control" 
-        value={numeroCuentaD} 
+        value={numeroCuentaDR} 
         onChange={(e) => setNumeroDeCuentaDR(e.target.value)} 
       />
         <br />
@@ -589,16 +882,34 @@ const handleSubmitTarjeta = async (e, accionp) => {
           type="number" 
           name="montoDR" 
           className="form-control" 
-          value={montoD} 
+          value={montoDR} 
           onChange={(e) => setmontoDR(e.target.value)} 
         />
         <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Depositar</button>
+        <button 
+          type="button" 
+          className="btn btn-warning" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitDR(e, 'depositar');  // Pasa el evento correctamente
+          }}
+        >
+          Depositar
+          </button>
         </div>
         <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Retirar</button>
+        <button 
+          type="button" 
+          className="btn btn-warning" 
+          onClick={(e) => {
+            e.preventDefault();  // Asegúrate de que el evento sea pasado correctamente
+            handleSubmitDR(e, 'retirar');  // Pasa el evento correctamente
+          }}
+        >
+          Retirar
+          </button>
         </div>
       </form>
       <br />
@@ -732,53 +1043,166 @@ const handleSubmitTarjeta = async (e, accionp) => {
       <h2>Asesores de crédito</h2>
       <br />
 
-      <h3>Ingreso y modificación de asesores</h3>
-      <br />
-      <form>
-        <label> Nombre: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Apellido 1: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
-      <br />
-      <form>
-        <label> Apellido 2: </label>
-        <input type="text" name="nombre" className="form-control" />
-      </form>
+      <h3>Ingreso y modificación de asesores de crédito</h3>
+      <form onSubmit={handleSubmitAsesor}>
         <br />
-        <form>
-        <label> Cédula: </label>
-        <input type="number" name="rol" className="form-control" />
-        </form>
-    <br />
-    <div className="col-md-4">
-          <label htmlFor="fechaNac" className="form-label">Fecha de nacimiento:</label>
-          <input type="date" id="fechaNac" className="form-control" />
-        </div>
-      <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Ingresar</button>
-        </div>
+
+        <label>Nombre:</label>
+        <input 
+          type="text" 
+          name="nombreAsesor" 
+          className="form-control" 
+          value={nombreAsesor} 
+          onChange={(e) => setnombreAsesor(e.target.value)} 
+        />
         <br />
+
+        <label>Apellido 1:</label>
+        <input 
+          type="text" 
+          name="apellido1Asesor" 
+          className="form-control" 
+          value={apellido1Asesor} 
+          onChange={(e) => setapellido1Asesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Apellido 2:</label>
+        <input 
+          type="text" 
+          name="apellido2Asesor" 
+          className="form-control" 
+          value={apellido2Asesor} 
+          onChange={(e) => setapellido2Asesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Cédula:</label>
+        <input 
+          type="number" 
+          name="cedulaAsesor" 
+          className="form-control" 
+          value={cedulaAsesor} 
+          onChange={(e) => setcedulaAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Fecha de nacimiento:</label>
+        <input 
+          type="date" 
+          name="fechaAsesor" 
+          className="form-control" 
+          value={fechaAsesor} 
+          onChange={(e) => setfechaAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Ingreso mensual (colones):</label>
+        <input 
+          type="number" 
+          name="ingresoAsesor" 
+          className="form-control" 
+          value={ingresoAsesor} 
+          onChange={(e) => setingresoAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Descripción de rol:</label>
+        <input 
+          type="text" 
+          name="rolDescEmpleado" 
+          className="form-control" 
+          value={rolDescAsesor} 
+          onChange={(e) => setrolDescAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Meta:</label>
+        <input 
+          type="number" 
+          name="metaAsesor" 
+          className="form-control" 
+          value={metaAsesor} 
+          onChange={(e) => setmetaAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Usuario:</label>
+        <input 
+          type="text" 
+          name="usuarioAsesor" 
+          className="form-control" 
+          value={usuarioAsesor} 
+          onChange={(e) => setusuarioAsesor(e.target.value)} 
+        />
+        <br />
+
+        <label>Contraseña:</label>
+        <input 
+          type="password" 
+          name="contrasenaAsesor" 
+          className="form-control" 
+          value={contrasenaAsesor} 
+          onChange={(e) => setcontrasenaAsesor(e.target.value)} 
+        />
+        <br />
+
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Modificar</button>
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitAsesor(e, 'ingresar');
+            }}
+          >
+            Ingresar
+          </button>
         </div>
         <br />
 
-        <h3>Eliminación de asesores</h3>
-        <br />
-        <form>
-        <label> Cédula: </label>
-        <input type="number" name="nombre" className="form-control" />
+        <div className="col-md-4 d-flex align-items-end">
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitAsesor(e, 'modificar');
+            }}
+          >
+            Modificar
+          </button>
+        </div>
       </form>
       <br />
-        <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Eliminar</button>
-        </div>
+
+      <h3>Eliminación de asesores de crédito</h3>
+      <br />
+      <form onSubmit={handleSubmitEliminarAsesor}>
+        <label>Cédula:</label>
+        <input 
+          type="number" 
+          name="cedulaEAsesor" 
+          className="form-control" 
+          value={cedulaEAsesor} 
+          onChange={(e) => setcedulaEAsesor(e.target.value)} 
+        />
         <br />
+
+        <div className="col-md-4 d-flex align-items-end">
+          <button 
+            type="button" 
+            className="btn btn-danger" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitEliminarAsesor(e);
+            }}
+          >
+            Eliminar
+          </button>
+        </div>
+      </form>
+      <br />
 
         <h3>Reporte sobre asesor</h3>
       <br />

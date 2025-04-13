@@ -47,11 +47,22 @@
     "Cuenta_Emisora": "B456",
     "Numero_de_Tarjeta": "T004",
     "Monto": 500,
-    "Nombre": "María",
-    "Apellido1": "Jiménez",
+    "Nombre": "Mar\u00EDa",
+    "Apellido1": "Jim\u00E9nez",
     "Apellido2": "Solano",
     "Fecha": "09/04/2025 14:45",
     "ID": "P004",
     "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "99193059",
+    "Numero_de_Tarjeta": "1232141234",
+    "Monto": 1000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 02:34",
+    "ID": "27104042",
+    "Moneda": "Colones"
   }
 ]

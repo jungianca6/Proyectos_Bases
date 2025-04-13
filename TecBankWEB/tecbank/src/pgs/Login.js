@@ -5,7 +5,7 @@ import { FaRegUser } from "react-icons/fa";
 import { MdLockOutline } from "react-icons/md";
 import React from "react";
 import axios from "axios";
-import './Login.css';
+import styles from './Login.module.css';
 
 function Login({ setUser }) {
     const [username, setUsername] = useState("");
@@ -121,11 +121,11 @@ function Login({ setUser }) {
     };
 
     return (
-        <div className="login-wrapper">
-            <div className="wrapper">
+        <div className={styles.loginWrapper}>
+            <div className={styles.wrapper}>
                 {isRegistering ? (
                     <form onSubmit={handleRegister}>
-                        <h1>Registro</h1>
+                        <h1 className={styles.title}>Registro</h1>
 
                         <input type="text" placeholder="Nombre" required onChange={(e) => setNewUser({ ...newUser, nombre: e.target.value })} />
                         <input type="text" placeholder="Primer Apellido" required onChange={(e) => setNewUser({ ...newUser, apellido1: e.target.value })} />
@@ -144,29 +144,29 @@ function Login({ setUser }) {
                         <input type="text" placeholder="Usuario" required onChange={(e) => setNewUser({ ...newUser, usuario: e.target.value })} />
                         <input type="password" placeholder="Contraseña" required onChange={(e) => setNewUser({ ...newUser, contrasena: e.target.value })} />
 
-                        <button type="submit">Registrarse</button>
-                        <p className="register-link">
+                        <button type="submit" className={styles.button}>Registrarse</button>
+                        <p className={styles.registerLink}>
                             ¿Ya tienes una cuenta?{" "}
                             <span onClick={() => setIsRegistering(false)} style={{ cursor: 'pointer', color: 'white' }}>Inicia sesión</span>
                         </p>
                     </form>
                 ) : (
                     <form onSubmit={handleLogin}>
-                        <h1>TecBank</h1>
+                        <h1 className={styles.title}>TecBank</h1>
 
-                        <div className="input-box">
+                        <div className={styles.inputBox}>
                             <input type="text" placeholder="Usuario" value={username} onChange={(e) => setUsername(e.target.value)} required />
-                            <FaRegUser className="icon" />
+                            <FaRegUser className={styles.icon} />
                         </div>
 
-                        <div className="input-box">
+                        <div className={styles.inputBox}>
                             <input type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                            <MdLockOutline className="icon" />
+                            <MdLockOutline className={styles.icon} />
                         </div>
 
-                        <button type="submit">Ingresar</button>
+                        <button type="submit" className={styles.button}>Ingresar</button>
 
-                        <div className="register-link">
+                        <div className={styles.registerLink}>
                             <p><span onClick={() => setIsRegistering(true)} style={{ cursor: 'pointer', color: 'white' }}>Registrarse</span></p>
                         </div>
                     </form>
