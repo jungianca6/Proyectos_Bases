@@ -296,6 +296,30 @@ namespace TECBank_BackEnd.Pruebas
             }).ToList();
         }
 
+        public List<PagoPrestamoModel> LeerPagosPrestamosPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
+        {
+            Jason json = new Jason();
+            var pagos = json.LeerPagosPrestamo();
+
+            // Intentamos convertir las fechas string a DateTime
+            if (!DateTime.TryParseExact(fechaInicio, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime inicio) ||
+                !DateTime.TryParseExact(fechaFin, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fin))
+            {
+                // Si hay error en la conversión, devolvemos la lista vacía
+                return new List<PagoPrestamoModel>();
+            }
+
+            // Filtramos los pagos que cumplan ambas condiciones
+            return pagos.Where(p =>
+            {
+                bool fechaValida = DateTime.TryParseExact(p.Fecha, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fechaPago);
+                return fechaValida &&
+                       fechaPago >= inicio &&
+                       fechaPago <= fin &&
+                       p.CuentaEmisora == numeroCuenta;
+            }).ToList();
+        }
+
         public List<TransferenciaModel> LeerTransferenciasPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
         {
             Jason json = new Jason();
