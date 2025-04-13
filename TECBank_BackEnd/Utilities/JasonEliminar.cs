@@ -41,22 +41,6 @@ namespace TECBank_BackEnd.Pruebas
             return eliminados > 0;
         }
 
-        public bool EliminarPago(string idPago)
-        {
-            Jason json = new Jason();
-            var pagos = json.LeerPagos();
-            var pagoEliminado = pagos.RemoveAll(p => p.ID == idPago);
-            json.GuardarPagos(pagos);
-            return pagoEliminado > 0;
-        }
-
-        public bool EliminarRetiro(string idRetiro)
-        {
-            Jason json = new Jason();
-            var retiros = json.LeerRetiros();
-            var retiroEliminado = retiros.RemoveAll(r => r.ID == idRetiro);
-            json.GuardarRetiros(retiros);
-            return retiroEliminado > 0;
-        }
+  
     }
 }
