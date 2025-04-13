@@ -67,7 +67,7 @@ namespace TECBank_BackEnd.Controllers
 
                 edicionJson.EditarEmpleado(data.Cedula, empleadoActualizado);
 
-                return Ok(new { success = true, message = "Empleado agregado con exito" });
+                return Ok(new { success = true, message = "Empleado modificado con exito" });
             }
             catch (Exception ex)
             {
