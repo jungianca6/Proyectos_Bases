@@ -78,15 +78,14 @@ namespace TECBank_BackEnd.Controllers
         {
             try
             {
-                PagoModel nuevo_pago = new PagoModel
+                PagoPrestamoModel nuevo_pago = new PagoPrestamoModel
                 {
                     Nombre = data.Nombre,
                     Apellido1 = data.Apellido1,
                     Apellido2 = data.Apellido2,
                     ID = GenerarID(),
                     Fecha = ObtenerFechaActual(),
-                    Numero_de_Tarjeta = data.Numero_de_Tarjeta,
-                    Cuenta_Emisora = data.NumeroDeCuenta,
+                    IdPrestamo = data.Numero_de_Tarjeta,
                     Moneda = data.Moneda,
                     Monto = data.Monto
                 };
@@ -99,14 +98,15 @@ namespace TECBank_BackEnd.Controllers
 
                 if (cuenta_emisora.Monto >= data.Monto)
                 {
-                    TarjetaModel tarjeta = jasonLectura.BuscarTarjetaPorNumero(data.Numero_de_Tarjeta);
-                    tarjeta.SaldoDisponible += data.Monto;
-                    jasonEditar.EditarTarjeta(data.Numero_de_Tarjeta, tarjeta);
+                    PrestamoModel prestamo = jasonLectura.BuscarPrestamoPorId(data.Numero_de_Tarjeta);
+                    prestamo.Saldo_Pendiente =- prestamo.Saldo_Pendiente - data.Monto;
+
+                    jasonEditar.EditarPrestamo(data.Numero_de_Tarjeta, prestamo);
 
                     cuenta_emisora.Monto -= data.Monto;
                     jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
 
-                    jasonEscritura.GuardarPago(nuevo_pago);
+                    jasonEscritura.GuardarPagoPrestamo(nuevo_pago);
 
                     return Ok(new { success = true, message = "El pago se hizo con exito" });
                 }
@@ -120,8 +120,6 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
-        
-
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]
         public ActionResult Transferencia([FromBody] TransferenciaDataInputModel data)

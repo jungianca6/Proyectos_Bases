@@ -261,6 +261,16 @@ namespace TECBank_BackEnd.Pruebas
             );
         }
 
+        public PrestamoModel? BuscarPrestamoPorId(string id_prestamo)
+        {
+            Jason json = new Jason();
+            var tarjetas = json.LeerPrestamos();
+
+            return tarjetas.FirstOrDefault(t =>
+                t.ID_Prestamos?.Equals(id_prestamo, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
 
         public List<PagoModel> LeerPagosPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
         {
