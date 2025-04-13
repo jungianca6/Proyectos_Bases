@@ -6,7 +6,7 @@
     "Moneda": "CRC",
     "TipoDeCuenta": "Corriente",
     "Nombre": "Cuenta Corriente",
-    "Monto": 130000
+    "Monto": 140000
   },
   {
     "NumeroDeCuenta": "99193059",
@@ -15,7 +15,7 @@
     "Moneda": "Colones",
     "TipoDeCuenta": "",
     "Nombre": "sapo",
-    "Monto": 219000
+    "Monto": 209000
   },
   {
     "NumeroDeCuenta": "C123",

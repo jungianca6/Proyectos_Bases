@@ -86,5 +86,27 @@
     "Fecha": "13/04/2025 01:47",
     "ID": "42355683",
     "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "57247795",
+    "Monto": 10000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 16:00",
+    "ID": "19713510",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "12193459",
+    "IdPrestamo": "57247795",
+    "Monto": 10000,
+    "Nombre": "jorge1",
+    "Apellido1": "e",
+    "Apellido2": "s",
+    "Fecha": "13/04/2025 16:09",
+    "ID": "70110660",
+    "Moneda": "Colones"
   }
 ]

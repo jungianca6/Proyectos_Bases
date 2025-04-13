@@ -23,7 +23,7 @@
     "TipoDeCliente": "Fisico",
     "Usuario": "sapo1",
     "Contrasena": "32",
-    "AdminRol": false
+    "AdminRol": true
   },
   {
     "Cedula": "118440677",

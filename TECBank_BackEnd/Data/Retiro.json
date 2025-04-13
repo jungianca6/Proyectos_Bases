@@ -22,7 +22,7 @@
   {
     "CuentaARetirar": "C123",
     "Monto": 250,
-    "Nombre": "María",
+    "Nombre": "Mar\u00EDa",
     "Apellido1": "Jimenez",
     "Apellido2": "Lopez",
     "Fecha": "10/04/2025 17:30",
@@ -48,5 +48,15 @@
     "Fecha": "01/01/2024 12:00",
     "ID": "R04",
     "Moneda": "USD"
+  },
+  {
+    "CuentaARetirar": "12193459",
+    "Monto": 10000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 12:25",
+    "ID": "96026327",
+    "Moneda": "Colones"
   }
 ]

@@ -4,7 +4,7 @@ import axios from "axios";
 
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
-  
+  const [usuario, setUsuarioG] = useState(null);
 
 
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
@@ -62,14 +62,21 @@ function AdminPG() {
   const [contrasenaAsesor, setcontrasenaAsesor] = useState('');
   const [metaAsesor, setmetaAsesor] = useState('');
 
+  const [montoPrestamo, setmontoPrestamo] = useState('');
+  const [cedulaPrestamo, setcedulaPrestamo] = useState('');
+  const [tasaPrestamo, settasaPrestamo] = useState('');
+  const [fechaPrestamo, setfechaPrestamo] = useState('');
+
+  const [idPP, setidPP] = useState('');
+  const [montoPP, setmontoPP] = useState('');
 
   useEffect(() => {
-    // Cargar cuenta actual desde localStorage
-    const cuentaGuardada = localStorage.getItem("cuenta_actual");
-    if (cuentaGuardada) {
-        setCuenta(JSON.parse(cuentaGuardada));
-    }
-}, []);
+      const cuentaGuardada = localStorage.getItem("cuenta_actual");
+      if (cuentaGuardada) setCuenta(JSON.parse(cuentaGuardada));
+  
+      const usuarioGuardado = localStorage.getItem("usuario_actual");
+      if (usuarioGuardado) setUsuarioG(JSON.parse(usuarioGuardado));
+    }, []);
 
 if (!cuenta) {
   return <div>Cargando información...</div>; // Mostrar mensaje de carga
@@ -80,32 +87,61 @@ const handleSubmitDR = async (e, accionp) => {
 
   console.log('Acción seleccionada:', accionp);
 
-  const drData = {
-    NumeroDeCuenta: numeroCuenta,
-    Descripcion: descripcionCuenta,
-    Usuario: usuarioCuenta,
-    Moneda: monedaCuenta,
-    TipoDeCuenta: tipoDeCuenta,
-    Nombre: nombreCuenta
-  };
-
-  console.log('Datos a enviar:', drData);
-
   try {
     if (accionp === 'depositar') {
-      // Enviar para agregar la tarjeta
-      const response = await axios.post('https://localhost:7190/MenuGestionCuentas/AgregarCuenta', drData);
-      console.log('Cliente ingresado con éxito:', response.data);
-      alert("Cuenta agregada con éxito");
+      const drDataDeposito = {
+        Nombre: usuario.nombre,
+        Apellido1: usuario.apellido1,
+        Apellido2: usuario.apellido2,
+        Cuenta_Emisora: "0", 
+        Cuenta_Receptora: numeroCuentaDR,
+        Moneda: "Colones",
+        Monto: parseFloat(montoDR)
+      };
+
+      console.log('Datos de depósito a enviar:', drDataDeposito);
+
+      const response = await axios.post('https://localhost:7190/Movimiento/TransferenciaAdmin', drDataDeposito);
+      console.log('Depósito ingresado con éxito:', response.data);
+      alert("Depósito realizado con éxito");
+
     } else if (accionp === 'retirar') {
-      // Enviar para modificar la tarjeta
-      const response = await axios.post('https://localhost:7190/MenuGestionCuentas/ModificarCuenta', drData);
-      console.log('Cliente modificado con éxito:', response.data);
-      alert("Cuenta modificada con éxito");
+      const drDataRetiro = {
+        Nombre: usuario.nombre,
+        Apellido1: usuario.apellido1,
+        Apellido2: usuario.apellido2,
+        ID: "0",
+        CuentaARetirar: numeroCuentaDR,
+        Moneda: "Colones",
+        Monto: parseFloat(montoDR)
+      };
+
+      console.log('Datos de retiro a enviar:', drDataRetiro);
+
+      const response = await axios.post('https://localhost:7190/Movimiento/Retiro', drDataRetiro);
+      console.log('Retiro realizado con éxito:', response.data);
+      alert("Retiro realizado con éxito");
     }
   } catch (error) {
-    console.error('Error al realizar la operación:', error);
-    alert("No se pudo realizar el cambio");
+    console.error("Error al realizar la operación:", error);
+  
+    if (error.response) {
+      console.error("Código de estado HTTP:", error.response.status);
+  
+      if (error.response.data) {
+        console.error("Detalles del error:", error.response.data);
+  
+        // Mostrar errores de validación si existen
+        if (error.response.data.errors) {
+          console.error("Errores de validación:");
+          for (const campo in error.response.data.errors) {
+            console.error(`${campo}: ${error.response.data.errors[campo].join(", ")}`);
+          }
+        }
+      }
+    } else {
+      console.error("Error sin respuesta del servidor:", error.message);
+    }
   }
 };
 
@@ -385,6 +421,51 @@ const handleSubmitTarjeta = async (e, accionp) => {
     }
   };
   
+  const handleSubmitPrestamos = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend 
+    const presData = {
+      Monto_Original: montoPrestamo,
+      Cedula_Cliente: cedulaPrestamo,
+      Tasa_De_Interes: tasaPrestamo,
+      FechaVencimiento: fechaPrestamo
+    };
+  
+    try {
+      // Send data to backend using Axios (endpoint para eliminar tarjeta)
+      const response = await axios.post('https://localhost:7190/Prestamo/AgregarPrestamo', presData);
+      console.log('Préstamo realizado con éxito:', response.data);
+      alert("Préstamo agregado con éxito");
+    } catch (error) {
+      alert("No se pudo realizar el préstamo", error);
+    }
+  };
+
+  const handleSubmitPP = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend 
+    const ppData = {
+      Nombre: usuario.nombre,
+      Apellido1: usuario.apellido1,
+      Apellido2: usuario.apellido2,
+      IdPrestamo: idPP,
+      Moneda: "Colones",
+      Monto: montoPP,
+      NumeroDeCuenta: cuenta.numeroDeCuenta
+    };
+  
+    try {
+      console.log('Datos enviados (ppData):', ppData);
+      const response = await axios.post('https://localhost:7190/Movimiento/PagoPrestamo', ppData);
+      console.log('Pago de préstamo realizado con éxito:', response.data);
+      alert("El préstamo elegido ha sido pagado con éxito");
+    } catch (error) {
+      alert("No se pudo realizar el pago", error);
+    }
+  };
+
 
   return (
     <div className="admin">
@@ -1223,47 +1304,108 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
       <h3>Ingreso de préstamos</h3>
       <br />
-      <form>
-        <label> Monto original: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+      <form onSubmit={handleSubmitPrestamos}>
+      <label> Monto original del préstamo: </label>
+      <input 
+        type="number" 
+        name="montoPrestamo" 
+        className="form-control" 
+        value={montoPrestamo} 
+        onChange={(e) => setmontoPrestamo(e.target.value)} 
+      />
       <br />
-      <form>
-        <label> Saldo: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+
+      <label> Fecha de vencimiento: </label>
+      <input
+            type="date"
+            className="form-control"
+            onChange={(e) => {
+              const [año, mes, dia] = e.target.value.split("-");
+              setfechaPrestamo(`${dia}/${mes}/${año}`);
+            }}
+      />
       <br />
-      <form>
-        <label> Número de cliente que solicitó el préstamo: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+
+      <label> Cédula del cliente que solicitó el préstamo: </label>
+      <input 
+        type="number" 
+        name="cedulaPrestamo" 
+        className="form-control" 
+        value={cedulaPrestamo} 
+        onChange={(e) => setcedulaPrestamo(e.target.value)} 
+      />
+      <br />
+
+      <label> Tasa de interés (%): </label>
+      <input 
+        type="number" 
+        name="tasaPrestamo" 
+        className="form-control" 
+        value={tasaPrestamo} 
+        onChange={(e) => settasaPrestamo(e.target.value)} 
+        min="0" 
+        max="100" 
+        step="0.01" 
+        required 
+      />
+      <br />
+
+      <div className="col-md-4 d-flex align-items-end">
+      
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitPrestamos(e);
+            }}
+          >
+            Ingresar
+          </button>
+      </div>
+    </form>
         <br />
-        <form>
-        <label> Tasa de interés (%): </label>
+
+        <h3>Pago de préstamos</h3>
+        <br />
+
+        <form onSubmit={handleSubmitPP}>
+        <label> ID del préstamo a pagar: </label>
         <input 
-            type="number" 
-            name="tasa" 
-            className="form-control" 
-            min="0" 
-            max="100" 
-            step="0.01" 
-            required 
+          type="text" 
+          name="idPP" 
+          className="form-control" 
+          value={idPP} 
+          onChange={(e) => setidPP(e.target.value)} 
         />
-        </form>
-      <br />
+
+        <br />
+
+        <label> Monto a pagar del préstamo: </label>
+        <input 
+          type="number" 
+          name="montoPP" 
+          className="form-control" 
+          value={montoPP} 
+          onChange={(e) => setmontoPP(e.target.value)} 
+        />
+
+        <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Ingresar</button>
-        </div>
-        <br />
+      
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitPP(e);
+            }}
+          >
+            Pagar
+          </button>
+      </div>
+        </form>
 
-        <h3>Cálculo de pagos</h3>
-        <br />
-
-        <h3>Pagos</h3>
-        <br />
-
-        <h3>Pagos extraordinarios</h3>
-        <br />
       <hr />
       <br />
 

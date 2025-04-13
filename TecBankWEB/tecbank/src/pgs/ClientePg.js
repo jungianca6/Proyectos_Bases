@@ -21,6 +21,9 @@ function ClientePG() {
 
   const [seccionActual, setSeccionActual] = useState(0);
 
+  const [idPP, setidPP] = useState('');
+  const [montoPP, setmontoPP] = useState('');
+
   useEffect(() => {
     const cuentaGuardada = localStorage.getItem("cuenta_actual");
     if (cuentaGuardada) setCuenta(JSON.parse(cuentaGuardada));
@@ -247,13 +250,37 @@ function ClientePG() {
     }
   };
 
+  const handleSubmitPP = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend 
+    const ppData = {
+      Nombre: usuario.nombre,
+      Apellido1: usuario.apellido1,
+      Apellido2: usuario.apellido2,
+      IdPrestamo: idPP,
+      Moneda: "Colones",
+      Monto: montoPP,
+      NumeroDeCuenta: cuenta.numeroDeCuenta
+    };
+  
+    try {
+      console.log('Datos enviados (ppData):', ppData);
+      const response = await axios.post('https://localhost:7190/Movimiento/PagoPrestamo', ppData);
+      console.log('Pago de préstamo realizado con éxito:', response.data);
+      alert("El préstamo elegido ha sido pagado con éxito");
+    } catch (error) {
+      alert("No se pudo realizar el pago", error);
+    }
+  };
+
   const secciones = [
     {
       titulo: "Cuentas",
       contenido: (
         <div className="p-3">
         <div className="d-flex align-items-start mb-4" style={{ gap: "15px" }}>
-        <label className={styles.labelwhite}>Mis movimientos</label>
+        <label className={styles.labelwhite}>Mis movimientos:</label>
         <textarea
           className="form-control"
           value={movimientosTexto}
@@ -354,8 +381,43 @@ function ClientePG() {
       titulo: "Préstamos",
       contenido: (
         <div className="p-3">
-          <h3 className="mb-4">Pagos normales</h3>
-          <h3 className="mb-5">Pagos extraordinarios</h3>
+          <h3 className="mb-4">Pago de préstamo</h3>
+          <form onSubmit={handleSubmitPP}>
+          <div className="mb-3">
+            <label className={styles.labelwhite}> ID del préstamo a pagar: </label>
+            <input 
+              type="text" 
+              name="idPP" 
+              className="form-control" 
+              value={idPP} 
+              onChange={(e) => setidPP(e.target.value)} 
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className={styles.labelwhite}> Monto a pagar del préstamo: </label>
+            <input 
+              type="number" 
+              name="montoPP" 
+              className="form-control" 
+              value={montoPP} 
+              onChange={(e) => setmontoPP(e.target.value)} 
+            />
+          </div>
+
+          <div className="col-md-4 d-flex align-items-end">
+            <button 
+              type="button" 
+              className="btn btn-primary" 
+              onClick={(e) => {
+                e.preventDefault();
+                handleSubmitPP(e);
+              }}
+            >
+              Pagar
+            </button>
+          </div>
+        </form>
         </div>
       )
     }
