@@ -9,179 +9,136 @@ namespace TECBank_BackEnd.Controllers
     [Route("[controller]")]
     public class MovimientoController : ControllerBase
     {
+        // Método auxiliar para generar ID único
+        private string GenerarID()
+        {
+            Random random = new Random();
+            return random.Next(10_000_000, 100_000_000).ToString();
+        }
+
+        // Método auxiliar para obtener la fecha y hora actual formateada
+        private string ObtenerFechaActual()
+        {
+            return DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+        }
+
         // POST: Movimiento/Pago
         [HttpPost("Pago")]
         public ActionResult Pago([FromBody] PagoDataInputModel data)
         {
-            try {
-                PagoModel nuevo_pago = new PagoModel();
-                Random random = new Random();
-                string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
-
-                // Asignacion de valores
-                nuevo_pago.Nombre = data.Nombre;
-                nuevo_pago.Apellido1 = data.Apellido1;
-                nuevo_pago.Apellido2 = data.Apellido2;
-                nuevo_pago.ID = id;
-                nuevo_pago.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
-                nuevo_pago.Cuenta_Emisora = data.NumeroDeCuenta;
-                nuevo_pago.Numero_de_Tarjeta = data.Numero_de_Tarjeta;
-                nuevo_pago.Moneda = data.Moneda;
-                nuevo_pago.Monto = data.Monto;
-
+            try
+            {
+                PagoModel nuevo_pago = new PagoModel
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    ID = GenerarID(),
+                    Fecha = ObtenerFechaActual(),
+                    Numero_de_Tarjeta = data.Numero_de_Tarjeta,
+                    Cuenta_Emisora = data.NumeroDeCuenta,
+                    Moneda = data.Moneda,
+                    Monto = data.Monto
+                };
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
+                JasonEscritura jasonEscritura = new JasonEscritura();
 
                 CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.NumeroDeCuenta);
 
-                CuentaModel cuenta_para_editar = new CuentaModel();
-
                 if (cuenta_emisora.Monto >= data.Monto)
                 {
+                    TarjetaModel tarjeta = jasonLectura.BuscarTarjetaPorNumero(data.Numero_de_Tarjeta);
+                    tarjeta.SaldoDisponible += data.Monto;
+                    jasonEditar.EditarTarjeta(data.Numero_de_Tarjeta, tarjeta);
 
-                    TarjetaModel tarjeta_a_modificar = jasonLectura.BuscarTarjetaPorNumero(nuevo_pago.Numero_de_Tarjeta);
+                    cuenta_emisora.Monto -= data.Monto;
+                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
 
-                    int nuevo_monto = tarjeta_a_modificar.SaldoDisponible + data.Monto;
-
-                    TarjetaModel tarjeta_modificada = new TarjetaModel();
-
-                    tarjeta_modificada.SaldoDisponible = nuevo_monto;
-
-
-                    jasonEditar.EditarTarjeta(nuevo_pago.Numero_de_Tarjeta, tarjeta_modificada);
-
-                    JasonEscritura jasonEscritura = new JasonEscritura();
                     jasonEscritura.GuardarPago(nuevo_pago);
 
-
-                    var response = new { success = true, message = "El pago se hizo con exito" };
-
-                    cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
-
-                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
-
-                    // Lógica para obtener datos
-                    return Ok(response);
-
+                    return Ok(new { success = true, message = "El pago se hizo con exito" });
                 }
-                else {
-                    var response = new { success = false, message = "No hay fondos suficientes en la cuenta" };
-                    return Ok(response);
+                else
+                {
+                    return Ok(new { success = false, message = "No hay fondos suficientes en la cuenta" });
                 }
-
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
-
         }
 
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]
         public ActionResult Transferencia([FromBody] TransferenciaDataInputModel data)
         {
-            try {
-
-                TransferenciaModel nueva_transferencia = new TransferenciaModel();
-                Random random = new Random();
-                string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
-
-                // Asignacion de valores
-                nueva_transferencia.Nombre = data.Nombre;
-                nueva_transferencia.Apellido1 = data.Apellido1;
-                nueva_transferencia.Apellido2 = data.Apellido2;
-                nueva_transferencia.ID = id;
-                nueva_transferencia.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                nueva_transferencia.Cuenta_Emisora = data.Cuenta_Emisora;
-                nueva_transferencia.Cuenta_Receptora = data.Cuenta_Receptora;
-                nueva_transferencia.Moneda = data.Moneda;
-                nueva_transferencia.Monto = data.Monto;
+            try
+            {
+                TransferenciaModel nueva_transferencia = new TransferenciaModel
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    ID = GenerarID(),
+                    Fecha = ObtenerFechaActual(),
+                    Cuenta_Emisora = data.Cuenta_Emisora,
+                    Cuenta_Receptora = data.Cuenta_Receptora,
+                    Moneda = data.Moneda,
+                    Monto = data.Monto
+                };
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
                 JasonEscritura jasonEscritura = new JasonEscritura();
 
-                CuentaModel? cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
+                var cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
+                var cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
 
-                CuentaModel? cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
+                if (cuenta_emisora == null)
+                    return Ok(new { success = false, message = "La cuenta origen no existe" });
 
-                if (cuenta_emisora != null){
-                    if (cuenta_receptora != null)
-                    {
-                        CuentaModel cuenta_para_editar = new CuentaModel();
+                if (cuenta_receptora == null)
+                    return Ok(new { success = false, message = "La cuenta destino no existe" });
 
-                        if (cuenta_emisora.Monto >= data.Monto)
-                        {
-                            cuenta_para_editar.Monto = cuenta_receptora.Monto + data.Monto;
+                if (cuenta_emisora.Monto < data.Monto)
+                    return Ok(new { success = false, message = "No hay fondos suficientes para realizar la transferencia" });
 
-                            jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_para_editar);
+                cuenta_receptora.Monto += data.Monto;
+                jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_receptora);
 
-                            cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
+                cuenta_emisora.Monto -= data.Monto;
+                jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
 
-                            jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
+                jasonEscritura.GuardarTransferencia(nueva_transferencia);
 
-                            var response = new { success = true, message = "Transferencia realizada con exito" };
-
-                            jasonEscritura.GuardarTransferencia(nueva_transferencia);
-
-                            return Ok(response);
-                        }
-                        else
-                        {
-                            var response = new { success = false, message = "No hay fondos suficientes para realizar la transferencia" };
-                            return Ok(response);
-                        }
-                    }
-                    else {
-                        var response = new { success = false, message = "La cuenta destino no existe" };
-                        return Ok(response);
-                    }
-                }
-                else
-                {
-                    var response = new { success = false, message = "La cuenta origen no existe" };
-                    return Ok(response);
-                }
+                return Ok(new { success = true, message = "Transferencia realizada con exito" });
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
-
-            // Lógica para obtener datos
-            return Ok();
         }
 
         // POST: Movimiento/Retiro
         [HttpPost("Retiro")]
         public ActionResult Retiro([FromBody] RetiroDataInputModel data)
         {
-            try {
-
-                RetiroModel nuevo_retiro = new RetiroModel();
-                Random random = new Random();
-                string id = random.Next(10_000_000, 100_000_000).ToString(); // Entre 10,000,000 y 99,999,999
-
-                // Asignacion de valores
-                nuevo_retiro.Nombre = data.Nombre;
-                nuevo_retiro.Apellido1 = data.Apellido1;
-                nuevo_retiro.Apellido2 = data.Apellido2;
-                nuevo_retiro.ID = id;
-                nuevo_retiro.Fecha = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
-                nuevo_retiro.CuentaARetirar = data.CuentaARetirar;
-                nuevo_retiro.Moneda = data.Moneda;
-                nuevo_retiro.Monto = data.Monto;
+            try
+            {
+                RetiroModel nuevo_retiro = new RetiroModel
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    ID = GenerarID(),
+                    Fecha = ObtenerFechaActual(),
+                    CuentaARetirar = data.CuentaARetirar,
+                    Moneda = data.Moneda,
+                    Monto = data.Monto
+                };
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
@@ -191,36 +148,24 @@ namespace TECBank_BackEnd.Controllers
 
                 if (cuenta_a_retirar.Monto >= data.Monto)
                 {
-                    cuenta_a_retirar.Monto = cuenta_a_retirar.Monto - data.Monto;
+                    cuenta_a_retirar.Monto -= data.Monto;
                     jasonEditar.EditarCuenta(cuenta_a_retirar.NumeroDeCuenta, cuenta_a_retirar);
-
-                    var response = new { success = true, message = "Retiro hecho con exito" };
-
                     jasonEscritura.GuardarRetiro(nuevo_retiro);
-                    
 
-                    return Ok(response);
+                    return Ok(new { success = true, message = "Retiro hecho con exito" });
                 }
-                else {
-                    var response = new { success = false, message = "No se realizo el retiro, fondos insuficientes" };
-
-
-
-                    return Ok(response);
+                else
+                {
+                    return Ok(new { success = false, message = "No se realizo el retiro, fondos insuficientes" });
                 }
-
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
-        // POST: Movimiento/Retiro
+        // POST: Movimiento/ListadoDeMovimientos
         [HttpPost("ListadoDeMovimientos")]
         public ActionResult ListadoDeMovimientos([FromBody] ListadoDeMovmientosDataInputModel data)
         {
@@ -228,29 +173,19 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonLectura jasonLectura = new JasonLectura();
 
-                var retiros_realizados = jasonLectura.LeerRetiros("NumeroDeCuenta", data.NumeroDeCuenta);
-                var transferencias_realizados = jasonLectura.LeerTransferencias("NumeroDeCuenta", data.NumeroDeCuenta);
-                var pagos_realizados = jasonLectura.LeerPagos("NumeroDeCuenta", data.NumeroDeCuenta);
+                var retiros = jasonLectura.LeerRetiros("NumeroDeCuenta", data.NumeroDeCuenta);
+                var transferencias = jasonLectura.LeerTransferencias("NumeroDeCuenta", data.NumeroDeCuenta);
+                var pagos = jasonLectura.LeerPagos("NumeroDeCuenta", data.NumeroDeCuenta);
 
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = true, retiros = retiros_realizados, pagos = pagos_realizados, transferencias = transferencias_realizados};
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return Ok(response);
-
-
+                return Ok(new { success = true, retiros, pagos, transferencias });
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
-        // POST: Movimiento/Retiro
+        // POST: Movimiento/ListadoDeCompras
         [HttpPost("ListadoDeCompras")]
         public ActionResult ListadoDeCompras([FromBody] ListadoDeComprasDataInputModel data)
         {
@@ -258,28 +193,16 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonLectura jasonLectura = new JasonLectura();
 
-                var retiros_realizados = jasonLectura.LeerRetirosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
-                var transferencias_realizados = jasonLectura.LeerTransferenciasPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
-                var pagos_realizados = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var retiros = jasonLectura.LeerRetirosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var transferencias = jasonLectura.LeerTransferenciasPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var pagos = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
 
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = true, retiros = retiros_realizados, pagos = pagos_realizados, transferencias = transferencias_realizados };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return Ok(response);
-
-
+                return Ok(new { success = true, retiros, pagos, transferencias });
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
-
-
     }
 }

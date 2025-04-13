@@ -10,45 +10,36 @@ namespace TECBank_BackEnd.Controllers
     [Route("/[controller]")]
     public class MenuInicioController : ControllerBase
     {
+        private readonly JasonEscritura escrituraJson = new();
+        private readonly JasonLectura lector = new();
+
         // POST: MenuInicio/Registro
         [HttpPost("Registro")]
         public ActionResult Registro([FromBody] ClienteModel data)
         {
             try
             {
-                // Crear una instancia del escritor de clientes de prueba
-                JasonEscritura escrituraJson = new JasonEscritura();
-
-                // Ejecutar el método para registrar los datos del cliente
+                // Guardar cliente
                 escrituraJson.GuardarCliente(data);
 
-                CuentaModel nueva_cuenta = new CuentaModel();
+                // Crear y guardar cuenta asociada al nuevo cliente
+                CuentaModel nuevaCuenta = new()
+                {
+                    Usuario = data.Usuario,
+                    Nombre = data.Nombre,
+                    TipoDeCuenta = "",
+                    Descripcion = "",
+                    Moneda = "Colones",
+                    NumeroDeCuenta = GenerarNumeroDeCuenta()
+                };
 
-                Random random = new Random();
-                int id = random.Next(10_000_000, 100_000_000); // Entre 10,000,000 y 99,999,999
+                escrituraJson.GuardarCuenta(nuevaCuenta);
 
-                nueva_cuenta.Usuario = data.Usuario;
-                nueva_cuenta.Nombre = data.Nombre;
-                nueva_cuenta.TipoDeCuenta = "";
-                nueva_cuenta.Descripcion = "";
-                nueva_cuenta.Moneda = "Colones";
-                nueva_cuenta.NumeroDeCuenta = id.ToString();
-
-                escrituraJson.GuardarCuenta(nueva_cuenta);
-
-                // Crear una respuesta indicando éxito
-                var response = new { success = true };
-
-                // Retornar la respuesta con código 200 (OK)
-                return Ok(response);
+                return Ok(new { success = true });
             }
             catch (Exception ex)
             {
-                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
-                var response = new { success = false, message = ex.Message };
-
-                // Retornar la respuesta con código 400 (BadRequest)
-                return BadRequest(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
         }
 
@@ -56,35 +47,30 @@ namespace TECBank_BackEnd.Controllers
         [HttpPost("Login")]
         public ActionResult Login([FromBody] LoginDataInputModel data)
         {
-            // Crear una instancia del lector de clientes
-            JasonLectura lector = new JasonLectura();
-
-            // Buscar el cliente por nombre de usuario
-            ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);
-
-            // Verificar si se encontró un cliente con ese usuario
-            if (cliente != null)
+            try
             {
-                // Si la contraseña no coincide, devolver mensaje de error
+                ClienteModel? cliente = lector.BuscarPorUsuario(data.usuario);
+
+                if (cliente == null)
+                    return Ok(new { success = false, message = "El Usuario no existe" });
+
                 if (cliente.Contrasena != data.contrasena)
-                {
-                    var response = new { success = false, message = "Contraseña incorrecta" };
-                    return Ok(response);
-                }
-                else
-                {
-                    CuentaModel cuenta = lector.BuscarCuentaPorUsuario(data.usuario);
-                    // Si la contraseña es correcta, devolver el cliente como usuario actual
-                    var response = new { success = true, usuario_actual = cliente, cuenta_actual = cuenta };
-                    return Ok(response);
-                }
+                    return Ok(new { success = false, message = "Contraseña incorrecta" });
+
+                CuentaModel cuenta = lector.BuscarCuentaPorUsuario(data.usuario);
+
+                return Ok(new { success = true, usuario_actual = cliente, cuenta_actual = cuenta });
             }
-            else
+            catch (Exception ex)
             {
-                // Si el usuario no existe, devolver mensaje de error
-                var response = new { success = false, message = "El Usuario no existe" };
-                return Ok(response);
+                return BadRequest(new { success = false, message = ex.Message });
             }
+        }
+
+        // Función auxiliar para generar un número de cuenta aleatorio
+        private string GenerarNumeroDeCuenta()
+        {
+            return new Random().Next(10_000_000, 100_000_000).ToString();
         }
     }
 }
