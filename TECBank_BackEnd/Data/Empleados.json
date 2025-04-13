@@ -14,8 +14,8 @@
   },
   {
     "Nombre": "Carlos",
-    "Rol": "Cajero",
-    "DescripcionDeRol": "pene",
+    "Rol": null,
+    "DescripcionDeRol": null,
     "Apellido1": "Perez",
     "Apellido2": "Gomez",
     "Cedula": "1234",
@@ -23,10 +23,10 @@
     "FechaDeNacimiento": "13/09/2004",
     "Usuario": "carlos.g",
     "Contrasena": "1234secure",
-    "IngresoMensual": 0
+    "IngresoMensual": 1210
   },
   {
-    "Nombre": "Laura",
+    "Nombre": "Koki no puto",
     "Rol": "AsesorDeCredito",
     "DescripcionDeRol": "Encargada de evaluar solicitudes de cr\u00E9dito",
     "Apellido1": "Hernandez",

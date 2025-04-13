@@ -36,7 +36,61 @@ namespace TECBank_BackEnd.Controllers
 
                 escrituraJson.GuardarEmpleado(nuevoEmpleado);
 
-                return Ok(new { success = true });
+                return Ok(new { success = true, message = "Empleado agregado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Modifica los datos de un empleado
+        [HttpPost("ModificarEmpleado")]
+        public ActionResult ModificarEmpleado([FromBody] EmpleadoModel data)
+        {
+            try
+            {
+                EmpleadoModel empleadoActualizado = new()
+                {
+                    Nombre = data.Nombre,
+                    Rol = data.Rol,
+                    DescripcionDeRol = data.DescripcionDeRol,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    Cedula = data.Cedula,
+                    AdminRol = data.AdminRol,
+                    FechaDeNacimiento = data.FechaDeNacimiento,
+                    Usuario = data.Usuario,
+                    Contrasena = data.Contrasena,
+                    IngresoMensual = data.IngresoMensual
+                };
+
+                edicionJson.EditarEmpleado(data.Cedula, empleadoActualizado);
+
+                return Ok(new { success = true, message = "Empleado agregado con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        // Elimina un empleado por cédula
+        [HttpPost("EliminarEmpleado")]
+        public ActionResult EliminarEmpleado([FromBody] EliminacionEmpleadoDataInputModel data)
+        {
+            try
+            {
+                bool eliminado = eliminadorJson.EliminarEmpleado(data.Cedula);
+
+                if (eliminado)
+                {
+                    return Ok(new { success = true, message = "El empleado se eliminó con éxito" });
+                }
+                else
+                {
+                    return Ok(new { success = true, message = "No se encontró el empleado a eliminar" });
+                }
             }
             catch (Exception ex)
             {
@@ -114,9 +168,9 @@ namespace TECBank_BackEnd.Controllers
                     Meta_Creditos = data.Meta_Creditos
                 };
 
-                edicionJson.EditarAsesorCredito(nuevoAsesor.Cedula,nuevoAsesor);
+                edicionJson.EditarAsesorCredito(nuevoAsesor.Cedula, nuevoAsesor);
 
-                return Ok(new { success = true , message = "Asesor modificado con exito" });
+                return Ok(new { success = true, message = "Asesor modificado con exito" });
             }
             catch (Exception ex)
             {
@@ -134,62 +188,6 @@ namespace TECBank_BackEnd.Controllers
                 eliminadorJson.EliminarAsesorCredito(data.Cedula);
 
                 return Ok(new { success = true, message = "Asesor modificado con exito" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { success = false, message = ex.Message });
-            }
-        }
-
-
-
-        // Modifica los datos de un empleado
-        [HttpPost("ModificarEmpleado")]
-        public ActionResult ModificarEmpleado([FromBody] EmpleadoModel data)
-        {
-            try
-            {
-                EmpleadoModel empleadoActualizado = new()
-                {
-                    Nombre = data.Nombre,
-                    Rol = data.Rol,
-                    DescripcionDeRol = data.DescripcionDeRol,
-                    Apellido1 = data.Apellido1,
-                    Apellido2 = data.Apellido2,
-                    Cedula = data.Cedula,
-                    AdminRol = data.AdminRol,
-                    FechaDeNacimiento = data.FechaDeNacimiento,
-                    Usuario = data.Usuario,
-                    Contrasena = data.Contrasena,
-                    IngresoMensual = data.IngresoMensual
-                };
-
-                edicionJson.EditarEmpleado(data.Cedula, empleadoActualizado);
-
-                return Ok(new { success = true });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { success = false, message = ex.Message });
-            }
-        }
-
-        // Elimina un empleado por cédula
-        [HttpPost("EliminarEmpleado")]
-        public ActionResult EliminarEmpleado([FromBody] EliminacionEmpleadoDataInputModel data)
-        {
-            try
-            {
-                bool eliminado = eliminadorJson.EliminarEmpleado(data.Cedula);
-
-                if (eliminado)
-                {
-                    return Ok(new { success = true, message = "El empleado se eliminó con éxito" });
-                }
-                else
-                {
-                    return Ok(new { success = true, message = "No se encontró el empleado a eliminar" });
-                }
             }
             catch (Exception ex)
             {

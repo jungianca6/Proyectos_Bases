@@ -1,30 +1,5 @@
 [
   {
-    "Cedula": "5678",
-    "Meta_Colones": 2000000,
-    "Meta_Creditos": [
-      3,
-      5,
-      7
-    ]
-  },
-  {
-    "Cedula": "5123678",
-    "Meta_Colones": 1500000,
-    "Meta_Creditos": [
-      3,
-      5,
-      7
-    ]
-  },
-  {
-    "Cedula": "207890123",
-    "Meta_Colones": 5000000,
-    "Meta_Creditos": [
-      1
-    ]
-  },
-  {
     "Cedula": "51236781243",
     "Meta_Colones": 2000000,
     "Meta_Creditos": [

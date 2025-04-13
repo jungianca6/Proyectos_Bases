@@ -71,7 +71,7 @@ namespace TECBank_BackEnd.Controllers
             }
         }
 
-        /*
+        
         // POST: Movimiento/Pago
         [HttpPost("PagoPrestamo")]
         public ActionResult PagoPrestamo([FromBody] PagoDataInputModel data)
@@ -120,7 +120,7 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
-        */
+        
 
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]
