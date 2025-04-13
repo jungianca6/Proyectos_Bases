@@ -66,25 +66,7 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
-        public List<DepositoModel> LeerDepositos(string filtro = "", string valor = "")
-        {
-            Jason json = new Jason();
-            var depositos = json.LeerDepositos();
-
-            return filtro switch
-            {
-                "ID" => depositos.Where(d => d.ID == valor).ToList(),
-                "Apellido1" => depositos.Where(d => d.Apellido1 == valor).ToList(),
-                "Apellido2" => depositos.Where(d => d.Apellido2 == valor).ToList(),
-                "Monto" => depositos.Where(d => d.Monto.ToString() == valor).ToList(),
-                "Moneda" => depositos.Where(d => d.Moneda == valor).ToList(),
-                "Fecha" => depositos.Where(d => d.Fecha == valor).ToList(),
-                "CuentaEmisora" => depositos.Where(d => d.CuentaEmisora == valor).ToList(),
-                "CuentaDestino" => depositos.Where(d => d.CuentaDestino == valor).ToList(),
-                _ => depositos
-            };
-        }
-
+     
         public List<EmpleadoModel> LeerEmpleados(string filtro = "", string valor = "")
         {
             Jason json = new Jason();
@@ -189,6 +171,17 @@ namespace TECBank_BackEnd.Pruebas
                 c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
             );
         }
+
+        public EmpleadoModel? BuscarEmpleadoPorCedula(string cedula)
+        {
+            Jason json = new Jason();
+            var clientes = json.LeerEmpleados();
+
+            return clientes.FirstOrDefault(c =>
+                c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
         public CuentaModel? BuscarCuentaPorUsuario(string usuario)
         {
             Jason json = new Jason();

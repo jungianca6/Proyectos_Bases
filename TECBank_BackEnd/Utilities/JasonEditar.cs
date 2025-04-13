@@ -41,6 +41,9 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Contrasena))
                     clienteExistente.Contrasena = nuevosDatos.Contrasena;
 
+                if (clienteExistente.AdminRol != nuevosDatos.AdminRol)
+                    clienteExistente.AdminRol = nuevosDatos.AdminRol;
+
                 holas.GuardarClientes(clientes);
 
                 Console.WriteLine($"✅ Cliente con cédula {cedula} actualizado parcialmente.");
@@ -153,6 +156,9 @@ namespace TECBank_BackEnd.Pruebas
 
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.Contraseña))
                     empleado.Contraseña = nuevosDatos.Contraseña;
+
+                if (empleado.AdminRol != nuevosDatos.AdminRol)
+                    empleado.AdminRol = nuevosDatos.AdminRol;
 
                 jason.GuardarEmpleados(empleados);
                 Console.WriteLine($"✅ Empleado con cédula {cedula} actualizado parcialmente.");

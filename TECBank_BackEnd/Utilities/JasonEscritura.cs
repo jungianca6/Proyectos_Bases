@@ -52,22 +52,7 @@ namespace TECBank_BackEnd.Pruebas
             json.GuardarTarjetas(tarjetas);
             Console.WriteLine($"✅ Tarjeta {tarjeta.Numero} agregada correctamente.");
         }
-        public void GuardarDeposito(DepositoModel deposito)
-        {
-            Jason json = new Jason();
-            var depositos = json.LeerDepositos();
-
-            if (depositos.Any(d => d.ID == deposito.ID))
-            {
-                Console.WriteLine($"⚠️ Ya existe un depósito con el ID {deposito.ID}. No se puede agregar.");
-                return;
-            }
-
-            depositos.Add(deposito);
-            json.GuardarDepositos(depositos);
-            Console.WriteLine($"✅ Depósito {deposito.ID} agregado correctamente.");
-        }
-
+     
         public void GuardarEmpleado(EmpleadoModel empleado)
         {
             Jason json = new Jason();

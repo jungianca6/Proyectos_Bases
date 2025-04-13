@@ -181,7 +181,7 @@ namespace TECBank_BackEnd.Controllers
 
                     var response = new { success = true, message = "Retiro hecho con exito" };
 
-                    jasonEscritura.GuardarRetiro(nuevo_retiro);
+                    
 
                     return Ok(response);
                 }
