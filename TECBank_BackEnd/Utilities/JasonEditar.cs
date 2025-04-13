@@ -235,5 +235,36 @@ namespace TECBank_BackEnd.Pruebas
         }
 
 
+
+
+        public void EditarCalendarioPago(string idPrestamo, CalendarioPagoModel nuevosDatos)
+        {
+            Jason jason = new Jason();
+            var calendarios = jason.LeerCalendarioPagos();
+
+            var calendario = calendarios.FirstOrDefault(c => c.ID_Prestamo == idPrestamo);
+
+            if (calendario != null)
+            {
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaVencimiento))
+                    calendario.FechaVencimiento = nuevosDatos.FechaVencimiento;
+
+                if (nuevosDatos.SaldoPendiente != 0)
+                    calendario.SaldoPendiente = nuevosDatos.SaldoPendiente;
+
+                if (nuevosDatos.CuotasMensuales != null && nuevosDatos.CuotasMensuales.Count > 0)
+                    calendario.CuotasMensuales = nuevosDatos.CuotasMensuales;
+
+                jason.GuardarCalendarioPagos(calendarios);
+                Console.WriteLine($"✅ Calendario de pago con ID {idPrestamo} actualizado parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró un calendario de pago con ID {idPrestamo}.");
+            }
+        }
+
+
+
     }
 }

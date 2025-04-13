@@ -3,6 +3,7 @@ using System.Globalization;
 using TECBank_BackEnd.Data_Input_Models;
 using TECBank_BackEnd.Models;
 using TECBank_BackEnd.Pruebas;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Controllers
 {
@@ -135,14 +136,11 @@ namespace TECBank_BackEnd.Controllers
                 if (prestamo.Saldo_Pendiente <= 0)
                     return BadRequest("El saldo pendiente debe ser mayor a cero.");
 
-                // Si ya pasó el día 1 del mes actual, comenzamos desde el mes siguiente
                 DateTime fechaInicioPago = (fechaActual.Day > 1)
                     ? new DateTime(fechaActual.Year, fechaActual.Month, 1).AddMonths(1)
                     : new DateTime(fechaActual.Year, fechaActual.Month, 1);
 
-                // SIEMPRE incluir el mes del vencimiento
                 DateTime fechaFinPago = new DateTime(fechaVencimiento.Year, fechaVencimiento.Month, 1);
-
                 int totalMeses = ((fechaFinPago.Year - fechaInicioPago.Year) * 12) + (fechaFinPago.Month - fechaInicioPago.Month) + 1;
 
                 if (totalMeses <= 0)
@@ -150,7 +148,7 @@ namespace TECBank_BackEnd.Controllers
 
                 decimal montoMensual = Math.Round(prestamo.Saldo_Pendiente / (decimal)totalMeses, 2);
 
-                List<object> calendario = new List<object>();
+                List<CuotaMensual> cuotasMensuales = new List<CuotaMensual>();
                 decimal totalGenerado = 0;
 
                 for (int i = 0; i < totalMeses; i++)
@@ -158,7 +156,6 @@ namespace TECBank_BackEnd.Controllers
                     DateTime fechaPago = fechaInicioPago.AddMonths(i);
                     decimal monto = montoMensual;
 
-                    // Ajuste en la última cuota
                     if (i == totalMeses - 1)
                     {
                         monto = prestamo.Saldo_Pendiente - totalGenerado;
@@ -167,22 +164,31 @@ namespace TECBank_BackEnd.Controllers
 
                     totalGenerado += monto;
 
-                    calendario.Add(new
+                    cuotasMensuales.Add(new CuotaMensual
                     {
                         Mes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(fechaPago.Month),
                         Anio = fechaPago.Year,
                         FechaPago = fechaPago.ToString("dd/MM/yyyy"),
-                        MontoAPagar = monto
+                        MontoAPagar = (int)monto
                     });
                 }
 
-                return Ok(new
+                var calendario = new CalendarioPagoModel
                 {
                     ID_Prestamo = data.ID_Prestamos,
                     FechaVencimiento = prestamo.FechaVencimiento,
                     SaldoPendiente = prestamo.Saldo_Pendiente,
-                    CuotasMensuales = calendario
-                });
+                    CuotasMensuales = cuotasMensuales
+                };
+
+                // Guardar en el JSON
+                JasonEscritura Escritura = new JasonEscritura();
+
+                Escritura.GuardarCalendarioPago(calendario);
+
+
+
+                return Ok(calendario);
             }
             catch (Exception ex)
             {

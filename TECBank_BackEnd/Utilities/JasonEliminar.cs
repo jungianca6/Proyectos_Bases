@@ -51,5 +51,15 @@ namespace TECBank_BackEnd.Pruebas
         }
 
 
+        public bool EliminarCalendarioPago(string idPrestamo)
+        {
+            Jason json = new Jason();
+            var calendarios = json.LeerCalendarioPagos();
+            var eliminados = calendarios.RemoveAll(c => c.ID_Prestamo == idPrestamo);
+            json.GuardarCalendarioPagos(calendarios);
+            return eliminados > 0;
+        }
+
+
     }
 }

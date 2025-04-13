@@ -13,6 +13,7 @@ namespace TECBank_BackEnd.Utilities
         private readonly string archivoEmpleados;
         private readonly string archivoPagos;
         private readonly string archivoPagosPrestamo;
+        private readonly string archivoCalendarioPagos;
 
         private readonly string archivoRetiros;
         private readonly string archivoTransferencias; // <-- NUEVA LÍNEA
@@ -36,6 +37,7 @@ namespace TECBank_BackEnd.Utilities
             archivoAsesores = Path.Combine(carpeta, "AsesoresCredito.json"); // <-- NUEVA LÍNEA
             archivoPrestamos = Path.Combine(carpeta, "Prestamo.json"); // <-- NUEVA LÍNEA
             archivoPagosPrestamo = Path.Combine(carpeta, "PagoPrestamo.json");
+            archivoCalendarioPagos = Path.Combine(carpeta, "CalendarioPago.json");
 
             archivoTransferencias = Path.Combine(carpeta, "Transferencia.json"); // <-- NUEVA LÍNEA
         }
@@ -230,6 +232,27 @@ namespace TECBank_BackEnd.Utilities
             var json = JsonSerializer.Serialize(pagosPrestamo, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(archivoPagosPrestamo, json);
         }
+
+
+
+        public List<CalendarioPagoModel> LeerCalendarioPagos()
+        {
+            if (!File.Exists(archivoCalendarioPagos))
+                return new List<CalendarioPagoModel>();
+
+            var json = File.ReadAllText(archivoCalendarioPagos);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<CalendarioPagoModel>();
+
+            return JsonSerializer.Deserialize<List<CalendarioPagoModel>>(json) ?? new List<CalendarioPagoModel>();
+        }
+
+        public void GuardarCalendarioPagos(List<CalendarioPagoModel> calendarios)
+        {
+            var json = JsonSerializer.Serialize(calendarios, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoCalendarioPagos, json);
+        }
+
 
 
     }
