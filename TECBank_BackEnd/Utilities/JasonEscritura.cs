@@ -150,6 +150,21 @@ namespace TECBank_BackEnd.Pruebas
             Console.WriteLine($"✅ Préstamo con ID {prestamo.ID_Prestamos} agregado correctamente.");
         }
 
+        public void GuardarPagoPrestamo(PagoPrestamoModel pagoPrestamo)
+        {
+            Jason json = new Jason();
+            var pagosPrestamo = json.LeerPagosPrestamo();
+
+            if (pagosPrestamo.Any(p => p.ID == pagoPrestamo.ID))
+            {
+                Console.WriteLine($"⚠️ Ya existe un pagoPrestamo con el ID {pagoPrestamo.ID}. No se puede agregar.");
+                return;
+            }
+
+            pagosPrestamo.Add(pagoPrestamo);
+            json.GuardarPagosPrestamo(pagosPrestamo);
+            Console.WriteLine($"✅ Pago con ID {pagoPrestamo.ID} agregado correctamente.");
+        }
 
     }
 }

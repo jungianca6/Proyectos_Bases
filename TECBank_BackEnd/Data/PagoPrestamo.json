@@ -1,0 +1,13 @@
+[
+  {
+    "CuentaEmisora": "C123",
+    "IdPrestamo": "T001",
+    "Monto": 200,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "P001",
+    "Moneda": "CRC"
+  }
+]

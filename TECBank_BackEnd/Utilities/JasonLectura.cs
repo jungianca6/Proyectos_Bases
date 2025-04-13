@@ -186,7 +186,24 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
+        public List<PagoPrestamoModel> LeerPagosPrestamo(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var pagosPrestamo = json.LeerPagosPrestamo();
 
+            return filtro switch
+            {
+                "ID" => pagosPrestamo.Where(p => p.ID == valor).ToList(),
+                "Apellido1" => pagosPrestamo.Where(p => p.Apellido1 == valor).ToList(),
+                "Apellido2" => pagosPrestamo.Where(p => p.Apellido2 == valor).ToList(),
+                "Monto" => pagosPrestamo.Where(p => p.Monto.ToString() == valor).ToList(),
+                "Moneda" => pagosPrestamo.Where(p => p.Moneda == valor).ToList(),
+                "Fecha" => pagosPrestamo.Where(p => p.Fecha == valor).ToList(),
+                "CuentaEmisora" => pagosPrestamo.Where(p => p.CuentaEmisora == valor).ToList(),
+                "IdPrestamo" => pagosPrestamo.Where(p => p.IdPrestamo == valor).ToList(),
+                _ => pagosPrestamo
+            };
+        }
 
         public ClienteModel? BuscarPorUsuario(string usuario)
         {
@@ -331,6 +348,9 @@ namespace TECBank_BackEnd.Pruebas
                 _ => asesores
             };
         }
+
+
+
 
 
     }

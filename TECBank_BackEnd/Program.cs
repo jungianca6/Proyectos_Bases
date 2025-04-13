@@ -428,6 +428,20 @@ Console.WriteLine("=============================================================
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var retiroA = new RetiroModel
 {
     CuentaARetirar = "dsadad",
@@ -591,6 +605,63 @@ var prestamoEditado = new PrestamoModel
     Pagos = 10
 };
 Editare.EditarPrestamo("PREST123", prestamoEditado);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var pagoPrestamoA = new PagoPrestamoModel
+{
+    CuentaEmisora = "C123",
+    IdPrestamo = "T001",
+    Nombre = "Carlos",
+    Apellido1 = "Perez",
+    Apellido2 = "Gomez",
+    Fecha = "2025-04-11",
+    Monto = 200,
+    ID = "P001",
+    Moneda = "CRC"
+};
+
+// 🟩 Escritura de pago
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE PAGOPrestamo ===========");
+Escritura.GuardarPagoPrestamo(pagoPrestamoA);
+
+// 🟩 Lectura de pagos
+Console.WriteLine("=========== 🔍 LECTURA DE PAGOSPrestamo (TODOS) ===========");
+var pagosPrestamoA = Lectura.LeerPagosPrestamo();
+
+foreach (var pagoPrestamo in pagosPrestamoA)
+{
+    Console.WriteLine($"ID: {pagoPrestamo.ID}");
+    Console.WriteLine($"Monto: {pagoPrestamo.Monto} {pagoPrestamo.Moneda}");
+    Console.WriteLine($"Cuenta Emisora: {pagoPrestamo.CuentaEmisora}");
+    Console.WriteLine($"Número de Tarjeta: {pagoPrestamo.IdPrestamo}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+Console.WriteLine("================================================================");
+
+
+
+
+
+
+
 
 
 app.Run();
