@@ -573,7 +573,6 @@ var prestamo = new PrestamoModel
     Cedula_Cliete = "12345678",
     Tasa_De_Interes = 0.065m,
     ID_Prestamos = "PREST123",
-    Pagos = 12,
     FechaVencimiento = "30/12/2025"
 };
 
@@ -592,7 +591,6 @@ foreach (var p in prestamos)
     Console.WriteLine($"Monto Original: {p.Monto_Original}");
     Console.WriteLine($"Saldo Pendiente: {p.Saldo_Pendiente}");
     Console.WriteLine($"Tasa de Interés: {p.Tasa_De_Interes}");
-    Console.WriteLine($"Pagos: {p.Pagos}");
     Console.WriteLine($"Fecha Vencimiento: {p.FechaVencimiento}");
     Console.WriteLine("------------------------------------------------------------");
 }
@@ -602,7 +600,6 @@ Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE PRÉSTAMO ===========");
 var prestamoEditado = new PrestamoModel
 {
     Saldo_Pendiente = 200000,
-    Pagos = 10
 };
 Editare.EditarPrestamo("PREST123", prestamoEditado);
 

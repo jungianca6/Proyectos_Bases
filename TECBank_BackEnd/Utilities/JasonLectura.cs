@@ -176,9 +176,6 @@ namespace TECBank_BackEnd.Pruebas
 
                 "ID_Prestamos" => prestamos.Where(p => p.ID_Prestamos == valor).ToList(),
 
-                "Pagos" => int.TryParse(valor, out int pagos)
-                    ? prestamos.Where(p => p.Pagos == pagos).ToList()
-                    : new List<PrestamoModel>(),
 
                 "FechaVencimiento" => prestamos.Where(p => p.FechaVencimiento == valor).ToList(),
 
