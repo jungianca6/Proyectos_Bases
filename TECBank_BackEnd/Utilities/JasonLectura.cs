@@ -84,7 +84,7 @@ namespace TECBank_BackEnd.Pruebas
 
                 "FechaDeNacimiento" => empleados.Where(e => e.FechaDeNacimiento.ToString() == valor).ToList(),
                 "Usuario" => empleados.Where(e => e.Usuario == valor).ToList(),
-                "Contraseña" => empleados.Where(e => e.Contraseña == valor).ToList(),
+                "Contrasena" => empleados.Where(e => e.Contrasena == valor).ToList(),
                 "AdminRol" =>
                     bool.TryParse(valor, out var parsedValor)
                         ? empleados.Where(c => c.AdminRol == parsedValor).ToList()
@@ -172,6 +172,16 @@ namespace TECBank_BackEnd.Pruebas
                 c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
             );
         }
+        public EmpleadoModel? BuscarEmpleadoPorCedula(string cedula)
+        {
+            Jason json = new Jason();
+            var empleados = json.LeerEmpleados();
+
+            return empleados.FirstOrDefault(c =>
+                c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
         public CuentaModel? BuscarCuentaPorUsuario(string usuario)
         {
             Jason json = new Jason();

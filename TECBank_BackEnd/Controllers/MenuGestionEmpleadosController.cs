@@ -33,7 +33,8 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_empleado.AdminRol = data.AdminRol;
                 nuevo_empleado.FechaDeNacimiento = data.FechaDeNacimiento; nuevo_empleado.FechaDeNacimiento = data.FechaDeNacimiento;
                 nuevo_empleado.Usuario = data.Usuario;
-                nuevo_empleado.Contraseña = data.Contraseña;
+                nuevo_empleado.Contrasena = data.Contrasena;
+                nuevo_empleado.IngresoMensual = data.IngresoMensual;
 
                 // Crear una respuesta indicando éxito
                 var response = new { success = true};
@@ -71,7 +72,8 @@ namespace TECBank_BackEnd.Controllers
                 nueva_empleadoA.AdminRol = data.AdminRol;
                 nueva_empleadoA.FechaDeNacimiento = data.FechaDeNacimiento; nueva_empleadoA.FechaDeNacimiento = data.FechaDeNacimiento;
                 nueva_empleadoA.Usuario = data.Usuario;
-                nueva_empleadoA.Contraseña = data.Contraseña;
+                nueva_empleadoA.Contrasena = data.Contrasena;
+                nueva_empleadoA.IngresoMensual = data.IngresoMensual;
 
                 edicionJson.EditarEmpleado(nueva_empleadoA.Cedula, nueva_empleadoA);
 

@@ -13,6 +13,9 @@
         public bool AdminRol { get; set; }
         public string FechaDeNacimiento { get; set; }
         public string Usuario { get; set; }
-        public string Contraseña { get; set; }
+        public string Contrasena { get; set; }
+
+        public int IngresoMensual { get; set; }
+
     }
 }
