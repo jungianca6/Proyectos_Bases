@@ -25,5 +25,14 @@
     "TipoDeCuenta": "Corriente",
     "Nombre": "Cuenta Corriente",
     "Monto": 0
+  },
+  {
+    "NumeroDeCuenta": "73626581",
+    "Descripcion": "",
+    "Usuario": "gvm",
+    "Moneda": "Colones",
+    "TipoDeCuenta": "",
+    "Nombre": "Giancarlo",
+    "Monto": 0
   }
 ]

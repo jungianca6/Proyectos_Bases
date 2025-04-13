@@ -24,5 +24,18 @@
     "Usuario": "sapo1",
     "Contrasena": "32",
     "AdminRol": false
+  },
+  {
+    "Cedula": "118440677",
+    "Direccion": "Cartago",
+    "Telefono": "89063555",
+    "IngresoMensual": 100000,
+    "Nombre": "Giancarlo",
+    "Apellido1": "Vega",
+    "Apellido2": "Mar\u00EDn",
+    "TipoDeCliente": "Juridico",
+    "Usuario": "gvm",
+    "Contrasena": "0606",
+    "AdminRol": false
   }
 ]
