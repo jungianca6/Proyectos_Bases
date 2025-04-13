@@ -448,7 +448,7 @@ Escritura.GuardarRetiro(retiroA);
 
 // 🟩 Lectura de retiros
 Console.WriteLine("=========== 🔍 LECTURA DE RETIROS (TODOS) ===========");
-var retirosA = Lectura.LeerRetiros("CuentaARetirar", "dasd");
+var retirosA = Lectura.LeerRetiros("CuentaARetirar", "dsadad");
 
 foreach (var retiro in retirosA)
 {

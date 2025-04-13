@@ -14,6 +14,7 @@ namespace TECBank_BackEnd.Utilities
         private readonly string archivoPagos;
         private readonly string archivoRetiros;
         private readonly string archivoTransferencias; // <-- NUEVA LÍNEA
+        private readonly string archivoAsesores; // <-- NUEVA LÍNEA
 
         public Jason()
         {
@@ -29,6 +30,8 @@ namespace TECBank_BackEnd.Utilities
             archivoEmpleados = Path.Combine(carpeta, "Empleados.json");
             archivoPagos = Path.Combine(carpeta, "Pago.json");
             archivoRetiros = Path.Combine(carpeta, "Retiro.json");
+            archivoAsesores = Path.Combine(carpeta, "AsesoresCredito.json"); // <-- NUEVA LÍNEA
+
             archivoTransferencias = Path.Combine(carpeta, "Transferencia.json"); // <-- NUEVA LÍNEA
         }
 
@@ -167,5 +170,25 @@ namespace TECBank_BackEnd.Utilities
             var json = JsonSerializer.Serialize(transferencias, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(archivoTransferencias, json);
         }
+
+        public List<AsesorCreditoModel> LeerAsesoresCredito()
+        {
+            if (!File.Exists(archivoAsesores))
+                return new List<AsesorCreditoModel>();
+
+            var json = File.ReadAllText(archivoAsesores);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<AsesorCreditoModel>();
+
+            return JsonSerializer.Deserialize<List<AsesorCreditoModel>>(json) ?? new List<AsesorCreditoModel>();
+        }
+
+        public void GuardarAsesoresCredito(List<AsesorCreditoModel> asesores)
+        {
+            var json = JsonSerializer.Serialize(asesores, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoAsesores, json);
+        }
+
+
     }
 }
