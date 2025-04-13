@@ -222,9 +222,6 @@ namespace TECBank_BackEnd.Pruebas
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.ID_Prestamos))
                     prestamoExistente.ID_Prestamos = nuevosDatos.ID_Prestamos;
 
-                if (nuevosDatos.Pagos != 0)
-                    prestamoExistente.Pagos = nuevosDatos.Pagos;
-
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaVencimiento))
                     prestamoExistente.FechaVencimiento = nuevosDatos.FechaVencimiento;
 

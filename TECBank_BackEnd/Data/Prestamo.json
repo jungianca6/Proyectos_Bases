@@ -5,7 +5,6 @@
     "Cedula_Cliete": "12345678",
     "Tasa_De_Interes": 0.065,
     "ID_Prestamos": "PREST123",
-    "Pagos": 10,
     "FechaVencimiento": "30/12/2025"
   }
 ]
