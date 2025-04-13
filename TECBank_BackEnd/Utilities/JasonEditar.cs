@@ -169,6 +169,45 @@ namespace TECBank_BackEnd.Pruebas
             {
                 Console.WriteLine($"⚠️ No se encontró el empleado con cédula {cedula}.");
             }
+
         }
+
+
+        public void EditarAsesorCredito(string cedula, AsesorCreditoModel nuevosDatos)
+        {
+            Jason jason = new Jason();
+            var asesores = jason.LeerAsesoresCredito();
+
+            var asesor = asesores.FirstOrDefault(a => a.Cedula == cedula);
+
+            if (asesor != null)
+            {
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Nombre))
+                    asesor.Nombre = nuevosDatos.Nombre;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido1))
+                    asesor.Apellido1 = nuevosDatos.Apellido1;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Apellido2))
+                    asesor.Apellido2 = nuevosDatos.Apellido2;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Fecha_de_Nacimiento))
+                    asesor.Fecha_de_Nacimiento = nuevosDatos.Fecha_de_Nacimiento;
+
+                if (nuevosDatos.Meta_Colones > 0)
+                    asesor.Meta_Colones = nuevosDatos.Meta_Colones;
+
+                if (nuevosDatos.Meta_Creditos != null && nuevosDatos.Meta_Creditos.Count > 0)
+                    asesor.Meta_Creditos = nuevosDatos.Meta_Creditos;
+
+                jason.GuardarAsesoresCredito(asesores);
+                Console.WriteLine($"✅ Asesor de crédito con cédula {cedula} actualizado parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró el asesor de crédito con cédula {cedula}.");
+            }
+        }
+
     }
 }

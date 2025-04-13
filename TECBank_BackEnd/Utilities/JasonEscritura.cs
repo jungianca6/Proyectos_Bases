@@ -117,5 +117,23 @@ namespace TECBank_BackEnd.Pruebas
             json.GuardarTransferencias(transferencias);
             Console.WriteLine($"✅ Transferencia con ID {transferencia.ID} agregada correctamente.");
         }
+
+
+        public void GuardarAsesorCredito(AsesorCreditoModel asesor)
+        {
+            Jason json = new Jason();
+            var asesores = json.LeerAsesoresCredito();
+
+            if (asesores.Any(a => a.Cedula == asesor.Cedula))
+            {
+                Console.WriteLine($"⚠️ Ya existe un asesor de crédito con la cédula {asesor.Cedula}. No se puede agregar.");
+                return;
+            }
+
+            asesores.Add(asesor);
+            json.GuardarAsesoresCredito(asesores);
+            Console.WriteLine($"✅ Asesor de crédito {asesor.Nombre} agregado correctamente.");
+        }
+
     }
 }

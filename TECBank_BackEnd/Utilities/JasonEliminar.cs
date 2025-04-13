@@ -41,6 +41,15 @@ namespace TECBank_BackEnd.Pruebas
             return eliminados > 0;
         }
 
-  
+        public bool EliminarAsesorCredito(string cedula)
+        {
+            Jason json = new Jason();
+            var asesores = json.LeerAsesoresCredito();
+            var eliminados = asesores.RemoveAll(a => a.Cedula == cedula);
+            json.GuardarAsesoresCredito(asesores);
+            return eliminados > 0;
+        }
+
+
     }
 }

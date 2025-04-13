@@ -507,6 +507,47 @@ foreach (var transferencia in TransferenciaA)
 Console.WriteLine("================================================================");
 
 
+var asesor = new AsesorCreditoModel
+{
+    Cedula = "5123678",
+    Nombre = "Laura",
+    Apellido1 = "Michi",
+    Apellido2 = "Solano",
+    Fecha_de_Nacimiento = "25/07/1995",
+    Meta_Colones = 1500000,
+    Meta_Creditos = new List<int> { 3, 5, 7 }
+};
+
+// 🟩 Escritura de asesor
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE ASESOR ===========");
+Escritura.GuardarAsesorCredito(asesor);
+
+// 🟩 Lectura de asesores
+Console.WriteLine("=========== 🔍 LECTURA DE ASESORES DE CRÉDITO (TODOS) ===========");
+var asesores = Lectura.LeerAsesoresCredito("Apellido1", "Ramirez");
+
+foreach (var a in asesores)
+{
+    Console.WriteLine($"Nombre Completo: {a.Nombre} {a.Apellido1} {a.Apellido2}");
+    Console.WriteLine($"Cédula: {a.Cedula}");
+    Console.WriteLine($"Fecha de Nacimiento: {a.Fecha_de_Nacimiento}");
+    Console.WriteLine($"Meta Colones: {a.Meta_Colones}");
+    Console.WriteLine($"Meta Créditos: {string.Join(", ", a.Meta_Creditos)}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// 🟩 Edición parcial de asesor
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE ASESOR ===========");
+var asesorEditado = new AsesorCreditoModel
+{
+    Meta_Colones = 2000000
+};
+Editare.EditarAsesorCredito("5678", asesorEditado);
+
+// 🟩 Eliminación de asesor
+Console.WriteLine("=========== ❌ PRUEBA DE ELIMINACIÓN DE ASESOR ===========");
+Elimionacion.EliminarAsesorCredito("567we8");
+Console.WriteLine("================================================================");
 
 
 app.Run();

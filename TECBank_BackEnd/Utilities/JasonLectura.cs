@@ -280,5 +280,26 @@ namespace TECBank_BackEnd.Pruebas
             }).ToList();
         }
 
+        public List<AsesorCreditoModel> LeerAsesoresCredito(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var asesores = json.LeerAsesoresCredito();
+
+            return filtro switch
+            {
+                "Nombre" => asesores.Where(a => a.Nombre == valor).ToList(),
+                "Apellido1" => asesores.Where(a => a.Apellido1 == valor).ToList(),
+                "Apellido2" => asesores.Where(a => a.Apellido2 == valor).ToList(),
+                "Cedula" => asesores.Where(a => a.Cedula == valor).ToList(),
+                "Fecha_de_Nacimiento" => asesores.Where(a => a.Fecha_de_Nacimiento == valor).ToList(),
+                "Meta_Colones" => int.TryParse(valor, out int colones) ? asesores.Where(a => a.Meta_Colones == colones).ToList() : new List<AsesorCreditoModel>(),
+                "Meta_Creditos" => int.TryParse(valor, out int metaCredito) ?
+                                    asesores.Where(a => a.Meta_Creditos.Contains(metaCredito)).ToList() :
+                                    new List<AsesorCreditoModel>(),
+                _ => asesores
+            };
+        }
+
+
     }
 }
