@@ -1,22 +1,3 @@
 [
-  {
-    "CuentaARetirar": "dasd",
-    "Monto": 500,
-    "Nombre": "Carlos",
-    "Apellido1": "Perez",
-    "Apellido2": "Gomez",
-    "Fecha": "2025-04-11",
-    "ID": "R001",
-    "Moneda": "CRC"
-  },
-  {
-    "CuentaARetirar": "dsadad",
-    "Monto": 500,
-    "Nombre": "Carlos",
-    "Apellido1": "Perez",
-    "Apellido2": "Gomez",
-    "Fecha": "2025-04-11",
-    "ID": "R01",
-    "Moneda": "CRC"
-  }
+
 ]

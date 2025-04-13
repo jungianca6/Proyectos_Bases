@@ -106,35 +106,50 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
+                JasonEscritura jasonEscritura = new JasonEscritura();
 
-                CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
+                CuentaModel? cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
 
-                CuentaModel cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
+                CuentaModel? cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
 
-                CuentaModel cuenta_para_editar = new CuentaModel();
+                if (cuenta_emisora != null){
+                    if (cuenta_receptora != null)
+                    {
+                        CuentaModel cuenta_para_editar = new CuentaModel();
 
-                if (cuenta_emisora.Monto >= data.Monto)
+                        if (cuenta_emisora.Monto >= data.Monto)
+                        {
+                            cuenta_para_editar.Monto = cuenta_receptora.Monto + data.Monto;
+
+                            jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_para_editar);
+
+                            cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
+
+                            jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
+
+                            var response = new { success = true, message = "Transferencia realizada con exito" };
+
+                            jasonEscritura.GuardarTransferencia(nueva_transferencia);
+
+                            return Ok(response);
+                        }
+                        else
+                        {
+                            var response = new { success = false, message = "No hay fondos suficientes para realizar la transferencia" };
+                            return Ok(response);
+                        }
+                    }
+                    else {
+                        var response = new { success = false, message = "La cuenta destino no existe" };
+                        return Ok(response);
+                    }
+                }
+                else
                 {
-                    cuenta_para_editar.Monto = cuenta_receptora.Monto + data.Monto;
-
-                    jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_para_editar);
-
-                    cuenta_para_editar.Monto = cuenta_emisora.Monto - data.Monto;
-
-                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_para_editar);
-
-                    var response = new { success = true, message = "Transferencia realizada con exito" };
-
-
-
-                    return Ok(response);
-
-                }
-                else {
-                    var response = new { success = false, message = "No hay fondos suficientes para realizar la transferencia" };
+                    var response = new { success = false, message = "La cuenta origen no existe" };
                     return Ok(response);
                 }
-                }
+            }
             catch (Exception ex)
             {
                 // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
@@ -181,6 +196,7 @@ namespace TECBank_BackEnd.Controllers
 
                     var response = new { success = true, message = "Retiro hecho con exito" };
 
+                    jasonEscritura.GuardarRetiro(nuevo_retiro);
                     
 
                     return Ok(response);

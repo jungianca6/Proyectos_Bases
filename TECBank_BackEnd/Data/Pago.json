@@ -1,35 +1,3 @@
 [
-  {
-    "Cuenta_Emisora": "99193059",
-    "Numero_de_Tarjeta": "1232141234",
-    "Monto": 1,
-    "Nombre": "Carlos",
-    "Apellido1": "S\u00E1nchez",
-    "Apellido2": "Ram\u00EDrez",
-    "Fecha": "12/04/2025 04:04",
-    "ID": "72188970",
-    "Moneda": "CRC"
-  },
-  {
-    "Cuenta_Emisora": "99193059",
-    "Numero_de_Tarjeta": "1232141234",
-    "Monto": 1,
-    "Nombre": "Carlos",
-    "Apellido1": "S\u00E1nchez",
-    "Apellido2": "Ram\u00EDrez",
-    "Fecha": "12/04/2025 04:06",
-    "ID": "50957229",
-    "Moneda": "CRC"
-  },
-  {
-    "Cuenta_Emisora": "C123",
-    "Numero_de_Tarjeta": "T001",
-    "Monto": 200,
-    "Nombre": "Carlos",
-    "Apellido1": "Perez",
-    "Apellido2": "Gomez",
-    "Fecha": "2025-04-11",
-    "ID": "P001",
-    "Moneda": "CRC"
-  }
+
 ]
