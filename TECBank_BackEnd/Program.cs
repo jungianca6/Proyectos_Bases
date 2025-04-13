@@ -550,4 +550,51 @@ Elimionacion.EliminarAsesorCredito("567we8");
 Console.WriteLine("================================================================");
 
 
+
+
+
+
+
+
+var prestamo = new PrestamoModel
+{
+    Monto_Original = 500000,
+    Saldo_Pendiente = 250000,
+    Cedula_Cliete = "12345678",
+    Tasa_De_Interes = 0.065m,
+    ID_Prestamos = "PREST123",
+    Pagos = 12,
+    FechaVencimiento = "30/12/2025"
+};
+
+// 🟩 Escritura de préstamo
+Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE PRÉSTAMO ===========");
+Escritura.GuardarPrestamo(prestamo);
+
+// 🟩 Lectura de préstamos
+Console.WriteLine("=========== 🔍 LECTURA DE PRÉSTAMOS POR CÉDULA ===========");
+var prestamos = Lectura.LeerPrestamos("Cedula_Cliete", "12345678");
+
+foreach (var p in prestamos)
+{
+    Console.WriteLine($"ID: {p.ID_Prestamos}");
+    Console.WriteLine($"Cédula: {p.Cedula_Cliete}");
+    Console.WriteLine($"Monto Original: {p.Monto_Original}");
+    Console.WriteLine($"Saldo Pendiente: {p.Saldo_Pendiente}");
+    Console.WriteLine($"Tasa de Interés: {p.Tasa_De_Interes}");
+    Console.WriteLine($"Pagos: {p.Pagos}");
+    Console.WriteLine($"Fecha Vencimiento: {p.FechaVencimiento}");
+    Console.WriteLine("------------------------------------------------------------");
+}
+
+// 🟩 Edición parcial de préstamo
+Console.WriteLine("=========== ✏️ CAMBIO PARCIAL DE PRÉSTAMO ===========");
+var prestamoEditado = new PrestamoModel
+{
+    Saldo_Pendiente = 200000,
+    Pagos = 10
+};
+Editare.EditarPrestamo("PREST123", prestamoEditado);
+
+
 app.Run();

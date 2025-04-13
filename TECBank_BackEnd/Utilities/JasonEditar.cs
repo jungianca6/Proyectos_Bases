@@ -209,5 +209,45 @@ namespace TECBank_BackEnd.Pruebas
             }
         }
 
+        public void EditarPrestamo(string idPrestamo, PrestamoModel nuevosDatos)
+        {
+            Jason jason = new Jason();
+            var prestamos = jason.LeerPrestamos();
+
+            var prestamoExistente = prestamos.FirstOrDefault(p => p.ID_Prestamos == idPrestamo);
+
+            if (prestamoExistente != null)
+            {
+                if (nuevosDatos.Monto_Original != 0)
+                    prestamoExistente.Monto_Original = nuevosDatos.Monto_Original;
+
+                if (nuevosDatos.Saldo_Pendiente != 0)
+                    prestamoExistente.Saldo_Pendiente = nuevosDatos.Saldo_Pendiente;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.Cedula_Cliete))
+                    prestamoExistente.Cedula_Cliete = nuevosDatos.Cedula_Cliete;
+
+                if (nuevosDatos.Tasa_De_Interes != 0)
+                    prestamoExistente.Tasa_De_Interes = nuevosDatos.Tasa_De_Interes;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.ID_Prestamos))
+                    prestamoExistente.ID_Prestamos = nuevosDatos.ID_Prestamos;
+
+                if (nuevosDatos.Pagos != 0)
+                    prestamoExistente.Pagos = nuevosDatos.Pagos;
+
+                if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaVencimiento))
+                    prestamoExistente.FechaVencimiento = nuevosDatos.FechaVencimiento;
+
+                jason.GuardarPrestamos(prestamos);
+                Console.WriteLine($"✅ Préstamo con ID {idPrestamo} actualizado parcialmente.");
+            }
+            else
+            {
+                Console.WriteLine($"⚠️ No se encontró un préstamo con ID {idPrestamo}.");
+            }
+        }
+
+
     }
 }

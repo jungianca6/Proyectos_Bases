@@ -153,6 +153,40 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
+        public List<PrestamoModel> LeerPrestamos(string filtro = "", string valor = "")
+        {
+            Jason json = new Jason();
+            var prestamos = json.LeerPrestamos();
+
+            return filtro switch
+            {
+                "Monto_Original" => int.TryParse(valor, out int montoOriginal)
+                    ? prestamos.Where(p => p.Monto_Original == montoOriginal).ToList()
+                    : new List<PrestamoModel>(),
+
+                "Saldo_Pendiente" => int.TryParse(valor, out int saldoPendiente)
+                    ? prestamos.Where(p => p.Saldo_Pendiente == saldoPendiente).ToList()
+                    : new List<PrestamoModel>(),
+
+                "Cedula_Cliete" => prestamos.Where(p => p.Cedula_Cliete == valor).ToList(),
+
+                "Tasa_De_Interes" => decimal.TryParse(valor, out decimal tasa)
+                    ? prestamos.Where(p => p.Tasa_De_Interes == tasa).ToList()
+                    : new List<PrestamoModel>(),
+
+                "ID_Prestamos" => prestamos.Where(p => p.ID_Prestamos == valor).ToList(),
+
+                "Pagos" => int.TryParse(valor, out int pagos)
+                    ? prestamos.Where(p => p.Pagos == pagos).ToList()
+                    : new List<PrestamoModel>(),
+
+                "FechaVencimiento" => prestamos.Where(p => p.FechaVencimiento == valor).ToList(),
+
+                _ => prestamos
+            };
+        }
+
+
 
         public ClienteModel? BuscarPorUsuario(string usuario)
         {

@@ -134,6 +134,22 @@ namespace TECBank_BackEnd.Pruebas
             json.GuardarAsesoresCredito(asesores);
             Console.WriteLine($"✅ Asesor de crédito {asesor.Nombre} agregado correctamente.");
         }
+        public void GuardarPrestamo(PrestamoModel prestamo)
+        {
+            Jason json = new Jason();
+            var prestamos = json.LeerPrestamos();
+
+            if (prestamos.Any(p => p.ID_Prestamos == prestamo.ID_Prestamos))
+            {
+                Console.WriteLine($"⚠️ Ya existe un préstamo con el ID {prestamo.ID_Prestamos}. No se puede agregar.");
+                return;
+            }
+
+            prestamos.Add(prestamo);
+            json.GuardarPrestamos(prestamos);
+            Console.WriteLine($"✅ Préstamo con ID {prestamo.ID_Prestamos} agregado correctamente.");
+        }
+
 
     }
 }
