@@ -30,6 +30,7 @@ class RegistroActivity : ComponentActivity() {
             val direccion = findViewById<EditText>(R.id.direccion).text.toString()
             val telefono = findViewById<EditText>(R.id.telefono).text.toString()
             val ingresoMensual = findViewById<EditText>(R.id.ingresoMensual).text.toString().toIntOrNull() ?: 0
+            val tipoCliente = findViewById<EditText>(R.id.TipoCliente).text.toString()
             val usuario = findViewById<EditText>(R.id.usuario).text.toString()
             val contrasena = findViewById<EditText>(R.id.contrasena).text.toString()
 
@@ -42,7 +43,7 @@ class RegistroActivity : ComponentActivity() {
                 put("nombre", nombre)
                 put("apellido1", apellido1)
                 put("apellido2", apellido2)
-                put("tipoDeCliente", "ola")
+                put("tipoDeCliente", tipoCliente)
                 put("usuario", usuario)
                 put("contrasena", contrasena)
                 put("adminRol", false)
@@ -72,7 +73,7 @@ class RegistroActivity : ComponentActivity() {
 
 
         val request = Request.Builder()
-            .url("https://b973-201-202-14-53.ngrok-free.app/MenuInicio/Registro")
+            .url("https://a083-186-64-212-255.ngrok-free.app/MenuInicio/Registro")
             .post(requestBody)
             .build()
 

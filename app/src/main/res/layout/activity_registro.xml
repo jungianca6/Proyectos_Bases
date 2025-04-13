@@ -107,6 +107,16 @@
                 android:padding="10dp" />
 
             <EditText
+                android:id="@+id/TipoCliente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/edittext_redondeado"
+                android:hint="TipoCliente"
+                android:inputType="textPersonName"
+                android:padding="10dp" />
+
+            <EditText
                 android:id="@+id/usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
