@@ -1,14 +1,14 @@
-body {
-    background-color: #002147; /* Azul oscuro */
-    color: white; 
-    font-family: Arial, sans-serif;
-    margin: 0;  
-    padding: 0; 
-    height: 100vh;
+html, body {
+  background-color: #002147; /* Azul oscuro */
+  font-family: Arial, sans-serif;
+  margin: 0;  
+  padding: 0; 
+  height: 100%;
+  width: 100%;
 }
 
 .container {
-    max-width: 800px;
+    max-width: none;
     width: 100%;
     margin: auto;
     padding: 20px;
@@ -31,9 +31,15 @@ body {
 
 :global(.cliente h1),
 :global(.cliente h2),
-:global(.cliente h3) {
+:global(.cliente h3){
     color: #f8f9fa;
     font-family: Arial, sans-serif;
+}
+
+:global(.cliente) {
+  background-color: #002147; /* Igual que el body */
+  min-height: 100%; /* Asegura que cubre toda la altura */
+  width: 100%;
 }
 
 :global(.cliente label) {
@@ -61,4 +67,8 @@ body {
   
   :global(.cliente button.btn-primary:hover) {
     background-color: #004494;
+  }
+
+  .labelwhite {
+    color: white;
   }
