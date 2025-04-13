@@ -74,7 +74,7 @@ namespace TECBank_BackEnd.Controllers
         
         // POST: Movimiento/Pago
         [HttpPost("PagoPrestamo")]
-        public ActionResult PagoPrestamo([FromBody] PagoDataInputModel data)
+        public ActionResult PagoPrestamo([FromBody] PagoPrestamoDataInputModel data)
         {
             try
             {
@@ -85,9 +85,10 @@ namespace TECBank_BackEnd.Controllers
                     Apellido2 = data.Apellido2,
                     ID = GenerarID(),
                     Fecha = ObtenerFechaActual(),
-                    IdPrestamo = data.Numero_de_Tarjeta,
+                    IdPrestamo = data.IdPrestamo,
                     Moneda = data.Moneda,
-                    Monto = data.Monto
+                    Monto = data.Monto,
+                    CuentaEmisora = data.NumeroDeCuenta
                 };
 
                 JasonLectura jasonLectura = new JasonLectura();
@@ -98,10 +99,10 @@ namespace TECBank_BackEnd.Controllers
 
                 if (cuenta_emisora.Monto >= data.Monto)
                 {
-                    PrestamoModel prestamo = jasonLectura.BuscarPrestamoPorId(data.Numero_de_Tarjeta);
-                    prestamo.Saldo_Pendiente =- prestamo.Saldo_Pendiente - data.Monto;
+                    PrestamoModel prestamo = jasonLectura.BuscarPrestamoPorId(data.IdPrestamo);
+                    prestamo.Saldo_Pendiente = prestamo.Saldo_Pendiente - data.Monto;
 
-                    jasonEditar.EditarPrestamo(data.Numero_de_Tarjeta, prestamo);
+                    jasonEditar.EditarPrestamo(data.IdPrestamo, prestamo);
 
                     cuenta_emisora.Monto -= data.Monto;
                     jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
@@ -224,9 +225,10 @@ namespace TECBank_BackEnd.Controllers
 
                 var retiros = jasonLectura.LeerRetiros("CuentaARetirar", data.NumeroDeCuenta);
                 var transferencias = jasonLectura.LeerTransferencias("Cuenta_Emisora", data.NumeroDeCuenta);
-                var pagos = jasonLectura.LeerPagos("Cuenta_Emisora", data.NumeroDeCuenta);
+                var pagos_tarjetas = jasonLectura.LeerPagos("Cuenta_Emisora", data.NumeroDeCuenta);
+                var pagos_prestamos = jasonLectura.LeerPagosPrestamo("CuentaEmisora", data.NumeroDeCuenta);
 
-                return Ok(new { success = true, retiros, pagos, transferencias });
+                return Ok(new { success = true, retiros, pagos_tarjetas, pagos_prestamos, transferencias });
             }
             catch (Exception ex)
             {
@@ -244,9 +246,10 @@ namespace TECBank_BackEnd.Controllers
 
                 var retiros = jasonLectura.LeerRetirosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
                 var transferencias = jasonLectura.LeerTransferenciasPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
-                var pagos = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var pagos_tarjetas = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var pagos_prestamos = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
 
-                return Ok(new { success = true, retiros, pagos, transferencias });
+                return Ok(new { success = true, retiros, pagos_tarjetas, pagos_prestamos, transferencias });
             }
             catch (Exception ex)
             {

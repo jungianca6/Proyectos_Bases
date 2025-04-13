@@ -24,7 +24,7 @@ namespace TECBank_BackEnd.Controllers
 
         // POST: Movimiento/Pago
         [HttpPost("AgregarPrestamo")]
-        public ActionResult Pago([FromBody] PrestamoModel data)
+        public ActionResult Pago([FromBody] AgregarPrestamoDataInputModel data)
         {
             try
             {
@@ -32,9 +32,10 @@ namespace TECBank_BackEnd.Controllers
                 {
                     Monto_Original = data.Monto_Original,
                     Saldo_Pendiente = data.Monto_Original,
-                    Cedula_Cliete = data.Cedula_Cliete,
+                    Cedula_Cliete = data.Cedula_Cliente,
                     Tasa_De_Interes = data.Tasa_De_Interes,
-                    FechaVencimiento = data.FechaVencimiento
+                    FechaVencimiento = data.FechaVencimiento,
+                    ID_Prestamos = GenerarID() 
                 };
 
                 JasonEscritura jasonEscritura = new JasonEscritura();
