@@ -1,20 +1,22 @@
 [
   {
-    "CuentaARetirar": {
-      "NumeroDeCuenta": "C123",
-      "Descripcion": "Cuenta para pagos r\u00E1pidos",
-      "Usuario": "carlos.g",
-      "Moneda": "CRC",
-      "TipoDeCuenta": "Corriente",
-      "Nombre": "Cuenta Corriente"
-    },
+    "CuentaARetirar": "dasd",
+    "Monto": 500,
     "Nombre": "Carlos",
-    "NumeroDeCuenta": "C123",
     "Apellido1": "Perez",
     "Apellido2": "Gomez",
     "Fecha": "2025-04-11",
-    "Monto": 500,
     "ID": "R001",
+    "Moneda": "CRC"
+  },
+  {
+    "CuentaARetirar": "dsadad",
+    "Monto": 500,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "R01",
     "Moneda": "CRC"
   }
 ]

@@ -46,7 +46,7 @@ app.MapControllers(); // Mapea los controladores
 
 
 
-/*
+
 var ClienteA = new ClienteModel
 {
     Cedula = "1243",
@@ -390,11 +390,10 @@ var pagoA = new PagoModel
     Cuenta_Emisora = "C123",
     Numero_de_Tarjeta = "T001",
     Nombre = "Carlos",
-    NumeroDeCuenta = "C123",
     Apellido1 = "Perez",
     Apellido2 = "Gomez",
     Fecha = "2025-04-11",
-    Monto = 200.00m,
+    Monto = 200,
     ID = "P001",
     Moneda = "CRC"
 };
@@ -429,22 +428,14 @@ Console.WriteLine("=============================================================
 
 var retiroA = new RetiroModel
 {
-    CuentaARetirar = new CuentaModel
-    {
-        NumeroDeCuenta = "C123",
-        Nombre = "Cuenta Corriente",
-        Descripcion = "Cuenta para pagos rápidos",
-        Usuario = "carlos.g",
-        Moneda = "CRC",
-        TipoDeCuenta = "Corriente"
-    },
+    CuentaARetirar = "dsadad",
+    Monto = 500,
+
     Nombre = "Carlos",
-    NumeroDeCuenta = "C123",
     Apellido1 = "Perez",
     Apellido2 = "Gomez",
     Fecha = "2025-04-11",
-    Monto = 500.00m,
-    ID = "R001",
+    ID = "R01",
     Moneda = "CRC"
 };
 
@@ -455,18 +446,18 @@ Escritura.GuardarRetiro(retiroA);
 
 // 🟩 Lectura de retiros
 Console.WriteLine("=========== 🔍 LECTURA DE RETIROS (TODOS) ===========");
-var retirosA = Lectura.LeerRetiros();
+var retirosA = Lectura.LeerRetiros("CuentaARetirar", "dasd");
 
 foreach (var retiro in retirosA)
 {
     Console.WriteLine($"ID: {retiro.ID}");
     Console.WriteLine($"Monto: {retiro.Monto} {retiro.Moneda}");
-    Console.WriteLine($"Cuenta para Retirar: {retiro.CuentaARetirar.NumeroDeCuenta}");
+    Console.WriteLine($"Cuenta para Retirar: {retiro.CuentaARetirar}");
     Console.WriteLine("------------------------------------------------------------");
 }
 
 Console.WriteLine("================================================================");
-*/
+
 
 
 

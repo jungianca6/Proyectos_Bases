@@ -20,5 +20,16 @@
     "Fecha": "12/04/2025 04:06",
     "ID": "50957229",
     "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "C123",
+    "Numero_de_Tarjeta": "T001",
+    "Monto": 200,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "P001",
+    "Moneda": "CRC"
   }
 ]

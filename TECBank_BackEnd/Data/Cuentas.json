@@ -16,5 +16,14 @@
     "TipoDeCuenta": "",
     "Nombre": "sapo",
     "Monto": 465000
+  },
+  {
+    "NumeroDeCuenta": "C123",
+    "Descripcion": "Cuenta editada para pagos internacionales",
+    "Usuario": "sapo",
+    "Moneda": "CRC",
+    "TipoDeCuenta": "Corriente",
+    "Nombre": "Cuenta Corriente",
+    "Monto": 0
   }
 ]
