@@ -10,6 +10,13 @@ namespace TECBank_BackEnd.Controllers
     public class MenuGestionClienteController : ControllerBase
     {
 
+        // Función auxiliar para generar un número de cuenta aleatorio
+        private string GenerarNumeroDeCuenta()
+        {
+            return new Random().Next(10_000_000, 100_000_000).ToString();
+        }
+
+
         // POST: MenuGestionCuentas/AgregarCuenta
         [HttpPost("AgregarCliente")]
         public ActionResult AgregarCliente([FromBody] ClienteModel data)
@@ -36,6 +43,20 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_Cliente.Contrasena = data.Contrasena;
                 nuevo_Cliente.AdminRol = data.AdminRol;
 
+                escrituraJson.GuardarCliente(nuevo_Cliente);
+
+                // Crear y guardar cuenta asociada al nuevo cliente
+                CuentaModel nuevaCuenta = new()
+                {
+                    Usuario = data.Usuario,
+                    Nombre = data.Nombre,
+                    TipoDeCuenta = "",
+                    Descripcion = "",
+                    Moneda = "Colones",
+                    NumeroDeCuenta = GenerarNumeroDeCuenta()
+                };
+
+                escrituraJson.GuardarCuenta(nuevaCuenta);
 
                 // Crear una respuesta indicando éxito
                 var response = new { success = true};
@@ -75,7 +96,6 @@ namespace TECBank_BackEnd.Controllers
                 nuevo_Cliente.Usuario = data.Usuario;
                 nuevo_Cliente.Contrasena = data.Contrasena;
                 nuevo_Cliente.AdminRol = data.AdminRol;
-
 
                 edicionJson.EditarClienteParcial(nuevo_Cliente.Cedula, nuevo_Cliente);
 
