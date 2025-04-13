@@ -2,12 +2,15 @@
 {
     public class PrestamoModel
     {
-        public decimal MontoOriginal { get; set; }
-        public decimal Saldo { get; set; }
-        public string IDCliente { get; set; }
-        public decimal TasaDeInterés { get; set; }
-        public List<DateTime> CalendarioDePagos { get; set; } = new List<DateTime>();
-        public DateTime FechaVencimiento { get; set; }
+        public int Monto_Original { get; set; }
+        public int Saldo_Pendiente { get; set; }
+        public string Cedula_Cliete { get; set; }
+        public decimal Tasa_De_Interes { get; set; }
+        public string ID_Prestamos { get; set; }
+
+        public int Pagos { get; set; }
+
+        public string FechaVencimiento { get; set; }
 
         public void CalcularPagos() { /* Implementación */ }
         public void RealizarPagos(decimal monto) { /* Implementación */ }
