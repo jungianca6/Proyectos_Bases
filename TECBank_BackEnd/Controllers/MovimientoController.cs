@@ -171,6 +171,49 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+        // POST: Movimiento/Transferencia
+        [HttpPost("TransferenciaAdmin")]
+        public ActionResult TransferenciaAdmin([FromBody] TransferenciaDataInputModel data)
+        {
+            try
+            {
+                TransferenciaModel nueva_transferencia = new TransferenciaModel
+                {
+                    Nombre = data.Nombre,
+                    Apellido1 = data.Apellido1,
+                    Apellido2 = data.Apellido2,
+                    ID = GenerarID(),
+                    Fecha = ObtenerFechaActual(),
+                    Cuenta_Emisora = "0",
+                    Cuenta_Receptora = data.Cuenta_Receptora,
+                    Moneda = data.Moneda,
+                    Monto = data.Monto
+                };
+
+                JasonLectura jasonLectura = new JasonLectura();
+                JasonEditar jasonEditar = new JasonEditar();
+                JasonEscritura jasonEscritura = new JasonEscritura();
+
+                var cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Emisora);
+                var cuenta_receptora = jasonLectura.BuscarCuentaPorNumero(data.Cuenta_Receptora);
+
+                if (cuenta_receptora == null)
+                    return Ok(new { success = false, message = "La cuenta destino no existe" });
+
+
+                cuenta_receptora.Monto += data.Monto;
+                jasonEditar.EditarCuenta(cuenta_receptora.NumeroDeCuenta, cuenta_receptora);
+
+
+                jasonEscritura.GuardarTransferencia(nueva_transferencia);
+
+                return Ok(new { success = true, message = "Transferencia realizada con exito" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
 
         // POST: Movimiento/Retiro
         [HttpPost("Retiro")]
@@ -214,6 +257,7 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
 
         // POST: Movimiento/ListadoDeMovimientos
         [HttpPost("ListadoDeMovimientos")]

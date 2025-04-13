@@ -169,6 +169,7 @@ namespace TECBank_BackEnd.Controllers
                 };
 
                 edicionJson.EditarAsesorCredito(nuevoAsesor.Cedula, nuevoAsesor);
+                edicionJson.EditarEmpleado(nuevoAsesor.Cedula, nuevoEmpleado);
 
                 return Ok(new { success = true, message = "Asesor modificado con exito" });
             }

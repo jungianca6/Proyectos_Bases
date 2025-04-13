@@ -3,7 +3,7 @@
 namespace TECBank_BackEnd.Controllers
 {
     [ApiController]
-    [Route("reporte/[controller]")]
+    [Route("[controller]")]
     public class ReporteController : ControllerBase
     {
 
