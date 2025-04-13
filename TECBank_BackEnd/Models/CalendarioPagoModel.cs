@@ -14,5 +14,6 @@
         public int Anio { get; set; }
         public string FechaPago { get; set; }
         public int MontoAPagar { get; set; }
+        public bool Pagado { get; set; }
     }
 }

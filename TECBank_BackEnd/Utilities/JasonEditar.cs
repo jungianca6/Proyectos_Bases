@@ -246,6 +246,8 @@ namespace TECBank_BackEnd.Pruebas
 
             if (calendario != null)
             {
+                // ID_Prestamo no se debe modificar, ya que es clave
+
                 if (!string.IsNullOrWhiteSpace(nuevosDatos.FechaVencimiento))
                     calendario.FechaVencimiento = nuevosDatos.FechaVencimiento;
 
@@ -253,16 +255,26 @@ namespace TECBank_BackEnd.Pruebas
                     calendario.SaldoPendiente = nuevosDatos.SaldoPendiente;
 
                 if (nuevosDatos.CuotasMensuales != null && nuevosDatos.CuotasMensuales.Count > 0)
-                    calendario.CuotasMensuales = nuevosDatos.CuotasMensuales;
+                {
+                    calendario.CuotasMensuales = nuevosDatos.CuotasMensuales.Select(c => new CuotaMensual
+                    {
+                        Mes = c.Mes,
+                        Anio = c.Anio,
+                        FechaPago = c.FechaPago,
+                        MontoAPagar = c.MontoAPagar,
+                        Pagado = c.Pagado // Aseguramos incluir este nuevo atributo
+                    }).ToList();
+                }
 
                 jason.GuardarCalendarioPagos(calendarios);
-                Console.WriteLine($"✅ Calendario de pago con ID {idPrestamo} actualizado parcialmente.");
+                Console.WriteLine($"✅ Calendario de pago con ID {idPrestamo} actualizado correctamente.");
             }
             else
             {
                 Console.WriteLine($"⚠️ No se encontró un calendario de pago con ID {idPrestamo}.");
             }
         }
+
 
 
 

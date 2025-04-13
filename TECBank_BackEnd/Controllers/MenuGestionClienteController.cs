@@ -169,7 +169,8 @@ namespace TECBank_BackEnd.Controllers
                         Mes = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(fechaPago.Month),
                         Anio = fechaPago.Year,
                         FechaPago = fechaPago.ToString("dd/MM/yyyy"),
-                        MontoAPagar = (int)monto
+                        MontoAPagar = (int)monto,
+                        Pagado = false // Inicializar en false por defecto
                     });
                 }
 
@@ -183,10 +184,7 @@ namespace TECBank_BackEnd.Controllers
 
                 // Guardar en el JSON
                 JasonEscritura Escritura = new JasonEscritura();
-
                 Escritura.GuardarCalendarioPago(calendario);
-
-
 
                 return Ok(calendario);
             }
@@ -195,6 +193,7 @@ namespace TECBank_BackEnd.Controllers
                 return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
+
 
         // POST: MenuGestionCuentas/AgregarCuenta
         [HttpPost("EliminarCliente")]

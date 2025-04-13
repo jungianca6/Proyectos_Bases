@@ -236,6 +236,14 @@ namespace TECBank_BackEnd.Pruebas
                 "MontoAPagar" => int.TryParse(valor, out int monto)
                                     ? calendarios.Where(c => c.CuotasMensuales.Any(cm => cm.MontoAPagar == monto)).ToList()
                                     : new List<CalendarioPagoModel>(),
+                "Pagado" => bool.TryParse(valor, out bool pagado)
+                ? calendarios.Where(c => c.CuotasMensuales.Any(cm => cm.Pagado == pagado)).ToList()
+                : new List<CalendarioPagoModel>(),
+
+
+
+
+
 
                 _ => calendarios
             };
