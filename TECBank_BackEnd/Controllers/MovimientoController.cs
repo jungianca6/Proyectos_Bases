@@ -173,9 +173,9 @@ namespace TECBank_BackEnd.Controllers
             {
                 JasonLectura jasonLectura = new JasonLectura();
 
-                var retiros = jasonLectura.LeerRetiros("NumeroDeCuenta", data.NumeroDeCuenta);
-                var transferencias = jasonLectura.LeerTransferencias("NumeroDeCuenta", data.NumeroDeCuenta);
-                var pagos = jasonLectura.LeerPagos("NumeroDeCuenta", data.NumeroDeCuenta);
+                var retiros = jasonLectura.LeerRetiros("CuentaARetirar", data.NumeroDeCuenta);
+                var transferencias = jasonLectura.LeerTransferencias("Cuenta_Emisora", data.NumeroDeCuenta);
+                var pagos = jasonLectura.LeerPagos("Cuenta_Emisora", data.NumeroDeCuenta);
 
                 return Ok(new { success = true, retiros, pagos, transferencias });
             }

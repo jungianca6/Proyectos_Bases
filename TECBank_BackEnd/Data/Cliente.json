@@ -23,6 +23,6 @@
     "TipoDeCliente": "Fisico",
     "Usuario": "sapo1",
     "Contrasena": "32",
-    "AdminRol": true
+    "AdminRol": false
   }
 ]
