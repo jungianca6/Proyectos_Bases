@@ -132,7 +132,7 @@ namespace TECBank_BackEnd.Pruebas
 
             asesores.Add(asesor);
             json.GuardarAsesoresCredito(asesores);
-            Console.WriteLine($"✅ Asesor de crédito {asesor.Nombre} agregado correctamente.");
+            Console.WriteLine($"✅ Asesor de crédito {asesor.Cedula} agregado correctamente.");
         }
         public void GuardarPrestamo(PrestamoModel prestamo)
         {
