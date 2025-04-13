@@ -213,5 +213,72 @@ namespace TECBank_BackEnd.Pruebas
             );
         }
 
+
+        public List<PagoModel> LeerPagosPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
+        {
+            Jason json = new Jason();
+            var pagos = json.LeerPagos();
+
+            // Intentamos convertir las fechas string a DateTime
+            if (!DateTime.TryParseExact(fechaInicio, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime inicio) ||
+                !DateTime.TryParseExact(fechaFin, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fin))
+            {
+                // Si hay error en la conversión, devolvemos la lista vacía
+                return new List<PagoModel>();
+            }
+
+            // Filtramos los pagos que cumplan ambas condiciones
+            return pagos.Where(p =>
+            {
+                bool fechaValida = DateTime.TryParseExact(p.Fecha, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fechaPago);
+                return fechaValida &&
+                       fechaPago >= inicio &&
+                       fechaPago <= fin &&
+                       p.Cuenta_Emisora == numeroCuenta;
+            }).ToList();
+        }
+
+        public List<TransferenciaModel> LeerTransferenciasPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
+        {
+            Jason json = new Jason();
+            var transferencias = json.LeerTransferencias();
+
+            if (!DateTime.TryParseExact(fechaInicio, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime inicio) ||
+                !DateTime.TryParseExact(fechaFin, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fin))
+            {
+                return new List<TransferenciaModel>();
+            }
+
+            return transferencias.Where(t =>
+            {
+                bool fechaValida = DateTime.TryParseExact(t.Fecha, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fechaTrans);
+                return fechaValida &&
+                       fechaTrans >= inicio &&
+                       fechaTrans <= fin &&
+                        (t.Cuenta_Emisora == numeroCuenta || t.Cuenta_Receptora == numeroCuenta);
+            }).ToList();
+        }
+
+        public List<RetiroModel> LeerRetirosPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
+        {
+            Jason json = new Jason();
+            var retiros = json.LeerRetiros();
+
+            if (!DateTime.TryParseExact(fechaInicio, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime inicio) ||
+                !DateTime.TryParseExact(fechaFin, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fin))
+            {
+                return new List<RetiroModel>();
+            }
+
+            return retiros.Where(r =>
+            {
+                bool fechaValida = DateTime.TryParseExact(r.Fecha, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime fechaRetiro);
+                return fechaValida &&
+                       fechaRetiro >= inicio &&
+                       fechaRetiro <= fin &&
+                       r.CuentaARetirar == numeroCuenta;
+            }).ToList();
+        }
+
     }
 }

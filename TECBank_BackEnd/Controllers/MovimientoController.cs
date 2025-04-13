@@ -218,10 +218,68 @@ namespace TECBank_BackEnd.Controllers
                 // Retornar la respuesta con código 400 (BadRequest)
                 return BadRequest(response);
             }
-
-            // Lógica para obtener datos
-            return Ok();
         }
+
+        // POST: Movimiento/Retiro
+        [HttpPost("ListadoDeMovimientos")]
+        public ActionResult ListadoDeMovimientos([FromBody] ListadoDeMovmientosDataInputModel data)
+        {
+            try
+            {
+                JasonLectura jasonLectura = new JasonLectura();
+
+                var retiros_realizados = jasonLectura.LeerRetiros("NumeroDeCuenta", data.NumeroDeCuenta);
+                var transferencias_realizados = jasonLectura.LeerTransferencias("NumeroDeCuenta", data.NumeroDeCuenta);
+                var pagos_realizados = jasonLectura.LeerPagos("NumeroDeCuenta", data.NumeroDeCuenta);
+
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = true, retiros = retiros_realizados, pagos = pagos_realizados, transferencias = transferencias_realizados};
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return Ok(response);
+
+
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = false, message = ex.Message };
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest(response);
+            }
+        }
+
+        // POST: Movimiento/Retiro
+        [HttpPost("ListadoDeCompras")]
+        public ActionResult ListadoDeCompras([FromBody] ListadoDeComprasDataInputModel data)
+        {
+            try
+            {
+                JasonLectura jasonLectura = new JasonLectura();
+
+                var retiros_realizados = jasonLectura.LeerRetirosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var transferencias_realizados = jasonLectura.LeerTransferenciasPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+                var pagos_realizados = jasonLectura.LeerPagosPorFechaYCuenta(data.fechaInicio, data.fechaFinal, data.numeroDeCuenta);
+
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = true, retiros = retiros_realizados, pagos = pagos_realizados, transferencias = transferencias_realizados };
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return Ok(response);
+
+
+            }
+            catch (Exception ex)
+            {
+                // Si ocurre un error, se construye una respuesta con success = false y el mensaje del error
+                var response = new { success = false, message = ex.Message };
+
+                // Retornar la respuesta con código 400 (BadRequest)
+                return BadRequest(response);
+            }
+        }
+
 
     }
 }
