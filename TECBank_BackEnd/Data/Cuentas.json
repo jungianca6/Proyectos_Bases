@@ -34,5 +34,14 @@
     "TipoDeCuenta": "",
     "Nombre": "Giancarlo",
     "Monto": 0
+  },
+  {
+    "NumeroDeCuenta": "96189768",
+    "Descripcion": "",
+    "Usuario": "carlosgr",
+    "Moneda": "Colones",
+    "TipoDeCuenta": "",
+    "Nombre": "Carlos",
+    "Monto": 0
   }
 ]

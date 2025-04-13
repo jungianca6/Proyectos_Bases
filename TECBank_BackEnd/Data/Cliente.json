@@ -37,5 +37,18 @@
     "Usuario": "gvm",
     "Contrasena": "0606",
     "AdminRol": false
+  },
+  {
+    "Cedula": "116780345",
+    "Direccion": "San Jos\u00E9, Costa Rica",
+    "Telefono": "88881234",
+    "IngresoMensual": 650000,
+    "Nombre": "Carlos",
+    "Apellido1": "Gonz\u00E1lez",
+    "Apellido2": "Ram\u00EDrez",
+    "TipoDeCliente": "Regular",
+    "Usuario": "carlosgr",
+    "Contrasena": "miClaveSegura",
+    "AdminRol": false
   }
 ]
