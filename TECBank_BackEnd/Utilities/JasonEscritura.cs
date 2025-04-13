@@ -52,7 +52,8 @@ namespace TECBank_BackEnd.Pruebas
             json.GuardarTarjetas(tarjetas);
             Console.WriteLine($"✅ Tarjeta {tarjeta.Numero} agregada correctamente.");
         }
-     
+
+
         public void GuardarEmpleado(EmpleadoModel empleado)
         {
             Jason json = new Jason();

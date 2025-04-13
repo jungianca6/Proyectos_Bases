@@ -66,7 +66,8 @@ namespace TECBank_BackEnd.Pruebas
             };
         }
 
-     
+
+
         public List<EmpleadoModel> LeerEmpleados(string filtro = "", string valor = "")
         {
             Jason json = new Jason();
@@ -171,17 +172,6 @@ namespace TECBank_BackEnd.Pruebas
                 c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
             );
         }
-
-        public EmpleadoModel? BuscarEmpleadoPorCedula(string cedula)
-        {
-            Jason json = new Jason();
-            var clientes = json.LeerEmpleados();
-
-            return clientes.FirstOrDefault(c =>
-                c.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
-            );
-        }
-
         public CuentaModel? BuscarCuentaPorUsuario(string usuario)
         {
             Jason json = new Jason();

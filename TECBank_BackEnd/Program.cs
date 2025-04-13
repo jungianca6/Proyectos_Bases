@@ -379,42 +379,6 @@ Console.WriteLine("=============================================================
 
 
 
-var depositoA = new DepositoModel
-{
-    CuentaEmisora = "C123",
-    CuentaDestino = "C456",
-    Nombre = "Carlos",
-    NumeroDeCuenta = "C123",
-    Apellido1 = "Perez",
-    Apellido2 = "Gomez",
-    Fecha = "2025-04-11",
-    Monto = 1500.00m,
-    ID = "D001",
-    Moneda = "CRC"
-};
-
-// 🟩 Escritura de depósito
-Console.WriteLine("=========== 📝 PRUEBA DE ESCRITURA DE DEPÓSITO ===========");
-Escritura.GuardarDeposito(depositoA);
-
-// 🟩 Lectura de depósitos
-Console.WriteLine("=========== 🔍 LECTURA DE DEPÓSITOS (TODOS) ===========");
-var depositosA = Lectura.LeerDepositos();
-
-foreach (var deposito in depositosA)
-{
-    Console.WriteLine($"ID: {deposito.ID}");
-    Console.WriteLine($"Monto: {deposito.Monto} {deposito.Moneda}");
-    Console.WriteLine($"Cuenta Emisora: {deposito.CuentaEmisora}");
-    Console.WriteLine($"Cuenta Destino: {deposito.CuentaDestino}");
-    Console.WriteLine("------------------------------------------------------------");
-}
-
-Console.WriteLine("================================================================");
-
-
-
-
 
 
 
