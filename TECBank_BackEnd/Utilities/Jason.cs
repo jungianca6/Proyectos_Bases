@@ -12,6 +12,8 @@ namespace TECBank_BackEnd.Utilities
         private readonly string archivoDepositos;
         private readonly string archivoEmpleados;
         private readonly string archivoPagos;
+        private readonly string archivoPagosPrestamo;
+
         private readonly string archivoRetiros;
         private readonly string archivoTransferencias; // <-- NUEVA LÍNEA
         private readonly string archivoAsesores; // <-- NUEVA LÍNEA
@@ -33,6 +35,7 @@ namespace TECBank_BackEnd.Utilities
             archivoRetiros = Path.Combine(carpeta, "Retiro.json");
             archivoAsesores = Path.Combine(carpeta, "AsesoresCredito.json"); // <-- NUEVA LÍNEA
             archivoPrestamos = Path.Combine(carpeta, "Prestamo.json"); // <-- NUEVA LÍNEA
+            archivoPagosPrestamo = Path.Combine(carpeta, "PagoPrestamo.json");
 
             archivoTransferencias = Path.Combine(carpeta, "Transferencia.json"); // <-- NUEVA LÍNEA
         }
@@ -207,6 +210,25 @@ namespace TECBank_BackEnd.Utilities
         {
             var json = JsonSerializer.Serialize(prestamos, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(archivoPrestamos, json);
+        }
+
+
+        public List<PagoPrestamoModel> LeerPagosPrestamo()
+        {
+            if (!File.Exists(archivoPagosPrestamo))
+                return new List<PagoPrestamoModel>();
+
+            var json = File.ReadAllText(archivoPagosPrestamo);
+            if (string.IsNullOrWhiteSpace(json))
+                return new List<PagoPrestamoModel>();
+
+            return JsonSerializer.Deserialize<List<PagoPrestamoModel>>(json) ?? new List<PagoPrestamoModel>();
+        }
+
+        public void GuardarPagosPrestamo(List<PagoPrestamoModel> pagosPrestamo)
+        {
+            var json = JsonSerializer.Serialize(pagosPrestamo, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(archivoPagosPrestamo, json);
         }
 
 
