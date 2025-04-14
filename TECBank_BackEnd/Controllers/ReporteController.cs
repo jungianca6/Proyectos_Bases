@@ -150,20 +150,21 @@ namespace TECBank_BackEnd.Controllers
                         });
                     }
                 }
-
                 if (prestamosConMora.Count == 0)
                     return Ok(new { success = true, message = "No hay cuotas en mora", prestamos = new List<object>() });
-
-                return Ok(new
+                else
                 {
-                    success = true,
-                    message = "Reporte de mora generado con éxito",
-                    Nombre = cliente_mora.Nombre,
-                    Apellido1 = cliente_mora.Apellido1,
-                    Apellido2 = cliente_mora.Apellido2,
-                    Cedula = cliente_mora.Cedula,
-                    prestamos = prestamosConMora
-                });
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "Reporte de mora generado con éxito",
+                        Nombre = cliente_mora.Nombre,
+                        Apellido1 = cliente_mora.Apellido1,
+                        Apellido2 = cliente_mora.Apellido2,
+                        Cedula = cliente_mora.Cedula,
+                        prestamos = prestamosConMora
+                    });
+                }
             }
             catch (Exception ex)
             {
