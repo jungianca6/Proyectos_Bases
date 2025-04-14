@@ -1,6 +1,6 @@
 [
   {
-    "Cedula": "1243",
+    "Cedula": "12345678",
     "Direccion": "S2e",
     "Telefono": "8828-8888",
     "IngresoMensual": 1210,
@@ -13,7 +13,7 @@
     "AdminRol": false
   },
   {
-    "Cedula": "1",
+    "Cedula": "123456782",
     "Direccion": "10807",
     "Telefono": "61942879",
     "IngresoMensual": 5000,
@@ -49,6 +49,32 @@
     "TipoDeCliente": "Regular",
     "Usuario": "carlosgr",
     "Contrasena": "miClaveSegura",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "119170144",
+    "Direccion": "Mi casa",
+    "Telefono": "61942879",
+    "IngresoMensual": 10000,
+    "Nombre": "Brayan",
+    "Apellido1": "Alpizar",
+    "Apellido2": "Elizondo",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "SpaceBa",
+    "Contrasena": "1234",
+    "AdminRol": false
+  },
+  {
+    "Cedula": "1243",
+    "Direccion": "S2e",
+    "Telefono": "8828-8888",
+    "IngresoMensual": 1210,
+    "Nombre": "jorge1",
+    "Apellido1": "e",
+    "Apellido2": "s",
+    "TipoDeCliente": "Pr2mium",
+    "Usuario": "sapo",
+    "Contrasena": "32",
     "AdminRol": false
   }
 ]

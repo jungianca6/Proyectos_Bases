@@ -106,10 +106,23 @@ namespace TECBank_BackEnd.Controllers
                         return BadRequest(new { success = false, message = "Todas las cuotas ya han sido pagadas." });
 
                     DateTime fechaPagoCuota = DateTime.ParseExact(siguienteCuota.FechaPago, "dd/MM/yyyy", null);
-                    decimal montoFinal = data.Monto;
+                    decimal montoIngresado = data.Monto;
+                    decimal montoCuota = siguienteCuota.MontoAPagar;
+                    bool estaAtrasado = fechaActual > fechaPagoCuota;
+
+                    if (montoIngresado < montoCuota && estaAtrasado)
+                    {
+                        return Ok(new
+                        {
+                            success = false,
+                            message = $"⚠️ La cuota correspondiente al {siguienteCuota.Mes} {siguienteCuota.Anio} ya venció. Debe pagar el monto completo de ₡{montoCuota}."
+                        });
+                    }
+
+                    decimal montoFinal = montoIngresado;
                     bool seAplicoInteres = false;
 
-                    if (fechaActual > fechaPagoCuota)
+                    if (estaAtrasado && montoIngresado >= montoCuota)
                     {
                         decimal interes = 0.10m;
                         montoFinal += montoFinal * interes;
@@ -143,15 +156,30 @@ namespace TECBank_BackEnd.Controllers
                     cuenta_emisora.Monto -= montoFinalEntero;
                     jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
 
-                    // 🔄 Marcar la cuota pagada en el calendario
-                    foreach (var cuota in calendario.CuotasMensuales.OrderBy(c => DateTime.ParseExact(c.FechaPago, "dd/MM/yyyy", null)))
+                    // 🔄 Marcar la cuota pagada si se pagó completo
+                    for (int i = 0; i < calendario.CuotasMensuales.Count; i++)
                     {
+                        var cuota = calendario.CuotasMensuales[i];
                         if (!cuota.Pagado)
                         {
-                            cuota.Pagado = true;
-                            break; // Solo se marca una como pagada
+                            if (montoFinalEntero >= cuota.MontoAPagar)
+                            {
+                                montoFinalEntero -= (int)cuota.MontoAPagar;
+                                cuota.MontoAPagar = 0;
+                                cuota.Pagado = true;
+                            }
+                            else
+                            {
+                                cuota.MontoAPagar -= montoFinalEntero;
+                                montoFinalEntero = 0;
+                            }
+
+                            calendario.CuotasMensuales[i] = cuota; // Asegura que el cambio se refleje
+                            break; // Solo modificamos la primera cuota pendiente
                         }
                     }
+
+
 
                     calendario.SaldoPendiente -= montoFinalEntero;
                     jasonEditar.EditarCalendarioPago(calendario.ID_Prestamo, calendario);
@@ -159,14 +187,14 @@ namespace TECBank_BackEnd.Controllers
                     return Ok(new
                     {
                         success = true,
-                        message = "El pago se hizo con éxito",
+                        message = "✅ El pago se hizo con éxito.",
                         interesAplicado = seAplicoInteres,
                         montoFinalCobrado = montoFinalEntero
                     });
                 }
                 else
                 {
-                    return Ok(new { success = false, message = "No hay fondos suficientes en la cuenta" });
+                    return Ok(new { success = false, message = "❌ No hay fondos suficientes en la cuenta." });
                 }
             }
             catch (Exception ex)
@@ -174,6 +202,7 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
 
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]

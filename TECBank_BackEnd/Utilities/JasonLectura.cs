@@ -319,6 +319,16 @@ namespace TECBank_BackEnd.Pruebas
             );
         }
 
+        public AsesorCreditoModel? BuscarAsesorPorCedula(string cedula)
+        {
+            Jason json = new Jason();
+            var tarjetas = json.LeerAsesoresCredito();
+
+            return tarjetas.FirstOrDefault(t =>
+                t.Cedula?.Equals(cedula, StringComparison.OrdinalIgnoreCase) == true
+            );
+        }
+
 
         public List<PagoModel> LeerPagosPorFechaYCuenta(string fechaInicio, string fechaFin, string numeroCuenta)
         {
