@@ -145,5 +145,152 @@
         "Pagado": false
       }
     ]
+  },
+  {
+    "ID_Prestamo": "13943277",
+    "FechaVencimiento": "30/12/2026",
+    "SaldoPendiente": 5000400,
+    "CuotasMensuales": [
+      {
+        "Mes": "mayo",
+        "Anio": 2025,
+        "FechaPago": "01/05/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "junio",
+        "Anio": 2025,
+        "FechaPago": "01/06/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "julio",
+        "Anio": 2025,
+        "FechaPago": "01/07/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "agosto",
+        "Anio": 2025,
+        "FechaPago": "01/08/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "septiembre",
+        "Anio": 2025,
+        "FechaPago": "01/09/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "octubre",
+        "Anio": 2025,
+        "FechaPago": "01/10/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "noviembre",
+        "Anio": 2025,
+        "FechaPago": "01/11/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "diciembre",
+        "Anio": 2025,
+        "FechaPago": "01/12/2025",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "enero",
+        "Anio": 2026,
+        "FechaPago": "01/01/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "febrero",
+        "Anio": 2026,
+        "FechaPago": "01/02/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "marzo",
+        "Anio": 2026,
+        "FechaPago": "01/03/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "abril",
+        "Anio": 2026,
+        "FechaPago": "01/04/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "mayo",
+        "Anio": 2026,
+        "FechaPago": "01/05/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "junio",
+        "Anio": 2026,
+        "FechaPago": "01/06/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "julio",
+        "Anio": 2026,
+        "FechaPago": "01/07/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "agosto",
+        "Anio": 2026,
+        "FechaPago": "01/08/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "septiembre",
+        "Anio": 2026,
+        "FechaPago": "01/09/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "octubre",
+        "Anio": 2026,
+        "FechaPago": "01/10/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "noviembre",
+        "Anio": 2026,
+        "FechaPago": "01/11/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      },
+      {
+        "Mes": "diciembre",
+        "Anio": 2026,
+        "FechaPago": "01/12/2026",
+        "MontoAPagar": 250020,
+        "Pagado": false
+      }
+    ]
   }
 ]
