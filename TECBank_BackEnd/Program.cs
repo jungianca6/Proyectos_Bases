@@ -46,7 +46,7 @@ app.MapControllers(); // Mapea los controladores
 
 
 
-
+/*
 var ClienteA = new ClienteModel
 {
     Cedula = "1243",
@@ -656,7 +656,7 @@ Console.WriteLine("=============================================================
 
 
 
-
+*/
 
 
 
