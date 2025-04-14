@@ -5,9 +5,9 @@
     "SaldoPendiente": 200000,
     "CuotasMensuales": [
       {
-        "Mes": "mayo",
+        "Mes": "enero",
         "Anio": 2025,
-        "FechaPago": "01/05/2025",
+        "FechaPago": "01/01/2025",
         "MontoAPagar": 10000,
         "Pagado": false
       },
@@ -289,6 +289,181 @@
         "Anio": 2026,
         "FechaPago": "01/12/2026",
         "MontoAPagar": 250020,
+        "Pagado": false
+      }
+    ]
+  },
+  {
+    "ID_Prestamo": "17798399",
+    "FechaVencimiento": "14/04/2027",
+    "SaldoPendiente": 350000,
+    "CuotasMensuales": [
+      {
+        "Mes": "May",
+        "Anio": 2025,
+        "FechaPago": "01/05/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "June",
+        "Anio": 2025,
+        "FechaPago": "01/06/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "July",
+        "Anio": 2025,
+        "FechaPago": "01/07/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "August",
+        "Anio": 2025,
+        "FechaPago": "01/08/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "September",
+        "Anio": 2025,
+        "FechaPago": "01/09/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "October",
+        "Anio": 2025,
+        "FechaPago": "01/10/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "November",
+        "Anio": 2025,
+        "FechaPago": "01/11/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "December",
+        "Anio": 2025,
+        "FechaPago": "01/12/2025",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "January",
+        "Anio": 2026,
+        "FechaPago": "01/01/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "February",
+        "Anio": 2026,
+        "FechaPago": "01/02/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "March",
+        "Anio": 2026,
+        "FechaPago": "01/03/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "April",
+        "Anio": 2026,
+        "FechaPago": "01/04/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "May",
+        "Anio": 2026,
+        "FechaPago": "01/05/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "June",
+        "Anio": 2026,
+        "FechaPago": "01/06/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "July",
+        "Anio": 2026,
+        "FechaPago": "01/07/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "August",
+        "Anio": 2026,
+        "FechaPago": "01/08/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "September",
+        "Anio": 2026,
+        "FechaPago": "01/09/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "October",
+        "Anio": 2026,
+        "FechaPago": "01/10/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "November",
+        "Anio": 2026,
+        "FechaPago": "01/11/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "December",
+        "Anio": 2026,
+        "FechaPago": "01/12/2026",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "January",
+        "Anio": 2027,
+        "FechaPago": "01/01/2027",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "February",
+        "Anio": 2027,
+        "FechaPago": "01/02/2027",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "March",
+        "Anio": 2027,
+        "FechaPago": "01/03/2027",
+        "MontoAPagar": 14583,
+        "Pagado": false
+      },
+      {
+        "Mes": "April",
+        "Anio": 2027,
+        "FechaPago": "01/04/2027",
+        "MontoAPagar": 14583,
         "Pagado": false
       }
     ]

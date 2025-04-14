@@ -2,7 +2,7 @@
   {
     "Monto_Original": 500000,
     "Saldo_Pendiente": 200000,
-    "Cedula_Cliete": "12345678",
+    "Cedula_Cliete": "123456782",
     "Tasa_De_Interes": 0.065,
     "ID_Prestamos": "PREST123",
     "FechaVencimiento": "30/12/2026"
@@ -21,6 +21,14 @@
     "Cedula_Cliete": "123456782",
     "Tasa_De_Interes": 12.5,
     "ID_Prestamos": "13943277",
-    "FechaVencimiento": "30/12/2026"
+    "FechaVencimiento": "30/12/2024"
+  },
+  {
+    "Monto_Original": 350000,
+    "Saldo_Pendiente": 350000,
+    "Cedula_Cliete": "12345678",
+    "Tasa_De_Interes": 0.07,
+    "ID_Prestamos": "17798399",
+    "FechaVencimiento": "14/04/2027"
   }
 ]

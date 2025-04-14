@@ -37,5 +37,18 @@
     "Usuario": "laura_h",
     "Contrasena": "pass1234",
     "IngresoMensual": 750000
+  },
+  {
+    "Nombre": "Mario",
+    "Rol": "Asesor de credito",
+    "DescripcionDeRol": "Hola",
+    "Apellido1": "Tutancamon",
+    "Apellido2": "Roca",
+    "Cedula": "32742378",
+    "AdminRol": true,
+    "FechaDeNacimiento": "2025-04-13",
+    "Usuario": "fantasmin",
+    "Contrasena": "boo",
+    "IngresoMensual": 372894787
   }
 ]
