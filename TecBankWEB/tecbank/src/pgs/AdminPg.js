@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './AdminPg.module.css';
 import axios from "axios";
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 function AdminPG() {
   const [cuenta, setCuenta] = useState(null);
@@ -64,11 +66,18 @@ function AdminPG() {
 
   const [montoPrestamo, setmontoPrestamo] = useState('');
   const [cedulaPrestamo, setcedulaPrestamo] = useState('');
+  const [cedulaAPrestamo, setcedulaAPrestamo] = useState('');
   const [tasaPrestamo, settasaPrestamo] = useState('');
   const [fechaPrestamo, setfechaPrestamo] = useState('');
 
   const [idPP, setidPP] = useState('');
   const [montoPP, setmontoPP] = useState('');
+
+  const [idCal, setidCal] = useState('');
+
+  const [cedulaRa, setcedulaRa] = useState('');
+
+  const [cedulaMo, setcedulaMo] = useState('');
 
   useEffect(() => {
       const cuentaGuardada = localStorage.getItem("cuenta_actual");
@@ -428,6 +437,7 @@ const handleSubmitTarjeta = async (e, accionp) => {
     const presData = {
       Monto_Original: montoPrestamo,
       Cedula_Cliente: cedulaPrestamo,
+      Cedula_Asesor: cedulaAPrestamo,
       Tasa_De_Interes: tasaPrestamo,
       FechaVencimiento: fechaPrestamo
     };
@@ -439,6 +449,130 @@ const handleSubmitTarjeta = async (e, accionp) => {
       alert("Préstamo agregado con éxito");
     } catch (error) {
       alert("No se pudo realizar el préstamo", error);
+    }
+  };
+
+  const handleSubmitCal = async (e) => {
+    e.preventDefault();
+  
+    const calData = {
+      iD_Prestamos: idCal
+    };
+  
+    try {
+      const response = await axios.post('https://localhost:7190/MenuGestionCliente/CalendarioPrestamo', calData);
+    
+      const calendario = response.data; // Debe tener la forma de CalendarioPagoModel
+      console.log('Préstamo recibido:', calendario);
+    
+      const doc = new jsPDF();
+      const fechaActual = new Date().toLocaleDateString();
+    
+      // Encabezado
+      doc.setFontSize(16);
+      doc.text("TecBank", 10, 10);
+    
+      doc.setFontSize(10);
+      doc.text(`Fecha: ${fechaActual}`, 150, 10); // Fecha en la esquina superior derecha
+    
+      // Título del reporte
+      doc.setFontSize(14);
+      doc.text("Calendario de Pagos", 10, 20);
+    
+      // Info principal
+      doc.setFontSize(12);
+      doc.text(`ID del Préstamo: ${idCal}`, 10, 30);
+      doc.text(`Fecha de Vencimiento: ${calendario.fechaVencimiento}`, 10, 40);
+      doc.text(`Saldo Pendiente: $${calendario.saldoPendiente}`, 10, 50);
+    
+      // Tabla de cuotas
+      let startY = 60;
+      doc.setFontSize(12);
+      doc.text("Cuotas Mensuales:", 10, startY);
+      startY += 10;
+    
+      calendario.cuotasMensuales.forEach((cuota, index) => {
+        const textoCuota = `#${index + 1} - ${cuota.mes} ${cuota.anio} | Fecha Pago: ${cuota.fechaPago} | Monto: $${cuota.montoAPagar} | Pagado: ${cuota.pagado ? "Sí" : "No"}`;
+        doc.text(textoCuota, 10, startY);
+        startY += 10;
+      });
+    
+      // Guardar el PDF
+      doc.save(`calendario_pagos_${idCal}.pdf`);
+    
+      alert("Calendario generado");
+    
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo realizar el calendario");
+    }
+  };
+
+  const handleSubmitRA = async (e) => {
+    e.preventDefault();
+  
+    const raData = {
+      cedula_Asesor: cedulaRa,
+    };
+  
+    try {
+      const response = await axios.post('https://localhost:7190/Reporte/ReporteAsesores', raData);
+      const data = response.data;
+  
+      console.log('Reporte recibido con éxito:', data);
+      alert("El reporte ha sido generado");
+  
+      // Crear PDF
+      const doc = new jsPDF();
+
+      //Fecha Actual
+      const fechaActual = new Date().toLocaleDateString();
+      // Título
+      doc.setFontSize(16);
+      doc.text("TecBank", 10, 10);
+      doc.text(`Fecha: ${fechaActual}`, 150, 10);
+      doc.setFontSize(14);
+      doc.text("Reporte de Asesor", 10, 20);
+  
+      // Datos principales
+      doc.setFontSize(12);
+      doc.text(`Nombre del Asesor: ${data.nombre ?? "N/A"}`, 10, 30);
+      doc.text(`Meta en Colones: ₡${data.metaColones ?? 0}`, 10, 40);
+      doc.text(`Meta en Dólares: $${(data.metaDolares ?? 0).toFixed(2)}`, 10, 50);
+  
+      // Totales de créditos
+      doc.text(`Total Créditos en Colones: ₡${data.totalCreditosColones ?? 0}`, 10, 60);
+      doc.text(`Total Créditos en Dólares: $${(data.totalCreditosDolares ?? 0).toFixed(2)}`, 10, 70);
+  
+      // Comisiones por cada crédito
+      let startY = 80;
+      doc.text("Comisiones (Colones):", 10, startY);
+      startY += 10;
+      (data.comisionesColones ?? []).forEach((com, i) => {
+        doc.text(`₡${com ?? 0}`, 10, startY);
+        startY += 7;
+      });
+  
+      startY += 5;
+      doc.text("Comisiones (Dólares):", 10, startY);
+      startY += 10;
+      (data.comisionesDolares ?? []).forEach((com, i) => {
+        doc.text(`$${(com ?? 0).toFixed(2)}`, 10, startY);
+        startY += 7;
+      });
+  
+      // Totales finales
+      startY += 10;
+      doc.text(`Total Comisiones Colones: ₡${data.totalColones ?? 0}`, 10, startY);
+      startY += 10;
+      doc.text(`Total Comisiones Dólares: $${(data.totalDolares ?? 0).toFixed(2)}`, 10, startY);
+  
+      // Guardar PDF
+      doc.save(`reporte_asesor_${cedulaRa}.pdf`);
+  
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo generar el reporte");
     }
   };
 
@@ -463,6 +597,66 @@ const handleSubmitTarjeta = async (e, accionp) => {
       alert("El préstamo elegido ha sido pagado con éxito");
     } catch (error) {
       alert("No se pudo realizar el pago", error);
+    }
+  };
+
+  const handleSubmitMo = async (e) => {
+    e.preventDefault();
+  
+    // Prepare the data to send to the backend 
+    const moData = {
+      cedula_Cliente: cedulaMo
+    };
+  
+    try {
+      console.log('Datos enviados (moData):', moData);
+      const response = await axios.post('https://localhost:7190/Reporte/ReporteMora', moData);
+      const reporte = response.data;
+  
+      console.log('Reporte generado con éxito:', reporte);
+      alert("El reporte ha sido generado");
+  
+      // Crear PDF
+      const doc = new jsPDF();
+      const fechaActual = new Date().toLocaleDateString();
+  
+      // Encabezado
+      doc.setFontSize(16);
+      doc.text("TecBank", 10, 10);
+      doc.setFontSize(10);
+      doc.text(`Fecha: ${fechaActual}`, 150, 10); // Fecha en esquina superior derecha
+  
+      // Título del reporte
+      doc.setFontSize(14);
+      doc.text("Reporte de Mora", 10, 20);
+  
+      // Datos del cliente
+      doc.setFontSize(12);
+      doc.text(`Nombre: ${reporte.nombre} ${reporte.apellido1} ${reporte.apellido2}`, 10, 30);
+      doc.text(`Cédula: ${reporte.cedula}`, 10, 40);
+  
+      // Lista de préstamos con mora
+      let startY = 50;
+      doc.setFontSize(12);
+      doc.text("Préstamos con mora:", 10, startY);
+      startY += 10;
+  
+      if (reporte.prestamos.length === 0) {
+        doc.text("No hay préstamos en mora.", 10, startY);
+      } else {
+        reporte.prestamos.forEach((prestamo, index) => {
+          const texto = `#${index + 1} - ID: ${prestamo.id_Prestamo} | Cuotas Atrasadas: ${prestamo.cuotasAtrasadas} | Monto Total Atrasado: ₡${prestamo.montoTotalAtrasado}`;
+          doc.text(texto, 10, startY);
+          startY += 10;
+        });
+      }
+  
+      // Guardar el PDF
+      doc.save(`reporte_mora_${cedulaMo}.pdf`);
+  
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo generar el reporte", error);
     }
   };
 
@@ -825,7 +1019,7 @@ const handleSubmitTarjeta = async (e, accionp) => {
       <form onSubmit={handleSubmitCuenta}>
       <label> Número de cuenta: </label>
       <input 
-        type="text" 
+        type="number" 
         name="numeroCuenta" 
         className="form-control" 
         value={numeroCuenta} 
@@ -1198,7 +1392,7 @@ const handleSubmitTarjeta = async (e, accionp) => {
         />
         <br />
 
-        <label>Meta:</label>
+        <label>Monto meta:</label>
         <input 
           type="number" 
           name="metaAsesor" 
@@ -1287,14 +1481,29 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
         <h3>Reporte sobre asesor</h3>
       <br />
-      <form>
-        <label> Cédula: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+      <form onSubmit={handleSubmitRA}>
+        <label> Cédula del asesor: </label>
+        <input 
+        type="number" 
+        name="cedulaRa" 
+        className="form-control" 
+        value={cedulaRa} 
+        onChange={(e) => setcedulaRa(e.target.value)} 
+      />
       <br />
         <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Generar reporte</button>
+        <button 
+            type="button" 
+            className="btn btn-danger" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitRA(e);
+            }}
+          >
+            Generar reporte
+          </button>
         </div>
+        </form>
       <br />
       <hr />
       <br />
@@ -1336,6 +1545,16 @@ const handleSubmitTarjeta = async (e, accionp) => {
       />
       <br />
 
+      <label> Cédula del asesor de crédito asociado al préstamo: </label>
+      <input 
+        type="number" 
+        name="cedulaAPrestamo" 
+        className="form-control" 
+        value={cedulaAPrestamo} 
+        onChange={(e) => setcedulaAPrestamo(e.target.value)} 
+      />
+      <br />
+
       <label> Tasa de interés (%): </label>
       <input 
         type="number" 
@@ -1372,7 +1591,7 @@ const handleSubmitTarjeta = async (e, accionp) => {
         <form onSubmit={handleSubmitPP}>
         <label> ID del préstamo a pagar: </label>
         <input 
-          type="text" 
+          type="number" 
           name="idPP" 
           className="form-control" 
           value={idPP} 
@@ -1406,6 +1625,35 @@ const handleSubmitTarjeta = async (e, accionp) => {
       </div>
         </form>
 
+        <br />
+         <h3>Calendario de pagos</h3>
+         <br />   
+        <form onSubmit={handleSubmitCal}>
+        <label> ID del préstamo a calendarizar: </label>
+        <input 
+          type="number" 
+          name="idCal" 
+          className="form-control" 
+          value={idCal} 
+          onChange={(e) => setidCal(e.target.value)} 
+        />
+
+        <br />
+        <div className="col-md-4 d-flex align-items-end">
+      
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitCal(e);
+            }}
+          >
+            Mostrar
+          </button>
+      </div>
+        </form>
+
       <hr />
       <br />
 
@@ -1414,14 +1662,30 @@ const handleSubmitTarjeta = async (e, accionp) => {
 
       <h3>Reporte sobre mora</h3>
       <br />
-      <form>
+      <form onSubmit={handleSubmitMo}>
         <label> Cédula: </label>
-        <input type="number" name="nombre" className="form-control" />
-      </form>
+        <input 
+          type="number" 
+          name="cedulaMo" 
+          className="form-control" 
+          value={cedulaMo} 
+          onChange={(e) => setcedulaMo(e.target.value)} 
+        />
+      
       <br />
       <div className="col-md-4 d-flex align-items-end">
-          <button type="submit" className="btn btn-primary">Generar reporte</button>
+      <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmitMo(e);
+            }}
+          >
+            Generar reporte
+          </button>
         </div>
+        </form>
       <br />
 
 
