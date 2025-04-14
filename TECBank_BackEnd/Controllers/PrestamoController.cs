@@ -65,7 +65,7 @@ namespace TECBank_BackEnd.Controllers
 
                 }else
                 {
-                    return Ok(new { success = false, message = "No se un asesor de credito, no puede emitir un prestamo" });
+                    return Ok(new { success = false, message = "No es un asesor de credito, no puede emitir un prestamo" });
                 }
 
                
