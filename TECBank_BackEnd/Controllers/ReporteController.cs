@@ -158,6 +158,10 @@ namespace TECBank_BackEnd.Controllers
                 {
                     success = true,
                     message = "Reporte de mora generado con éxito",
+                    Nombre = cliente_mora.Nombre,
+                    Apellido1 = cliente_mora.Apellido1,
+                    Apellido2 = cliente_mora.Apellido2,
+                    Cedula = cliente_mora.Cedula,
                     prestamos = prestamosConMora
                 });
             }
