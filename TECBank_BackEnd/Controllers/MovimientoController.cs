@@ -2,6 +2,7 @@
 using TECBank_BackEnd.Data_Input_Models;
 using TECBank_BackEnd.Models;
 using TECBank_BackEnd.Pruebas;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Controllers
 {
@@ -71,45 +72,97 @@ namespace TECBank_BackEnd.Controllers
             }
         }
 
-        
-        // POST: Movimiento/Pago
+
         [HttpPost("PagoPrestamo")]
         public ActionResult PagoPrestamo([FromBody] PagoPrestamoDataInputModel data)
         {
             try
             {
-                PagoPrestamoModel nuevo_pago = new PagoPrestamoModel
-                {
-                    Nombre = data.Nombre,
-                    Apellido1 = data.Apellido1,
-                    Apellido2 = data.Apellido2,
-                    ID = GenerarID(),
-                    Fecha = ObtenerFechaActual(),
-                    IdPrestamo = data.IdPrestamo,
-                    Moneda = data.Moneda,
-                    Monto = data.Monto,
-                    CuentaEmisora = data.NumeroDeCuenta
-                };
-
                 JasonLectura jasonLectura = new JasonLectura();
                 JasonEditar jasonEditar = new JasonEditar();
                 JasonEscritura jasonEscritura = new JasonEscritura();
+                Jason json = new Jason(); // Se usa para leer calendarios
 
                 CuentaModel cuenta_emisora = jasonLectura.BuscarCuentaPorNumero(data.NumeroDeCuenta);
 
-                if (cuenta_emisora.Monto >= data.Monto)
+                if (cuenta_emisora.Monto >= (int)data.Monto)
                 {
-                    PrestamoModel prestamo = jasonLectura.BuscarPrestamoPorId(data.IdPrestamo);
-                    prestamo.Saldo_Pendiente = prestamo.Saldo_Pendiente - data.Monto;
+                    DateTime fechaActual = DateTime.Now;
 
-                    jasonEditar.EditarPrestamo(data.IdPrestamo, prestamo);
+                    // Obtener el calendario de pagos del préstamo
+                    var calendarios = json.LeerCalendarioPagos();
+                    var calendario = calendarios.FirstOrDefault(c => c.ID_Prestamo == data.IdPrestamo);
 
-                    cuenta_emisora.Monto -= data.Monto;
-                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
+                    if (calendario == null)
+                        return BadRequest(new { success = false, message = "No se encontró el calendario de pagos." });
+
+                    // Buscar la siguiente cuota NO pagada
+                    var siguienteCuota = calendario.CuotasMensuales
+                        .Where(cm => !cm.Pagado)
+                        .OrderBy(cm => DateTime.ParseExact(cm.FechaPago, "dd/MM/yyyy", null))
+                        .FirstOrDefault();
+
+                    if (siguienteCuota == null)
+                        return BadRequest(new { success = false, message = "Todas las cuotas ya han sido pagadas." });
+
+                    DateTime fechaPagoCuota = DateTime.ParseExact(siguienteCuota.FechaPago, "dd/MM/yyyy", null);
+                    decimal montoFinal = data.Monto;
+                    bool seAplicoInteres = false;
+
+                    if (fechaActual > fechaPagoCuota)
+                    {
+                        decimal interes = 0.10m;
+                        montoFinal += montoFinal * interes;
+                        seAplicoInteres = true;
+                    }
+
+                    int montoFinalEntero = (int)Math.Round(montoFinal);
+
+                    // Crear y guardar el pago
+                    PagoPrestamoModel nuevo_pago = new PagoPrestamoModel
+                    {
+                        Nombre = data.Nombre,
+                        Apellido1 = data.Apellido1,
+                        Apellido2 = data.Apellido2,
+                        ID = GenerarID(),
+                        Fecha = fechaActual.ToString("dd/MM/yyyy"),
+                        IdPrestamo = data.IdPrestamo,
+                        Moneda = data.Moneda,
+                        Monto = montoFinalEntero,
+                        CuentaEmisora = data.NumeroDeCuenta
+                    };
 
                     jasonEscritura.GuardarPagoPrestamo(nuevo_pago);
 
-                    return Ok(new { success = true, message = "El pago se hizo con exito" });
+                    // Actualizar préstamo
+                    PrestamoModel prestamo = jasonLectura.BuscarPrestamoPorId(data.IdPrestamo);
+                    prestamo.Saldo_Pendiente -= montoFinalEntero;
+                    jasonEditar.EditarPrestamo(data.IdPrestamo, prestamo);
+
+                    // Actualizar cuenta
+                    cuenta_emisora.Monto -= montoFinalEntero;
+                    jasonEditar.EditarCuenta(cuenta_emisora.NumeroDeCuenta, cuenta_emisora);
+
+                    // 🔄 Marcar la cuota pagada en el calendario
+                    foreach (var cuota in calendario.CuotasMensuales.OrderBy(c => DateTime.ParseExact(c.FechaPago, "dd/MM/yyyy", null)))
+                    {
+                        if (!cuota.Pagado)
+                        {
+                            cuota.Pagado = true;
+                            break; // Solo se marca una como pagada
+                        }
+                    }
+
+                    calendario.SaldoPendiente -= montoFinalEntero;
+                    jasonEditar.EditarCalendarioPago(calendario.ID_Prestamo, calendario);
+
+                    return Ok(new
+                    {
+                        success = true,
+                        message = "El pago se hizo con éxito",
+                        interesAplicado = seAplicoInteres,
+                        montoFinalCobrado = montoFinalEntero
+                    });
                 }
                 else
                 {
@@ -121,6 +174,7 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
         // POST: Movimiento/Transferencia
         [HttpPost("Transferencia")]
         public ActionResult Transferencia([FromBody] TransferenciaDataInputModel data)
