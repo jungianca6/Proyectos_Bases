@@ -97,5 +97,25 @@ namespace TECBank_BackEnd.Controllers
                 return BadRequest(new { success = false, message = ex.Message });
             }
         }
+
+        // POST: Movimiento/Pago
+        [HttpPost("ReporteMora")]
+        public ActionResult ReporteMora([FromBody] ReporteMoraDataInputModel data)
+        {
+            try
+            {
+
+                JasonLectura jasonLectura = new JasonLectura();
+                ClienteModel? cliente_mora = null;
+                CuentaModel? cuenta_ = null;
+
+                return BadRequest(new { success = false, message = "Koki puto" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
     }
 }
