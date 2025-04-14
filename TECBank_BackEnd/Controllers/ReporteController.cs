@@ -18,10 +18,11 @@ namespace TECBank_BackEnd.Controllers
             {
 
                 JasonLectura jasonLectura = new JasonLectura();
-                AsesorCreditoModel? asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
-                EmpleadoModel? empleado = jasonLectura.BuscarEmpleadoPorCedula(data.Cedula_Asesor);
+                AsesorCreditoModel? asesor_de_credito = null;
+                EmpleadoModel? empleado = null;
 
-
+                asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
+                empleado = jasonLectura.BuscarEmpleadoPorCedula(data.Cedula_Asesor);
 
                 if (asesor_de_credito == null)
                 {
