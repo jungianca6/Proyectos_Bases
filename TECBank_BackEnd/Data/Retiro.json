@@ -1,0 +1,62 @@
+[
+  {
+    "CuentaARetirar": "dsadad",
+    "Monto": 500,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "R01",
+    "Moneda": "CRC"
+  },
+  {
+    "CuentaARetirar": "C123",
+    "Monto": 500,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "11/04/2025 09:00",
+    "ID": "R01",
+    "Moneda": "CRC"
+  },
+  {
+    "CuentaARetirar": "C123",
+    "Monto": 250,
+    "Nombre": "Mar\u00EDa",
+    "Apellido1": "Jimenez",
+    "Apellido2": "Lopez",
+    "Fecha": "10/04/2025 17:30",
+    "ID": "R02",
+    "Moneda": "USD"
+  },
+  {
+    "CuentaARetirar": "B456",
+    "Monto": 150,
+    "Nombre": "Luis",
+    "Apellido1": "Castro",
+    "Apellido2": "Lopez",
+    "Fecha": "10/04/2025 10:00",
+    "ID": "R03",
+    "Moneda": "CRC"
+  },
+  {
+    "CuentaARetirar": "C123",
+    "Monto": 300,
+    "Nombre": "Ana",
+    "Apellido1": "Ramirez",
+    "Apellido2": "Mora",
+    "Fecha": "01/01/2024 12:00",
+    "ID": "R04",
+    "Moneda": "USD"
+  },
+  {
+    "CuentaARetirar": "12193459",
+    "Monto": 10000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 12:25",
+    "ID": "96026327",
+    "Moneda": "Colones"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "Cuenta_Emisora": "C123",
+    "Numero_de_Tarjeta": "T001",
+    "Monto": 200,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "P001",
+    "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "C123",
+    "Numero_de_Tarjeta": "T001",
+    "Monto": 200,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "11/04/2025 10:15",
+    "ID": "P001",
+    "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "C123",
+    "Numero_de_Tarjeta": "T002",
+    "Monto": 150,
+    "Nombre": "Ana",
+    "Apellido1": "Ramirez",
+    "Apellido2": "Mora",
+    "Fecha": "01/01/2023 08:30",
+    "ID": "P002",
+    "Moneda": "USD"
+  },
+  {
+    "Cuenta_Emisora": "C999",
+    "Numero_de_Tarjeta": "T003",
+    "Monto": 300,
+    "Nombre": "Luis",
+    "Apellido1": "Castro",
+    "Apellido2": "Lopez",
+    "Fecha": "10/04/2025 09:00",
+    "ID": "P003",
+    "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "B456",
+    "Numero_de_Tarjeta": "T004",
+    "Monto": 500,
+    "Nombre": "Mar\u00EDa",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Solano",
+    "Fecha": "09/04/2025 14:45",
+    "ID": "P004",
+    "Moneda": "CRC"
+  },
+  {
+    "Cuenta_Emisora": "99193059",
+    "Numero_de_Tarjeta": "1232141234",
+    "Monto": 1000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 02:34",
+    "ID": "27104042",
+    "Moneda": "Colones"
+  }
+]

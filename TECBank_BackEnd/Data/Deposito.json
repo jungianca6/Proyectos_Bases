@@ -1,0 +1,14 @@
+[
+  {
+    "CuentaEmisora": "C123",
+    "CuentaDestino": "C456",
+    "Nombre": "Carlos",
+    "NumeroDeCuenta": "C123",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "Monto": 1500.00,
+    "ID": "D001",
+    "Moneda": "CRC"
+  }
+]

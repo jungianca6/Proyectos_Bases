@@ -1,0 +1,75 @@
+body {
+  background-color: #002147; /* Azul oscuro */
+  font-family: Arial, sans-serif;
+  margin: 0;  
+  padding: 0; 
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+    max-width: none;
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    background-color: #003366;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+    min-height: 100vh;
+}
+
+.datos-en-linea {
+  display: flex;
+  justify-content: center;
+  gap: 40px; 
+  margin-top: 20px;
+}
+
+.datos-en-linea p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+:global(.cliente h1),
+:global(.cliente h2),
+:global(.cliente h3){
+    color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+:global(.cliente) {
+  background-color: #002147; /* Igual que el body */
+  min-height: 100%; /* Asegura que cubre toda la altura */
+  width: 100%;
+}
+
+:global(.cliente label) {
+    font-weight: bold;
+  }
+  
+  :global(.cliente input) {
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  :global(.cliente button.btn-primary) {
+    background-color: #0056b3;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  :global(.cliente button.btn-primary:hover) {
+    background-color: #004494;
+  }
+
+  .labelwhite {
+    color: white;
+  }

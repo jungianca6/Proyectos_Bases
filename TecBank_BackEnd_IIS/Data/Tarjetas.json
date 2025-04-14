@@ -1,0 +1,18 @@
+[
+  {
+    "Numero": "T001",
+    "NumeroDeCuenta": "C123",
+    "TipoDeTarjeta": "zorra",
+    "FechaDeExpiracion": "2027/12/31",
+    "CCV": "123",
+    "SaldoDisponible": 75000
+  },
+  {
+    "Numero": "1232141234",
+    "NumeroDeCuenta": "99193059",
+    "TipoDeTarjeta": "Credito",
+    "FechaDeExpiracion": "1111-11-11",
+    "CCV": "123",
+    "SaldoDisponible": 101053
+  }
+]
