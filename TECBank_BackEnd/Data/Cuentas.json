@@ -1,56 +1,11 @@
 [
   {
-    "NumeroDeCuenta": "12193459",
-    "Descripcion": "Cuenta editada para pagos internacionales",
-    "Usuario": "sapo",
+    "NumeroDeCuenta": "1111111",
+    "Descripcion": "Cuenta administradora",
+    "Usuario": "admin",
     "Moneda": "CRC",
     "TipoDeCuenta": "Corriente",
     "Nombre": "Cuenta Corriente",
-    "Monto": 140000
-  },
-  {
-    "NumeroDeCuenta": "99193059",
-    "Descripcion": "",
-    "Usuario": "sapo1",
-    "Moneda": "Colones",
-    "TipoDeCuenta": "",
-    "Nombre": "sapo",
-    "Monto": 5209400
-  },
-  {
-    "NumeroDeCuenta": "C123",
-    "Descripcion": "Cuenta editada para pagos internacionales",
-    "Usuario": "sapo",
-    "Moneda": "CRC",
-    "TipoDeCuenta": "Corriente",
-    "Nombre": "Cuenta Corriente",
-    "Monto": 0
-  },
-  {
-    "NumeroDeCuenta": "73626581",
-    "Descripcion": "",
-    "Usuario": "gvm",
-    "Moneda": "Colones",
-    "TipoDeCuenta": "",
-    "Nombre": "Giancarlo",
-    "Monto": 0
-  },
-  {
-    "NumeroDeCuenta": "96189768",
-    "Descripcion": "",
-    "Usuario": "carlosgr",
-    "Moneda": "Colones",
-    "TipoDeCuenta": "",
-    "Nombre": "Carlos",
-    "Monto": 0
-  },
-  {
-    "NumeroDeCuenta": "16858158",
-    "Descripcion": "",
-    "Usuario": "SpaceBa",
-    "Moneda": "Colones",
-    "TipoDeCuenta": "",
-    "Nombre": "Brayan",
-    "Monto": 0
+    "Monto": 10000000000
   }
 ]
