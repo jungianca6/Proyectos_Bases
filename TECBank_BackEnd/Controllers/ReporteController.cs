@@ -107,16 +107,31 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 ClienteModel? cliente_mora = null;
-                CuentaModel? cuenta = null;
+
+                if (cliente_mora == null)
+                {
+
+                    return Ok(new
+                    {
+                        success = false,
+                        message = "El cliente no existe"
+                    });
+                }
 
                 cliente_mora = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
-                cuenta = jasonLectura.BuscarCuentaPorUsuario(cliente_mora.Usuario);
-
                 List<PrestamoModel> prestamos_del_cliente = new List<PrestamoModel>();
 
                 prestamos_del_cliente = jasonLectura.LeerPrestamos("Cedula_Cliete", cliente_mora.Cedula);
 
-                return Ok(new { success = false, message = "Koki puto" });
+                return Ok(new
+                {
+                    success = true,
+                    message = "",
+                    Nombre = cliente_mora.Nombre,
+                    Apellido1 = cliente_mora.Apellido1,
+                    Apellido2 = cliente_mora.Apellido2,
+                    Cedula = cliente_mora.Cedula,
+                });
             }
             catch (Exception ex)
             {
