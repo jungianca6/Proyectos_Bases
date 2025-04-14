@@ -386,7 +386,7 @@ function ClientePG() {
           <div className="mb-3">
             <label className={styles.labelwhite}> ID del préstamo a pagar: </label>
             <input 
-              type="number" 
+              type="text" 
               name="idPP" 
               className="form-control" 
               value={idPP} 
