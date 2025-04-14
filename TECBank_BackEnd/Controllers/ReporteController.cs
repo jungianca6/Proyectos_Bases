@@ -24,6 +24,13 @@ namespace TECBank_BackEnd.Controllers
                 asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
                 empleado = jasonLectura.BuscarEmpleadoPorCedula(data.Cedula_Asesor);
 
+                if(empleado == null) {
+                    return Ok(new
+                    {
+                        success = false,
+                        message = "El Asesor de credito no existe"
+                    });
+                }
                 if (asesor_de_credito == null)
                 {
                     return Ok(new
