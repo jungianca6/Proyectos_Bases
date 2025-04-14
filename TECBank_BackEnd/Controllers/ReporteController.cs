@@ -2,6 +2,7 @@
 using TECBank_BackEnd.Data_Input_Models;
 using TECBank_BackEnd.Models;
 using TECBank_BackEnd.Pruebas;
+using TECBank_BackEnd.Utilities;
 
 namespace TECBank_BackEnd.Controllers
 {
@@ -104,19 +105,61 @@ namespace TECBank_BackEnd.Controllers
         {
             try
             {
-
                 JasonLectura jasonLectura = new JasonLectura();
-                ClienteModel? cliente_mora = null;
-                CuentaModel? cuenta = null;
+                ClienteModel? cliente_mora = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
+                if (cliente_mora == null)
+                    return NotFound(new { success = false, message = "Cliente no encontrado" });
 
-                cliente_mora = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
-                cuenta = jasonLectura.BuscarCuentaPorUsuario(cliente_mora.Usuario);
+                CuentaModel? cuenta = jasonLectura.BuscarCuentaPorUsuario(cliente_mora.Usuario);
+                if (cuenta == null)
+                    return NotFound(new { success = false, message = "Cuenta no encontrada" });
 
-                List<PrestamoModel> prestamos_del_cliente = new List<PrestamoModel>();
+                List<PrestamoModel> prestamos_del_cliente = jasonLectura.LeerPrestamos("Cedula_Cliete", cliente_mora.Cedula);
+                if (prestamos_del_cliente == null || prestamos_del_cliente.Count == 0)
+                    return NotFound(new { success = false, message = "No hay préstamos asociados al cliente" });
 
-                prestamos_del_cliente = jasonLectura.LeerPrestamos("Cedula_Cliete", cliente_mora.Cedula);
+                var calendarios = jasonLectura.LeerCalendariosPago();
+                var prestamosConMora = new List<object>();
 
-                return Ok(new { success = false, message = "Koki puto" });
+                DateTime fechaActual = DateTime.Now;
+
+                foreach (var prestamo in prestamos_del_cliente)
+                {
+                    var calendario = calendarios.FirstOrDefault(c => c.ID_Prestamo == prestamo.ID_Prestamos);
+                    if (calendario == null) continue;
+
+                    var cuotasAtrasadas = calendario.CuotasMensuales
+                        .Where(cuota =>
+                        {
+                            DateTime fechaCuota;
+                            if (!DateTime.TryParseExact(cuota.FechaPago, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out fechaCuota))
+                                return false;
+                            return !cuota.Pagado && fechaCuota < fechaActual;
+                        })
+                        .ToList();
+
+                    if (cuotasAtrasadas.Count > 0)
+                    {
+                        int montoTotalAtrasado = cuotasAtrasadas.Sum(c => c.MontoAPagar);
+
+                        prestamosConMora.Add(new
+                        {
+                            ID_Prestamo = prestamo.ID_Prestamos,
+                            CuotasAtrasadas = cuotasAtrasadas,
+                            MontoTotalAtrasado = montoTotalAtrasado
+                        });
+                    }
+                }
+
+                if (prestamosConMora.Count == 0)
+                    return Ok(new { success = true, message = "No hay cuotas en mora", prestamos = new List<object>() });
+
+                return Ok(new
+                {
+                    success = true,
+                    message = "Reporte de mora generado con éxito",
+                    prestamos = prestamosConMora
+                });
             }
             catch (Exception ex)
             {
