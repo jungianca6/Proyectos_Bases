@@ -1,3 +1,41 @@
 [
-  
+  {
+    "Nombre": "Carlos",
+    "Rol": null,
+    "DescripcionDeRol": null,
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Cedula": "12345",
+    "AdminRol": true,
+    "FechaDeNacimiento": "1985-05-15T00:00:00",
+    "Usuario": "carlos.g",
+    "Contrasena": "1234secure",
+    "IngresoMensual": 0
+  },
+  {
+    "Nombre": "Carlos",
+    "Rol": null,
+    "DescripcionDeRol": null,
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Cedula": "1234",
+    "AdminRol": false,
+    "FechaDeNacimiento": "13/09/2004",
+    "Usuario": "carlos.g",
+    "Contrasena": "1234secure",
+    "IngresoMensual": 1210
+  },
+  {
+    "Nombre": "Koki no puto",
+    "Rol": "AsesorDeCredito",
+    "DescripcionDeRol": "Encargada de evaluar solicitudes de cr\u00E9dito",
+    "Apellido1": "Hernandez",
+    "Apellido2": "Soto",
+    "Cedula": "207890123",
+    "AdminRol": true,
+    "FechaDeNacimiento": "12/04/2001",
+    "Usuario": "laura_h",
+    "Contrasena": "pass1234",
+    "IngresoMensual": 750000
+  }
 ]

@@ -1,2 +1,112 @@
 [
+  {
+    "CuentaEmisora": "C123",
+    "IdPrestamo": "T001",
+    "Monto": 200,
+    "Nombre": "Carlos",
+    "Apellido1": "Perez",
+    "Apellido2": "Gomez",
+    "Fecha": "2025-04-11",
+    "ID": "P001",
+    "Moneda": "CRC"
+  },
+  {
+    "CuentaEmisora": null,
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:45",
+    "ID": "26749025",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": null,
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:45",
+    "ID": "41144793",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": null,
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:45",
+    "ID": "38935308",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:47",
+    "ID": "97342352",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:47",
+    "ID": "14270054",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:47",
+    "ID": "21235580",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "33810729",
+    "Monto": 25000,
+    "Nombre": "Carlos",
+    "Apellido1": "Jim\u00E9nez",
+    "Apellido2": "Soto",
+    "Fecha": "13/04/2025 01:47",
+    "ID": "42355683",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "99193059",
+    "IdPrestamo": "57247795",
+    "Monto": 10000,
+    "Nombre": "sapo",
+    "Apellido1": "sapo",
+    "Apellido2": "sapo",
+    "Fecha": "13/04/2025 16:00",
+    "ID": "19713510",
+    "Moneda": "Colones"
+  },
+  {
+    "CuentaEmisora": "12193459",
+    "IdPrestamo": "57247795",
+    "Monto": 10000,
+    "Nombre": "jorge1",
+    "Apellido1": "e",
+    "Apellido2": "s",
+    "Fecha": "13/04/2025 16:09",
+    "ID": "70110660",
+    "Moneda": "Colones"
+  }
 ]
