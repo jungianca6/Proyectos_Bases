@@ -107,9 +107,16 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 ClienteModel? cliente_mora = null;
-                CuentaModel? cuenta_ = null;
+                CuentaModel? cuenta = null;
 
-                return BadRequest(new { success = false, message = "Koki puto" });
+                cliente_mora = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
+                cuenta = jasonLectura.BuscarCuentaPorUsuario(cliente_mora.Usuario);
+
+                List<PrestamoModel> prestamos_del_cliente = new List<PrestamoModel>();
+
+                prestamos_del_cliente = jasonLectura.LeerPrestamos("Cedula_Cliete", cliente_mora.Cedula);
+
+                return Ok(new { success = false, message = "Koki puto" });
             }
             catch (Exception ex)
             {
