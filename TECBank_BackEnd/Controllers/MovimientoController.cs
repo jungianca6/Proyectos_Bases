@@ -162,14 +162,23 @@ namespace TECBank_BackEnd.Controllers
                         var cuota = calendario.CuotasMensuales[i];
                         if (!cuota.Pagado)
                         {
-                            if (montoIngresado >= cuota.MontoAPagar || !estaAtrasado)
+                            if (montoFinalEntero >= cuota.MontoAPagar)
                             {
+                                montoFinalEntero -= (int)cuota.MontoAPagar;
+                                cuota.MontoAPagar = 0;
                                 cuota.Pagado = true;
-                                calendario.CuotasMensuales[i] = cuota; // Aseguramos la actualización
                             }
-                            break;
+                            else
+                            {
+                                cuota.MontoAPagar -= montoFinalEntero;
+                                montoFinalEntero = 0;
+                            }
+
+                            calendario.CuotasMensuales[i] = cuota; // Asegura que el cambio se refleje
+                            break; // Solo modificamos la primera cuota pendiente
                         }
                     }
+
 
 
                     calendario.SaldoPendiente -= montoFinalEntero;
