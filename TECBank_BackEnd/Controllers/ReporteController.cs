@@ -15,7 +15,7 @@ namespace TECBank_BackEnd.Controllers
         [HttpPost("ReporteAsesores")]
         public ActionResult ReporteAsesores([FromBody] ReporteAsesorDeCreditoDataInputModel data)
         {
-            try
+            try 
             {
 
                 JasonLectura jasonLectura = new JasonLectura();
@@ -25,8 +25,7 @@ namespace TECBank_BackEnd.Controllers
                 asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
                 empleado = jasonLectura.BuscarEmpleadoPorCedula(data.Cedula_Asesor);
 
-                if (empleado == null)
-                {
+                if(empleado == null) {
                     return Ok(new
                     {
                         success = false,
@@ -64,7 +63,7 @@ namespace TECBank_BackEnd.Controllers
                         message = "Comisiones calculadas correctamente.",
                         nombre = empleado.Nombre,
                         MetaColones = asesor_de_credito.Meta_Colones,
-                        MetaDolares = asesor_de_credito.Meta_Colones / 500,
+                        MetaDolares = asesor_de_credito.Meta_Colones / 500 ,
                         TotalCreditosColones = suma_montos_entregados,
                         TotalCreditosDolares = suma_montos_entregados / 500,
                         comisionesColones = comisiones_colones,
