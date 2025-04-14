@@ -19,10 +19,12 @@ namespace TECBank_BackEnd.Controllers
 
                 JasonLectura jasonLectura = new JasonLectura();
                 AsesorCreditoModel? asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
+                EmpleadoModel? empleado = jasonLectura.BuscarEmpleadoPorCedula(data.Cedula_Asesor);
+
+
 
                 if (asesor_de_credito == null)
                 {
-
                     return Ok(new
                     {
                         success = false,
@@ -50,6 +52,11 @@ namespace TECBank_BackEnd.Controllers
                     {
                         success = true,
                         message = "Comisiones calculadas correctamente.",
+                        nombre = empleado.Nombre,
+                        MetaColones = asesor_de_credito.Meta_Colones,
+                        MetaDolares = asesor_de_credito.Meta_Colones / 500 ,
+                        TotalCreditosColones = suma_montos_entregados,
+                        TotalCreditosDolares = suma_montos_entregados / 500,
                         comisionesColones = comisiones_colones,
                         comisionesDolares = comisiones_dolares,
                         totalColones = comision_total_colones,
@@ -64,6 +71,11 @@ namespace TECBank_BackEnd.Controllers
                     {
                         success = true,
                         message = "Comisiones calculadas correctamente.",
+                        nombre = empleado.Nombre,
+                        MetaColones = asesor_de_credito.Meta_Colones,
+                        MetaDolares = asesor_de_credito.Meta_Colones / 500,
+                        TotalCreditosColones = 0,
+                        TotalCreditosDolares = 0,
                         comisionesColones = new List<float>(),
                         comisionesDolares = new List<float>(),
                         totalColones = 0,
