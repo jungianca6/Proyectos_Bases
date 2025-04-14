@@ -28,21 +28,47 @@ namespace TECBank_BackEnd.Controllers
         {
             try
             {
-                PrestamoModel nuevo_prestamo = new PrestamoModel
-                {
-                    Monto_Original = data.Monto_Original,
-                    Saldo_Pendiente = data.Monto_Original,
-                    Cedula_Cliete = data.Cedula_Cliente,
-                    Tasa_De_Interes = data.Tasa_De_Interes,
-                    FechaVencimiento = data.FechaVencimiento,
-                    ID_Prestamos = GenerarID() 
-                };
-
                 JasonEscritura jasonEscritura = new JasonEscritura();
+                JasonEditar jasonEditar = new JasonEditar();
+                JasonLectura jasonLectura = new JasonLectura();
 
-                jasonEscritura.GuardarPrestamo(nuevo_prestamo);
+                AsesorCreditoModel? asesor_de_credito = jasonLectura.BuscarAsesorPorCedula(data.Cedula_Asesor);
 
-                return Ok(new { success = true, message = "El prestamo se ha creado con exito" });
+                if (asesor_de_credito != null)
+                {
+                    PrestamoModel nuevo_prestamo = new PrestamoModel 
+                    {
+                        Monto_Original = data.Monto_Original,
+                        Saldo_Pendiente = data.Monto_Original,
+                        Cedula_Cliete = data.Cedula_Cliente,
+                        Tasa_De_Interes = data.Tasa_De_Interes,
+                        FechaVencimiento = data.FechaVencimiento,
+                        ID_Prestamos = GenerarID()
+                    };
+
+                    //Se agrega el credito en el asesor
+                    asesor_de_credito.Meta_Creditos.Add(data.Monto_Original);
+
+                    jasonEditar.EditarAsesorCredito(asesor_de_credito.Cedula, asesor_de_credito);
+
+                    jasonEscritura.GuardarPrestamo(nuevo_prestamo);
+
+                    ClienteModel cliente_del_prestamo = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
+
+                    CuentaModel cuenta_modificada = jasonLectura.BuscarCuentaPorUsuario(cliente_del_prestamo.Usuario);
+
+                    cuenta_modificada.Monto = cuenta_modificada.Monto + data.Monto_Original;
+
+                    jasonEditar.EditarCuenta(cuenta_modificada.NumeroDeCuenta, cuenta_modificada);
+
+                    return Ok(new { success = true, message = "El prestamo se ha creado con exito" });
+
+                }else
+                {
+                    return Ok(new { success = false, message = "No se un asesor de credito, no puede emitir un prestamo" });
+                }
+
+               
 
             }
             catch (Exception ex)

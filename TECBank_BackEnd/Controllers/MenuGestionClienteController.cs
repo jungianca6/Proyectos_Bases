@@ -207,7 +207,17 @@ namespace TECBank_BackEnd.Controllers
                 JasonEliminar jasonEliminar = new JasonEliminar();
                 ClienteModel? cliente = jasonLectura.BuscarPorCedula(data.Cedula);
 
-                var CuentasA = jasonLectura.LeerCuentas("Usuario", cliente.Usuario);
+                List<CuentaModel>? CuentasA = null;
+
+                if (cliente != null)
+                {
+                    CuentasA = jasonLectura.LeerCuentas("Usuario", cliente.Usuario);
+                }
+                else
+                {
+                    var response = new { success = false, message = "El Cliente no existe" };
+                    return Ok(response);
+                }
 
 
                 var tarjetaEditada = new TarjetaModel
@@ -217,17 +227,17 @@ namespace TECBank_BackEnd.Controllers
 
                 if (jasonEliminar.EliminarPorCedula(data.Cedula))
                 {
-                    
+
                     foreach (var Cuenta in CuentasA)
                     {
 
                         var Tarjetas = jasonLectura.LeerTarjetas("NumeroDeCuenta", Cuenta.NumeroDeCuenta);
-                        
-                            foreach (var tarjeta in Tarjetas)
+
+                        foreach (var tarjeta in Tarjetas)
                         {
                             JasonEdicion.EditarTarjeta(tarjeta.Numero, tarjetaEditada);
                         }
-                        
+
                         jasonEliminar.EliminarCuenta(Cuenta.NumeroDeCuenta);
                     }
                     var response = new { success = true, message = "El Cliente se elimino con exito" };

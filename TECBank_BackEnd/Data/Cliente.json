@@ -50,5 +50,18 @@
     "Usuario": "carlosgr",
     "Contrasena": "miClaveSegura",
     "AdminRol": false
+  },
+  {
+    "Cedula": "119170144",
+    "Direccion": "Mi casa",
+    "Telefono": "61942879",
+    "IngresoMensual": 10000,
+    "Nombre": "Brayan",
+    "Apellido1": "Alpizar",
+    "Apellido2": "Elizondo",
+    "TipoDeCliente": "Fisico",
+    "Usuario": "SpaceBa",
+    "Contrasena": "1234",
+    "AdminRol": false
   }
 ]

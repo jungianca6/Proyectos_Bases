@@ -43,5 +43,14 @@
     "TipoDeCuenta": "",
     "Nombre": "Carlos",
     "Monto": 0
+  },
+  {
+    "NumeroDeCuenta": "16858158",
+    "Descripcion": "",
+    "Usuario": "SpaceBa",
+    "Moneda": "Colones",
+    "TipoDeCuenta": "",
+    "Nombre": "Brayan",
+    "Monto": 0
   }
 ]

@@ -9,5 +9,6 @@ namespace TECBank_BackEnd.Data_Input_Models
         public decimal Tasa_De_Interes { get; set; }
         public string FechaVencimiento { get; set; }
 
+        public string Cedula_Asesor { get; set; }
     }
 }
