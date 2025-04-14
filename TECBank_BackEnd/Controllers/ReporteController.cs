@@ -108,7 +108,11 @@ namespace TECBank_BackEnd.Controllers
                 JasonLectura jasonLectura = new JasonLectura();
                 ClienteModel? cliente_mora = jasonLectura.BuscarPorCedula(data.Cedula_Cliente);
                 if (cliente_mora == null)
-                    return NotFound(new { success = false, message = "Cliente no encontrado" });
+                {
+
+
+                }
+                return NotFound(new { success = false, message = "Cliente no encontrado" });
 
                 CuentaModel? cuenta = jasonLectura.BuscarCuentaPorUsuario(cliente_mora.Usuario);
                 if (cuenta == null)
