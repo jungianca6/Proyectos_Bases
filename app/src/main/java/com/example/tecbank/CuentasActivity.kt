@@ -30,14 +30,21 @@ class CuentasActivity : ComponentActivity() {
         val prestamosButton: Button = findViewById(R.id.prestamos_button)
 
         val nombre = intent.getStringExtra("nombre") ?: ""
+        val apellido1 = intent.getStringExtra("apellido1") ?: ""
+        val apellido2 = intent.getStringExtra("apellido2") ?: ""
         val usuario = intent.getStringExtra("usuario") ?: ""
         val numeroCuenta = intent.getStringExtra("numeroCuenta") ?: ""
 
-        textoView.text = "Usuario: $usuario\nNombre: $nombre\nCuenta: $numeroCuenta"
+        textoView.text =
+            "Usuario: $usuario\nNombre: $nombre\nApellido1: $apellido1\n" +
+                    "Apellido2: $apellido2\nCuenta: $numeroCuenta"
 
 
         transferenciaButton.setOnClickListener {
             val intent = Intent(this, TransferenciaActivity::class.java)
+            intent.putExtra("nombre", nombre)
+            intent.putExtra("apellido1", apellido1)
+            intent.putExtra("apellido2", apellido2)
             intent.putExtra("numeroCuenta", numeroCuenta)
             startActivity(intent)
         }

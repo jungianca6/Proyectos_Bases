@@ -18,6 +18,9 @@ class TransferenciaActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transferencia)
 
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val apellido1 = intent.getStringExtra("apellido1") ?: ""
+        val apellido2 = intent.getStringExtra("apellido2") ?: ""
         val cuentaEmisora = intent.getStringExtra("numeroCuenta") ?: ""
 
         val editTextCuentaDestino: EditText = findViewById(R.id.editTextCuentaDestino)
@@ -39,15 +42,16 @@ class TransferenciaActivity : ComponentActivity() {
                 return@setOnClickListener
             }
 
-            realizarTransferencia(cuentaEmisora, cuentaDestino, cantidad)
+            realizarTransferencia(cuentaEmisora, cuentaDestino, cantidad,nombre,apellido1,apellido2)
         }
     }
 
-    private fun realizarTransferencia(cuentaEmisora: String, cuentaDestino: String, monto: Double) {
+    private fun realizarTransferencia(cuentaEmisora: String, cuentaDestino: String, monto: Double,
+                                      nombre: String,apellido1: String,apellido2: String) {
         val json = JSONObject().apply {
-            put("nombre", "Giancarlo")         // Puedes adaptar para que se envíe el nombre real del usuario
-            put("apellido1", "Vega")
-            put("apellido2", "Marin")
+            put("nombre", nombre)         // Puedes adaptar para que se envíe el nombre real del usuario
+            put("apellido1", apellido1)
+            put("apellido2", apellido2)
             put("monto", monto)
             put("moneda", "Colones")           // Puedes hacerlo dinámico si lo necesitas
             put("cuenta_Emisora", cuentaEmisora)

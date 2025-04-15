@@ -95,6 +95,8 @@ class MainActivity : ComponentActivity() {
                                     val intent =
                                         Intent(this@MainActivity, CuentasActivity::class.java).apply{
                                             putExtra("nombre", usuarioActual.getString("nombre"))
+                                            putExtra("apellido1", usuarioActual.getString("apellido1"))
+                                            putExtra("apellido2", usuarioActual.getString("apellido2"))
                                             putExtra("usuario", usuarioActual.getString("usuario"))
                                             putExtra("numeroCuenta", cuentaActual.getString("numeroDeCuenta"))
                                         }
