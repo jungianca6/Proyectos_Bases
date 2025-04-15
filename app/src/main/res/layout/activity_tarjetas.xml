@@ -66,7 +66,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="236dp">
+        android:layout_height="155dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,5 +115,19 @@
             android:layout_marginTop="8dp"
             android:text="Confirmar Pago" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/editTextDate2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="date" />
 
 </LinearLayout>
