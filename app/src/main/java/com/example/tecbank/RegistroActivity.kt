@@ -73,7 +73,7 @@ class RegistroActivity : ComponentActivity() {
 
 
         val request = Request.Builder()
-            .url("https://6c78-186-64-212-255.ngrok-free.app/MenuInicio/Registro")
+            .url("https://b4b6-201-204-89-80.ngrok-free.app/MenuInicio/Registro")
             .post(requestBody)
             .build()
 

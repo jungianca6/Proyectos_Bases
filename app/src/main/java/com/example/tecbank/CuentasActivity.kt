@@ -11,6 +11,11 @@ import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.io.IOException
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONObject
+
 
 
 class CuentasActivity : ComponentActivity() {
@@ -26,109 +31,106 @@ class CuentasActivity : ComponentActivity() {
         val tarjetasButton: Button = findViewById(R.id.tarjetas_button)
         val prestamosButton: Button = findViewById(R.id.prestamos_button)
 
-        // Leer el archivo JSON de cuentas
-        val cuentas = cargarCuentas()
-        transferenciaButton.setOnClickListener{
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val usuario = intent.getStringExtra("usuario") ?: ""
+        val numeroCuenta = intent.getStringExtra("numeroCuenta") ?: ""
+
+        textoView.text = "Usuario: $usuario\nNombre: $nombre\nCuenta: $numeroCuenta"
+
+
+        transferenciaButton.setOnClickListener {
             val intent = Intent(this, TransferenciaActivity::class.java)
             startActivity(intent)
 
         }
-        tarjetasButton.setOnClickListener{
+        tarjetasButton.setOnClickListener {
             val intent = Intent(this, TarjetasActivity::class.java)
             startActivity(intent)
 
         }
-        prestamosButton.setOnClickListener{
+        prestamosButton.setOnClickListener {
             val intent = Intent(this, PrestamosActivity::class.java)
             startActivity(intent)
 
         }
+        obtenerMovimientos(numeroCuenta)
+    }
 
-        if (cuentas != null) {
-            // Iterar sobre las cuentas (JSONArray) utilizando un bucle for clásico
-            for (i in 0 until cuentas.length()) {
-                val cuenta = cuentas.getJSONObject(i)
+    private fun obtenerMovimientos(numeroCuenta: String) {
+        val client = OkHttpClient()
 
-                // Crear un botón por cada cuenta en el archivo JSON
-                val cuentaButton = Button(this)
-                val numeroCuenta = cuenta.getString("numero_cuenta")
-                val tipo = cuenta.getString("tipo")
-                val moneda = cuenta.getString("moneda")
-                val saldo = cuenta.getString("saldo")
-                cuentaButton.text = "Cuenta $tipo: $numeroCuenta \nSaldo: $saldo $moneda"
-                cuentaButton.textSize = 18f
+        val json = JSONObject().apply {
+            put("numeroDeCuenta", numeroCuenta)
+        }
 
-                cuentaButton.setPadding(16, 16, 16, 16)
-                val movimientos = cargarMovimientos(numeroCuenta)
-                layoutMovimientos.removeAllViews() // Limpiar antes de agregar nuevos
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            json.toString()
+        )
 
-                cuentaButton.setOnClickListener {
+        val request = Request.Builder()
+            .url("https://b4b6-201-204-89-80.ngrok-free.app/Movimiento/ListadoDeMovimientos")
+            .post(requestBody)
+            .build()
 
-                    layoutMovimientos.removeAllViews() // Limpiar antes de agregar nuevos
-                    for (i in 0 until movimientos.length()) {
-                        val movimiento = movimientos.getJSONObject(i)
-                        val movimientoView = TextView(this)
-                        val texto = "ID: ${movimiento.getString("id")}\n" +
-                                "Fecha: ${movimiento.getString("fecha")}\n" +
-                                "Monto: ${movimiento.getDouble("monto")} ${movimiento.getString("moneda")}"
-                        movimientoView.text = texto
-                        movimientoView.textSize = 18f
-                        movimientoView.setTextColor(Color.WHITE)
-                        movimientoView.setPadding(16, 16, 16, 16)
-                        layoutMovimientos.addView(movimientoView)
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(
+                        this@CuentasActivity,
+                        "Error al cargar movimientos",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body?.string()
+                        val jsonResponse = JSONObject(responseBody)
+                        val retiros = jsonResponse.getJSONArray("retiros")
+                        val pagosTarjetas = jsonResponse.getJSONArray("pagos_tarjetas")
+                        val pagosPrestamos = jsonResponse.getJSONArray("pagos_prestamos")
+                        val transferencias = jsonResponse.getJSONArray("transferencias")
+
+                        runOnUiThread {
+                            mostrarMovimientos("Retiros", retiros)
+                            mostrarMovimientos("Pagos Tarjetas", pagosTarjetas)
+                            mostrarMovimientos("Pagos Préstamos", pagosPrestamos)
+                            mostrarMovimientos("Transferencias", transferencias)
+                        }
+                    } else {
+                        runOnUiThread {
+                            Toast.makeText(
+                                this@CuentasActivity,
+                                "Error del servidor",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                    textoView.text = "Cuenta seleccionada: $numeroCuenta"
-                }
-
-                // Agregar el botón al layout
-                layoutCuentas.addView(cuentaButton)
-            }
-        } else {
-            // Si no se pudieron cargar las cuentas, mostrar un mensaje
-            Toast.makeText(this, "Error al cargar las cuentas", Toast.LENGTH_SHORT).show()
-        }
-
-        // Manejar el botón de salida
-        val btnSalir: Button = findViewById(R.id.btnSalir)
-        btnSalir.setOnClickListener {
-            finish()  // Cierra la actividad actual
-        }
-    }
-
-    // Función para cargar las cuentas desde el archivo JSON
-    private fun cargarCuentas(): JSONArray? {
-        return try {
-            // Abrir el archivo JSON desde assets
-            val inputStream: InputStream = assets.open("cuentas.json")
-            val inputStreamReader = InputStreamReader(inputStream)
-            val jsonString = inputStreamReader.readText()
-
-            // Convertir el JSON en un array
-            JSONArray(jsonString)
-        } catch (e: Exception) {
-            e.printStackTrace() // Imprimir el error en el Logcat
-            null
-        }
-    }
-
-    private fun cargarMovimientos(numeroCuenta: String): JSONArray {
-        val listaFiltrada = JSONArray()
-
-        try {
-            val inputStream: InputStream = assets.open("movimientos.json")
-            val jsonString = inputStream.bufferedReader().use { it.readText() }
-            val todosLosMovimientos = JSONArray(jsonString)
-
-            for (i in 0 until todosLosMovimientos.length()) {
-                val mov = todosLosMovimientos.getJSONObject(i)
-                if (mov.getString("numero_cuenta") == numeroCuenta) {
-                    listaFiltrada.put(mov)
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        })
+    }
 
-        return listaFiltrada
+    fun mostrarMovimientos(titulo: String, array: JSONArray) {
+        val layoutMovimientos: LinearLayout = findViewById(R.id.layout_movimientos)
+
+        val tituloText = TextView(this).apply {
+            text = "$titulo (${array.length()})"
+            setTextColor(Color.WHITE)
+            textSize = 16f
+        }
+        layoutMovimientos.addView(tituloText)
+
+        for (i in 0 until array.length()) {
+            val item = array.getJSONObject(i)
+            val detalle = TextView(this).apply {
+                text = item.toString() // Puedes formatear aquí si conoces los campos
+                setTextColor(Color.DKGRAY)
+            }
+            layoutMovimientos.addView(detalle)
+        }
     }
 }

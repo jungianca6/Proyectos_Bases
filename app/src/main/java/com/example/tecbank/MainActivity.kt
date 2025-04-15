@@ -12,6 +12,7 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.json.JSONObject
 import java.io.IOException
 
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +52,7 @@ class MainActivity : ComponentActivity() {
         )
 
         val request = Request.Builder()
-            .url("https://6c78-186-64-212-255.ngrok-free.app/MenuInicio/Login")
+            .url("https://b4b6-201-204-89-80.ngrok-free.app/MenuInicio/Login")
             .post(requestBody)
             .build()
 
@@ -88,9 +89,15 @@ class MainActivity : ComponentActivity() {
 
                             runOnUiThread {
                                 if (success) {
-                                    
+                                    val usuarioActual= jsonResponse.getJSONObject("usuario_actual")
+                                    val cuentaActual= jsonResponse.getJSONObject("cuenta_actual")
+
                                     val intent =
-                                        Intent(this@MainActivity, CuentasActivity::class.java)
+                                        Intent(this@MainActivity, CuentasActivity::class.java).apply{
+                                            putExtra("nombre", usuarioActual.getString("nombre"))
+                                            putExtra("usuario", usuarioActual.getString("usuario"))
+                                            putExtra("numeroCuenta", cuentaActual.getString("numeroDeCuenta"))
+                                        }
                                     startActivity(intent)
                                 } else {
                                     Toast.makeText(
