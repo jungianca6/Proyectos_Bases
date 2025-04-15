@@ -9,8 +9,6 @@ import android.widget.Toast
 import android.graphics.Color
 import androidx.activity.ComponentActivity
 import org.json.JSONArray
-import java.io.InputStream
-import java.io.InputStreamReader
 import java.io.IOException
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -40,8 +38,8 @@ class CuentasActivity : ComponentActivity() {
 
         transferenciaButton.setOnClickListener {
             val intent = Intent(this, TransferenciaActivity::class.java)
+            intent.putExtra("numeroCuenta", numeroCuenta)
             startActivity(intent)
-
         }
         tarjetasButton.setOnClickListener {
             val intent = Intent(this, TarjetasActivity::class.java)

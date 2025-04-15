@@ -6,93 +6,86 @@ import androidx.activity.ComponentActivity
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.InputStream
+import java.io.IOException
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+
+
 
 class TransferenciaActivity : ComponentActivity() {
-
-    private var cuentas: MutableList<Cuenta> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transferencia)
 
-        val spinnerCuentaOrigen: Spinner = findViewById(R.id.spinnerCuentaOrigen)
-        val spinnerCuentaDestino: Spinner = findViewById(R.id.spinnerCuentaDestino)
+        val cuentaEmisora = intent.getStringExtra("numeroCuenta") ?: ""
+
+        val editTextCuentaDestino: EditText = findViewById(R.id.editTextCuentaDestino)
         val editTextCantidad: EditText = findViewById(R.id.editTextCantidad)
         val btnTransferir: Button = findViewById(R.id.btnTransferir)
 
-        // Cargar cuentas desde JSON
-        cuentas = cargarCuentas()
-
-        // Adaptador para los Spinners
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, cuentas.map { it.numeroCuenta })
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerCuentaOrigen.adapter = adapter
-        spinnerCuentaDestino.adapter = adapter
-
         btnTransferir.setOnClickListener {
-            val cuentaOrigen = spinnerCuentaOrigen.selectedItem as String
-            val cuentaDestino = spinnerCuentaDestino.selectedItem as String
-            val cantidadStr = editTextCantidad.text.toString()
+            val cuentaDestino = editTextCuentaDestino.text.toString().trim()
+            val cantidadStr = editTextCantidad.text.toString().trim()
 
-            if (cantidadStr.isNotEmpty()) {
-                val cantidad = cantidadStr.toDoubleOrNull()
-                if (cantidad != null && cantidad > 0) {
-                    realizarTransferencia(cuentaOrigen, cuentaDestino, cantidad)
-                } else {
-                    Toast.makeText(this, "Cantidad inválida", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(this, "Por favor ingresa una cantidad válida", Toast.LENGTH_SHORT).show()
+            if (cuentaDestino.isEmpty() || cantidadStr.isEmpty()) {
+                Toast.makeText(this, "Debes llenar todos los campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            val cantidad = cantidadStr.toDoubleOrNull()
+            if (cantidad == null || cantidad <= 0) {
+                Toast.makeText(this, "Cantidad inválida", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            realizarTransferencia(cuentaEmisora, cuentaDestino, cantidad)
         }
     }
 
-    private fun cargarCuentas(): MutableList<Cuenta> {
-        val cuentasList = mutableListOf<Cuenta>()
-        val inputStream: InputStream = assets.open("cuentas.json")
-        val jsonText = inputStream.bufferedReader().use { it.readText() }
-
-        val jsonArray = JSONArray(jsonText)
-        for (i in 0 until jsonArray.length()) {
-            val obj: JSONObject = jsonArray.getJSONObject(i)
-            val numeroCuenta = obj.getString("numero_cuenta")
-            val tipo = obj.getString("tipo")
-            val moneda = obj.getString("moneda")
-            val saldo = obj.getDouble("saldo")
-
-            cuentasList.add(Cuenta(numeroCuenta, tipo, moneda, saldo))
+    private fun realizarTransferencia(cuentaEmisora: String, cuentaDestino: String, monto: Double) {
+        val json = JSONObject().apply {
+            put("nombre", "Giancarlo")         // Puedes adaptar para que se envíe el nombre real del usuario
+            put("apellido1", "Vega")
+            put("apellido2", "Marin")
+            put("monto", monto)
+            put("moneda", "Colones")           // Puedes hacerlo dinámico si lo necesitas
+            put("cuenta_Emisora", cuentaEmisora)
+            put("cuenta_Receptora", cuentaDestino)
         }
 
-        return cuentasList
-    }
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            json.toString()
+        )
 
-    private fun realizarTransferencia(cuentaOrigen: String, cuentaDestino: String, cantidad: Double) {
-        // Verificar que no sea la misma cuenta
-        if (cuentaOrigen == cuentaDestino) {
-            Toast.makeText(this, "No puedes transferir a la misma cuenta", Toast.LENGTH_SHORT).show()
-            return
-        }
+        val request = Request.Builder()
+            .url("https://b4b6-201-204-89-80.ngrok-free.app/Movimiento/Transferencia") // Asegúrate que este sea el endpoint correcto
+            .post(requestBody)
+            .build()
 
-        val cuentaOrigenObj = cuentas.find { it.numeroCuenta == cuentaOrigen }
-        val cuentaDestinoObj = cuentas.find { it.numeroCuenta == cuentaDestino }
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(
+                        this@TransferenciaActivity,
+                        "Error al realizar la transferencia",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
 
-        if (cuentaOrigenObj == null || cuentaDestinoObj == null) {
-            Toast.makeText(this, "Una o ambas cuentas no existen", Toast.LENGTH_SHORT).show()
-            return
-        }
+            override fun onResponse(call: Call, response: Response) {
+                response.use {
+                    val responseBody = response.body?.string()
+                    val jsonResponse = JSONObject(responseBody ?: "{}")
+                    val mensaje = jsonResponse.optString("message", "Respuesta desconocida")
 
-        // Verificar saldo suficiente
-        if (cuentaOrigenObj.saldo < cantidad) {
-            Toast.makeText(this, "Saldo insuficiente en la cuenta origen", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Realizar la transferencia
-        cuentaOrigenObj.saldo -= cantidad
-        cuentaDestinoObj.saldo += cantidad
-
-        Toast.makeText(this, "Transferencia realizada con éxito", Toast.LENGTH_SHORT).show()
-
-        // Aquí podrías guardar los cambios si fuera necesario
+                    runOnUiThread {
+                        Toast.makeText(this@TransferenciaActivity, mensaje, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        })
     }
 }

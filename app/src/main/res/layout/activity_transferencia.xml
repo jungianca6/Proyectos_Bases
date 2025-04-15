@@ -38,20 +38,6 @@
         android:padding="16dp">
 
         <!-- Selector de cuenta de origen -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selecciona la cuenta de origen"
-            android:textSize="16sp"
-            android:textColor="#FFFFFF"
-            android:layout_marginBottom="8dp"/>
-
-        <Spinner
-            android:id="@+id/spinnerCuentaOrigen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#FFFFFF"
-            android:popupBackground="#FFFFFF"/>
 
         <!-- Selector de cuenta destino -->
         <TextView
@@ -63,22 +49,26 @@
             android:textColor="#FFFFFF"
             android:layout_marginTop="16dp"/>
 
-        <Spinner
-            android:id="@+id/spinnerCuentaDestino"
+        <!-- Campo para la cantidad a transferir -->
+
+        <EditText
+            android:id="@+id/editTextCuentaDestino"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:backgroundTint="#FFFFFF"
-            android:popupBackground="#FFFFFF"/>
+            android:hint="Cuenta destino"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#CCCCCC" />
 
-        <!-- Campo para la cantidad a transferir -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cantidad a transferir"
-            android:textSize="16sp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
+            android:text="Cantidad a transferir"
             android:textColor="#FFFFFF"
-            android:layout_marginTop="16dp"/>
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextCantidad"
