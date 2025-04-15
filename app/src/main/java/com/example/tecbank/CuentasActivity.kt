@@ -128,7 +128,7 @@ class CuentasActivity : ComponentActivity() {
             val item = array.getJSONObject(i)
             val detalle = TextView(this).apply {
                 text = item.toString() // Puedes formatear aquí si conoces los campos
-                setTextColor(Color.DKGRAY)
+                setTextColor(Color.WHITE)
             }
             layoutMovimientos.addView(detalle)
         }
