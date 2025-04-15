@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.activity.ComponentActivity
+import org.json.JSONArray
+import java.io.IOException
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONObject
 
 class TarjetasActivity : ComponentActivity() {
 
@@ -11,35 +16,80 @@ class TarjetasActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tarjetas)
 
-        val spinnerTarjetas = findViewById<Spinner>(R.id.spinnerTarjetas)
+
         val btnRealizarPago = findViewById<Button>(R.id.btnRealizarPago)
-        val formularioPago = findViewById<LinearLayout>(R.id.formularioPago)
-        val btnConfirmarPago = findViewById<Button>(R.id.btnConfirmarPago)
         val editMonto = findViewById<EditText>(R.id.editMonto)
+        val editNumeroTarjeta = findViewById<EditText>(R.id.editNumeroTarjeta)
 
-        // Tarjetas de ejemplo
-        val tarjetas = listOf("**** 1234", "**** 5678", "**** 9876")
+        val nombre = intent.getStringExtra("nombre") ?: ""
+        val apellido1 = intent.getStringExtra("apellido1") ?: ""
+        val apellido2 = intent.getStringExtra("apellido2") ?: ""
+        val cuentaTarjeta = intent.getStringExtra("numeroCuenta") ?: ""
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tarjetas)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerTarjetas.adapter = adapter
+
 
         btnRealizarPago.setOnClickListener {
-            // Mostrar u ocultar el formulario
-            formularioPago.visibility = if (formularioPago.visibility == View.GONE) View.VISIBLE else View.GONE
-        }
+            val numeroTarjeta = editNumeroTarjeta.text.toString().trim()
+            val montoStr = editMonto.text.toString().trim()
 
-        btnConfirmarPago.setOnClickListener {
-            val tarjetaSeleccionada = spinnerTarjetas.selectedItem.toString()
-            val monto = editMonto.text.toString()
-
-            if (monto.isNotEmpty()) {
-                Toast.makeText(this, "Pago de $monto a $tarjetaSeleccionada", Toast.LENGTH_SHORT).show()
-                formularioPago.visibility = View.GONE
-                editMonto.text.clear()
-            } else {
-                Toast.makeText(this, "Ingrese un monto válido", Toast.LENGTH_SHORT).show()
+            if (numeroTarjeta.isEmpty() || montoStr.isEmpty()) {
+                Toast.makeText(this, "Debe ingresar número de tarjeta y monto", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            val monto = montoStr.toDoubleOrNull()
+            if (monto == null || monto <= 0) {
+                Toast.makeText(this, "Monto inválido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            realizarPagoTarjeta(nombre, apellido1, apellido2, cuentaTarjeta, numeroTarjeta, monto)
         }
+    }
+    private fun realizarPagoTarjeta(
+        nombre: String,
+        apellido1: String,
+        apellido2: String,
+        numeroCuenta: String,
+        numeroTarjeta: String,
+        monto: Double
+    ) {
+        val json = JSONObject().apply {
+            put("nombre", nombre)
+            put("apellido1", apellido1)
+            put("apellido2", apellido2)
+            put("numeroDeCuenta", numeroCuenta)
+            put("numero_de_Tarjeta", numeroTarjeta)
+            put("monto", monto)
+            put("moneda", "Colones")
+        }
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            json.toString()
+        )
+
+        val request = Request.Builder()
+            .url("https://b4b6-201-204-89-80.ngrok-free.app/Movimiento/PagoTarjeta") // Actualiza si cambia
+            .post(requestBody)
+            .build()
+
+        OkHttpClient().newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                runOnUiThread {
+                    Toast.makeText(this@TarjetasActivity, "Error en conexión", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val responseBody = response.body?.string()
+                val jsonResponse = JSONObject(responseBody ?: "{}")
+                val mensaje = jsonResponse.optString("message", "Respuesta desconocida")
+
+                runOnUiThread {
+                    Toast.makeText(this@TarjetasActivity, mensaje, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
     }
 }

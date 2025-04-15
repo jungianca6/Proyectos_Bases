@@ -50,6 +50,10 @@ class CuentasActivity : ComponentActivity() {
         }
         tarjetasButton.setOnClickListener {
             val intent = Intent(this, TarjetasActivity::class.java)
+            intent.putExtra("nombre", nombre)
+            intent.putExtra("apellido1", apellido1)
+            intent.putExtra("apellido2", apellido2)
+            intent.putExtra("numeroCuenta", numeroCuenta)
             startActivity(intent)
 
         }

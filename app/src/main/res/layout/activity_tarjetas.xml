@@ -40,50 +40,50 @@
         android:textSize="16sp"
         android:layout_marginBottom="4dp"/>
 
-    <Spinner
-        android:id="@+id/spinnerTarjetas"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:layout_marginBottom="16dp" />
-
     <!-- Título -->
-    <TextView
+
+    <EditText
+        android:id="@+id/editNumeroTarjeta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:text="Compras realizadas"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:hint="Número de tarjeta"
+        android:inputType="number" />
 
-    <!-- ScrollView para lista de compras -->
-    <ScrollView
+    <!-- Monto -->
+    <EditText
+        android:id="@+id/editMonto"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#00FFFFFF"
-        android:padding="8dp">
+        android:layout_height="wrap_content"
+        android:hint="Monto"
+        android:inputType="numberDecimal" />
 
-        <LinearLayout
-            android:id="@+id/lista_compras"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!-- Aquí irán dinámicamente las compras -->
-        </LinearLayout>
-    </ScrollView>
-
-    <!-- Botón para mostrar formulario de pago -->
     <Button
         android:id="@+id/btnRealizarPago"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Realizar Pago"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:text="Realizar Pago" />
 
-    <!-- Formulario de pago (monto y confirmar) -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="236dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:text="Compras realizadas"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
+
     <LinearLayout
         android:id="@+id/formularioPago"
         android:layout_width="match_parent"
@@ -91,6 +91,13 @@
         android:orientation="vertical"
         android:paddingTop="8dp"
         android:visibility="gone">
+
+        <EditText
+            android:id="@+id/editNumeroTarjeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número de tarjeta"
+            android:inputType="number" />
 
         <!-- Monto -->
         <EditText
